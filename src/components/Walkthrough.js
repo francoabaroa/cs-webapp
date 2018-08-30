@@ -465,6 +465,7 @@ class Walkthrough extends Component {
     );
   }
 
+  /*
   renderScene17(props) {
     const { classes } = props;
     return (
@@ -480,6 +481,7 @@ class Walkthrough extends Component {
       </div>
     );
   }
+  */
 
   render() {
     const { classes } = this.props;
