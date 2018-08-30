@@ -26,8 +26,8 @@ const styles = theme => ({
   },
   bigButton: {
     margin: theme.spacing.unit,
-    height: '340px',
-    width: '300px',
+    height: '300px',
+    width: '260px',
   },
   group: {
     margin: `${theme.spacing.unit}px 0`,
@@ -62,6 +62,9 @@ const styles = theme => ({
     marginRight: theme.spacing.unit,
     width: 480,
   },
+  demo: {
+    marginTop: '15px',
+  }
 });
 
 const scenes = {
@@ -111,7 +114,7 @@ let exchangesList = {
   7: 'Kucoin',
   8: 'Okex',
   9: 'Poloniex',
-}
+};
 
 class Walkthrough extends Component {
   constructor(props) {
