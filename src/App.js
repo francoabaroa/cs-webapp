@@ -5,6 +5,7 @@ import './App.css';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 
+import Chart from './components/Chart';
 import Walkthrough from './components/Walkthrough';
 
 import Walkthrough_Old from './components/Walkthrough_Old';
@@ -32,6 +33,8 @@ class App extends Component {
   renderWalkthrough() {
     console.log('this.state', this.state);
     // <Walkthrough_Old />
+    // <Walkthrough />
+    // <Chart />
     return (
       <Walkthrough />
     );

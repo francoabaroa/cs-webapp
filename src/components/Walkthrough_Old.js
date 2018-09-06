@@ -5,21 +5,14 @@ import '../App.css';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
-import FormLabel from '@material-ui/core/FormLabel';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import RadioGroup from '@material-ui/core/RadioGroup';
-import Radio from '@material-ui/core/Radio';
-import Paper from '@material-ui/core/Paper';
 import Slider from '@material-ui/lab/Slider';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
-import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import ListItemText from '@material-ui/core/ListItemText';
 import Checkbox from '@material-ui/core/Checkbox';
-import IconButton from '@material-ui/core/IconButton';
 
 const styles = theme => ({
   button: {
@@ -433,8 +426,6 @@ class Walkthrough_Old extends Component {
   }
 
   renderScene7(classes) {
-    let strings = ['Yes', 'No'];
-
     return (
       <div className={classes.list}>
         <List>
@@ -636,7 +627,7 @@ class Walkthrough_Old extends Component {
 
   render() {
     const { classes } = this.props;
-    const { spacing, currentSceneNumber } = this.state;
+    const { spacing } = this.state;
 
     let headline = this.renderHeadline();
     let body = this[actions[this.state.currentSceneNumber]] ?

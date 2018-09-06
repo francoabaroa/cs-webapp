@@ -60,7 +60,9 @@ class Walkthrough extends Component {
         });
       }, secondsToWait)
     }
-    currentSceneNum === 13 ? console.log('componentDidUpdate()', this.state) : null;
+    if (currentSceneNum === 13) {
+      console.log('componentDidUpdate()', this.state);
+    }
   }
 
   changeToNextScene = () => {
