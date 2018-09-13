@@ -8,8 +8,8 @@ const WalkthroughConfig = {
     5: 'HitBTC',
     6: 'Huobi',
     7: 'Kucoin',
-    8: 'Okex',
-    9: 'Poloniex',
+    8: 'Poloniex',
+    // 9: 'Okex',
   },
   scenesConfig: {
     0: {
@@ -59,7 +59,7 @@ const WalkthroughConfig = {
       'headline': 'When it comes to trading crypto, do you prefer to focus on a specific set of currencies?',
       'method': 'renderButtons',
       'strings': ['Safest', 'Moderate', 'High-risk, high-reward', 'Any and all'],
-      'subStrings': ['Top 5 by trading volume', 'Top 25 by trading volume', 'Top 100 by trading volume', 'Top 250 by market cap'],
+      'subStrings': ['Top 5', 'Top 25', 'Top 100', 'Top 250'],
     },
     10: {
       'arguments': ['technicalAnalysisUse'],

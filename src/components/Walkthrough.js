@@ -20,118 +20,18 @@ class Walkthrough extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      checkedExchanges: [],
-      currenciesToExplore: '',
-      currentSceneNumber: 2,
-      discoveryReason: '',
-      email: '',
-      isPastCryptoTrader: false,
-      moneyWillingToInvest: '',
-      name: '',
-      phone: '',
-      phoneTradeSetup: '',
       spacing: '40',
-      spareTimeAvailability: '',
-      technicalAnalysisUse: '',
     };
   }
 
-  componentDidMount() {
-    let twoSeconds = 2000;
-    let currentSceneNum = this.state.currentSceneNumber;
-    if (WalkthroughConfig.scenesConfig[currentSceneNum].method === undefined) {
-      setTimeout(() => {
-        this.setState({
-          currentSceneNumber: currentSceneNum + 1,
-        });
-      }, twoSeconds)
-    }
-  }
-
-  componentDidUpdate() {
-    let twoSeconds = 2000;
-    let fiveSeconds = 5000;
-    let currentSceneNum = this.state.currentSceneNumber;
-    let secondsToWait = currentSceneNum === 1 ? fiveSeconds : twoSeconds;
-    if (WalkthroughConfig.scenesConfig[currentSceneNum].method === undefined) {
-      setTimeout(() => {
-        this.setState({
-          currentSceneNumber: currentSceneNum + 1,
-        });
-      }, secondsToWait)
-    }
-    if (currentSceneNum === 13) {
-      console.log('componentDidUpdate()', this.state);
-    }
-  }
-
-  changeToNextScene = () => {
-    let currentSceneNum = this.state.currentSceneNumber;
-    this.setState({
-      currentSceneNumber: currentSceneNum + 1,
-    });
-  };
-
-  handleChange = name => event => {
-    this.setState({
-      [name]: event.target.value,
-    });
-  };
-
-  handleExchangeListToggle = value => () => {
-    const { checkedExchanges } = this.state;
-    const currentIndex = checkedExchanges.indexOf(value);
-    const newChecked = [...checkedExchanges];
-    if (currentIndex === -1) {
-      newChecked.push(value);
-    } else {
-      newChecked.splice(currentIndex, 1);
-    }
-    this.setState({
-      checkedExchanges: newChecked,
-    });
-  };
-
-  handleSelection = (selection, propertyName) => {
-    let currentSceneNum = this.state.currentSceneNumber;
-    this.setState({
-      [propertyName]: selection,
-      currentSceneNumber: currentSceneNum + 1,
-    });
-  };
-
-  handlePastCryptoTrader = isPastCryptoTrader => {
-    let currentSceneNum = this.state.currentSceneNumber;
-    if (!isPastCryptoTrader) {
-      currentSceneNum = currentSceneNum + 2;
-    }
-    this.setState({
-      currentSceneNumber: currentSceneNum + 1,
-      isPastCryptoTrader
-    });
-  };
-
-   handleDiscoveryReasonSelection = event => {
-    this.setState({ discoveryReason: event.target.value });
-  };
-
-  handleKeyPress = e => {
-    if (e.key === 'Enter') {
-      let currentSceneNum = this.state.currentSceneNumber;
-      this.setState({
-        currentSceneNumber: currentSceneNum + 1,
-      });
-    }
-  };
-
   renderHeadline() {
-    let showName = this.state.currentSceneNumber === 3;
-    let text = WalkthroughConfig.scenesConfig[this.state.currentSceneNumber].headline;
+    let showName = this.props.currentSceneNumber === 3;
+    let text = WalkthroughConfig.scenesConfig[this.props.currentSceneNumber].headline;
     if (showName) {
-      text = text + this.state.name + '!';
+      text = text + this.props.name + '!';
     }
     return (
-      <Grid key={this.state.currentSceneNumber} item>
+      <Grid key={this.props.currentSceneNumber} item>
         <header className="App-header2">
           <Typography variant="display1" color="primary">
             {text}
@@ -143,14 +43,14 @@ class Walkthrough extends Component {
 
   renderTextInput(classes, field) {
     return (
-      <Grid key={this.state.currentSceneNumber} item>
+      <Grid key={this.props.currentSceneNumber} item>
         <TextField
           fullWidth
           id={field[0]}
           className={classes.textField}
-          value={this.state[field[0]]}
-          onChange={this.handleChange(field[0])}
-          onKeyPress={this.handleKeyPress}
+          value={this.props[field[0]]}
+          onChange={this.props.handleChange(field[0])}
+          onKeyPress={this.props.handleKeyPress}
           margin="normal"
         />
       </Grid>
@@ -158,31 +58,33 @@ class Walkthrough extends Component {
   }
 
   renderButtons(classes) {
-    let buttonStrings = WalkthroughConfig.scenesConfig[this.state.currentSceneNumber].strings;
-    let argument = WalkthroughConfig.scenesConfig[this.state.currentSceneNumber].arguments[0];
+    let buttonStrings = WalkthroughConfig.scenesConfig[this.props.currentSceneNumber].strings;
+    let argument = WalkthroughConfig.scenesConfig[this.props.currentSceneNumber].arguments[0];
     let buttonSubStrings = [];
     let hasSubStrings = false;
 
-    if (WalkthroughConfig.scenesConfig[this.state.currentSceneNumber].subStrings !== undefined) {
+    if (WalkthroughConfig.scenesConfig[this.props.currentSceneNumber].subStrings !== undefined) {
       hasSubStrings = true;
-      buttonSubStrings = WalkthroughConfig.scenesConfig[this.state.currentSceneNumber].subStrings;
+      buttonSubStrings = WalkthroughConfig.scenesConfig[this.props.currentSceneNumber].subStrings;
     }
 
-    return buttonStrings.map((value, index) => (
-      <Grid key={index} item>
-        <Button
-          variant="outlined"
-          size="large"
-          color="primary"
-          className={classes.bigButton}
-          onClick={this.handleSelection.bind(this, buttonStrings[index], argument)}>
-          <Typography variant="headline" color="primary" >
-            {buttonStrings[index]}
-          </Typography>
-          {hasSubStrings ? this.renderSubStrings(buttonSubStrings[index]) : []}
-        </Button>
-      </Grid>
-    ));
+    return buttonStrings.map((value, index) => {
+    let selectionHandlerArgument = hasSubStrings ? buttonSubStrings[index] : buttonStrings[index];
+      return (
+        <Grid key={index} item>
+          <Button
+            variant="outlined"
+            size="large"
+            color="primary"
+            className={classes.bigButton}
+            onClick={this.props.handleSelection.bind(this, selectionHandlerArgument, argument)}>
+            <Typography variant="headline" color="primary" >
+              {buttonStrings[index]}
+            </Typography>
+            {hasSubStrings ? this.renderSubStrings(buttonSubStrings[index]) : []}
+          </Button>
+        </Grid>
+    )});
   }
 
   renderSubStrings(subString) {
@@ -202,7 +104,7 @@ class Walkthrough extends Component {
           size="large"
           color="primary"
           className={classes.mediumButton}
-          onClick={this.handlePastCryptoTrader.bind(this, strings[value] === 'Yes')}>
+          onClick={this.props.handlePastCryptoTrader.bind(this, strings[value] === 'Yes')}>
           {strings[value]}
         </Button>
       </Grid>
@@ -219,11 +121,11 @@ class Walkthrough extends Component {
               role={undefined}
               dense
               button
-              onClick={this.handleExchangeListToggle(value)}
+              onClick={this.props.handleExchangeListToggle(value)}
               className={classes.listItem}
             >
               <Checkbox
-                checked={this.state.checkedExchanges.indexOf(value) !== -1}
+                checked={this.props.checkedExchanges.indexOf(value) !== -1}
                 tabIndex={-1}
                 disableRipple
               />
@@ -236,7 +138,7 @@ class Walkthrough extends Component {
           size="large"
           color="primary"
           className={classes.button}
-          onClick={this.changeToNextScene}>
+          onClick={this.props.changeToNextScene}>
           {'Submit'}
         </Button>
       </div>
@@ -245,13 +147,13 @@ class Walkthrough extends Component {
 
   renderRadioButtons(classes) {
     return (
-      <Grid key={this.state.currentSceneNumber} item>
+      <Grid key={this.props.currentSceneNumber} item>
         <RadioGroup
           aria-label="Gender"
           name="gender1"
           className={classes.group}
-          value={this.state.discoveryReason}
-          onChange={this.handleDiscoveryReasonSelection}>
+          value={this.props.discoveryReason}
+          onChange={this.props.handleDiscoveryReasonSelection}>
           <FormControlLabel value="searchEngine" control={<Radio />} label="Search Engine" />
           <FormControlLabel value="socialMedia" control={<Radio />} label="Social Media" />
           <FormControlLabel value="sweatcoin" control={<Radio />} label="Sweatcoin" />
@@ -263,7 +165,7 @@ class Walkthrough extends Component {
           size="large"
           color="primary"
           className={classes.button}
-          onClick={this.changeToNextScene}>
+          onClick={this.props.changeToNextScene}>
           {'Submit'}
         </Button>
       </Grid>
@@ -271,8 +173,8 @@ class Walkthrough extends Component {
   }
 
   render() {
-    const { classes } = this.props;
-    const { spacing, currentSceneNumber } = this.state;
+    const { classes, currentSceneNumber } = this.props;
+    const { spacing } = this.state;
     let headline = this.renderHeadline();
     let args = [];
     let body = [];
