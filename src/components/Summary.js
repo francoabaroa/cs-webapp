@@ -327,7 +327,7 @@ class Summary extends Component {
               [CREDIT CARD INFO]
             </Typography>
             <br />
-            <Button size="large" variant="contained" className={classes.buttonBackground}>
+            <Button size="large" variant="contained"  className={classNames(classes.cssRoot, classes.center)}>
                 Purchase
             </Button>
           </div>
@@ -359,7 +359,6 @@ class Summary extends Component {
                 {this.props.checkedExchanges.length > 0 ? this.props.checkedExchanges.join(', ') : 'None selected'}
               </Typography>
               </div>
-              <br className={this.props.checkedExchanges.length === 0 ? classes.hide : null} />
               <div className={classes.nonActiveOverlay}>
               <Typography gutterBottom variant="headline" component="h5" className={classNames(classes.blackFont, classes.textLeft)}>
                 Alerts:
