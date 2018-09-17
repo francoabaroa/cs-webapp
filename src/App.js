@@ -22,7 +22,7 @@ class App extends Component {
     super(props);
     this.state = {
       activeStep: 0,
-      enableWalkthrough: true,
+      enableWalkthrough: false,
       checkedExchanges: [],
       cryptoRiskProfile: '',
       cryptoCurrentStatus: '',
@@ -133,15 +133,27 @@ class App extends Component {
     });
   };
 
-  changePriceIncrease = (event, value) => {
+  changePriceIncrease = (event) => {
+    this.setState({ priceIncrease: event.target.value });
+  }
+
+  changePriceIncreaseSlider = (event, value) => {
     this.setState({ priceIncrease: value.toFixed() });
   }
 
-  changePriceDecrease = (event, value) => {
+  changePriceDecrease = (event) => {
+    this.setState({ priceDecrease: event.target.value });
+  }
+
+  changePriceDecreaseSlider = (event, value) => {
     this.setState({ priceDecrease: value.toFixed() });
   }
 
-  changeTimeOut = (event, value) => {
+  changeTimeOut = (event) => {
+    this.setState({ timeOut: event.target.value });
+  }
+
+  changeTimeOutSlider = (event, value) => {
     this.setState({ timeOut: value.toFixed() });
   }
 
@@ -258,8 +270,11 @@ class App extends Component {
       <Summary
         goBack={this.goBack}
         changePriceIncrease={this.changePriceIncrease}
+        changePriceIncreaseSlider={this.changePriceIncreaseSlider}
         changePriceDecrease={this.changePriceDecrease}
+        changePriceDecreaseSlider={this.changePriceDecreaseSlider}
         changeTimeOut={this.changeTimeOut}
+        changeTimeOutSlider={this.changeTimeOutSlider}
         currenciesToExplore={this.state.currenciesToExplore}
         checkedExchanges={this.state.checkedExchanges}
         name={this.state.name}

@@ -202,6 +202,7 @@ const styles = theme => ({
   },
   wrapper: {
     display: 'flex',
+    justifyContent: 'center',
   },
   wrapperLeft: {
     flex: '0 0 65%',
@@ -219,7 +220,7 @@ const styles = theme => ({
     padding: '4px',
   },
   inputFieldFont: {
-    fontSize: '10px',
+    fontSize: '14px',
     textAlign: 'center',
   },
 });
@@ -724,19 +725,45 @@ class Summary extends Component {
                {'These can be fully customized below:'}
               </Typography>
               <br />
+              <br />
+              <br />
 
               <div className={classes.wrapper}>
               <div className={classNames(classes.wrapperRight, classes.slider)}>
               <Typography id="label">Price Increase</Typography>
-              <Slider value={priceIncrease} aria-labelledby="label" onChange={this.props.changePriceIncrease} />
+              <Slider value={parseInt(priceIncrease)} aria-labelledby="label" onChange={this.props.changePriceIncreaseSlider} />
+              <FormControl>
+              <Input
+                onChange={this.props.changePriceIncrease}
+                className={classNames(classes.textField, classes.inputFieldFont)}
+                disableUnderline={true}
+                value={priceIncrease}
+              />
+              </FormControl>
               </div>
               <div className={classNames(classes.wrapperRight, classes.slider)}>
               <Typography id="label2">Price Decrease</Typography>
-              <Slider value={priceDecrease} aria-labelledby="label2" onChange={this.props.changePriceDecrease} />
+              <Slider value={parseInt(priceDecrease)} aria-labelledby="label2" onChange={this.props.changePriceDecreaseSlider} />
+              <FormControl>
+              <Input
+                onChange={this.props.changePriceDecrease}
+                className={classNames(classes.textField, classes.inputFieldFont)}
+                disableUnderline={true}
+                value={priceDecrease}
+              />
+              </FormControl>
               </div>
               <div className={classNames(classes.wrapperRight, classes.slider)}>
               <Typography id="label3">Timeout</Typography>
-              <Slider value={timeOut} min={2} max={168} aria-labelledby="label3" onChange={this.props.changeTimeOut} />
+              <Slider value={parseInt(timeOut)} min={2} max={168} aria-labelledby="label3" onChange={this.props.changeTimeOutSlider} />
+              <FormControl>
+              <Input
+                onChange={this.props.changeTimeOut}
+                className={classNames(classes.textField, classes.inputFieldFont)}
+                disableUnderline={true}
+                value={timeOut}
+              />
+              </FormControl>
               </div>
             </div>
 
