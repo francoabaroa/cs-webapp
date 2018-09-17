@@ -21,23 +21,31 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      activeStep: 0,
       enableWalkthrough: true,
       checkedExchanges: [],
+      cryptoRiskProfile: '',
+      cryptoCurrentStatus: '',
+      cryptoTradingHabit: '',
       currenciesToExplore: '',
       currentSceneNumber: 0,
-      discoveryReason: '',
+      discoveryReason: '', // unused
+      doesUseTSA: false,
       email: '',
+      incorporatingCryptoLifeAnswer: '',
       isPastCryptoTrader: false,
-      moneyWillingToInvest: '',
+      moneyWillingToInvest: '', // unused
       name: '',
+      packageSelected: null,
       phone: '',
       phoneTradeSetup: '',
       priceIncrease: 15,
       priceDecrease: 5,
-      timeOut: 24,
+      referralSource: '',
       spacing: '40',
       spareTimeAvailability: '',
-      technicalAnalysisUse: '',
+      technicalAnalysisUse: '', // unused
+      timeOut: 24,
     };
   }
 
@@ -45,10 +53,12 @@ class App extends Component {
     if (this.state.enableWalkthrough) {
       let twoSeconds = 2000;
       let currentSceneNum = this.state.currentSceneNumber;
+      let activeStep = WalkthroughConfig.scenesConfig[currentSceneNum].stepLevel;
       if (WalkthroughConfig.scenesConfig[currentSceneNum].method === undefined) {
         setTimeout(() => {
           this.setState({
             currentSceneNumber: currentSceneNum + 1,
+            activeStep: activeStep,
           });
         }, twoSeconds)
       }
@@ -58,6 +68,7 @@ class App extends Component {
   componentDidUpdate() {
     let twoSeconds = 2000;
     let currentSceneNum = this.state.currentSceneNumber;
+    let isLastScene = WalkthroughConfig.scenesConfig[currentSceneNum + 1] === undefined;
 
     if (this.state.enableWalkthrough) {
       let fiveSeconds = 5000;
@@ -69,15 +80,23 @@ class App extends Component {
           });
         }, secondsToWait)
       }
-      if (currentSceneNum === 13) {
+      if (isLastScene) {
         console.log('componentDidUpdate()', this.state);
       }
     }
 
-    if (this.state.enableWalkthrough && currentSceneNum === 13) {
+    if (this.state.enableWalkthrough && isLastScene) {
+      // TODO: better way to determine package
+      let pkg = '';
+      if (this.state.currenciesToExplore === 'Top currencies') {
+        pkg = 'Coinbase';
+      } else {
+        pkg = 'Trader';
+      }
         setTimeout(() => {
           this.setState({
             enableWalkthrough: false,
+            packageSelected: pkg,
           });
         }, twoSeconds)
       }
@@ -89,10 +108,28 @@ class App extends Component {
     });
   }
 
+  goBack = () => {
+    let currentSceneNum = this.state.currentSceneNumber;
+    let scenesToSubtract = 1;
+    let activeStep = WalkthroughConfig.scenesConfig[currentSceneNum].stepLevel;
+
+    if (WalkthroughConfig.scenesConfig[currentSceneNum - 1].method === undefined) {
+      scenesToSubtract = 2;
+    }
+
+    this.setState({
+      currentSceneNumber: currentSceneNum - scenesToSubtract,
+      enableWalkthrough: true,
+      activeStep,
+    });
+  };
+
   changeToNextScene = () => {
     let currentSceneNum = this.state.currentSceneNumber;
+    let activeStep = WalkthroughConfig.scenesConfig[currentSceneNum].stepLevel;
     this.setState({
       currentSceneNumber: currentSceneNum + 1,
+      activeStep,
     });
   };
 
@@ -109,15 +146,19 @@ class App extends Component {
   }
 
   handleChange = name => event => {
+    let currentSceneNum = this.state.currentSceneNumber;
+    let activeStep = WalkthroughConfig.scenesConfig[currentSceneNum].stepLevel;
     this.setState({
       [name]: event.target.value,
+      activeStep,
     });
   };
 
   handleExchangeListToggle = value => () => {
-    const { checkedExchanges } = this.state;
+    const { checkedExchanges, currentSceneNumber } = this.state;
     const currentIndex = checkedExchanges.indexOf(value);
     const newChecked = [...checkedExchanges];
+    let activeStep = WalkthroughConfig.scenesConfig[currentSceneNumber].stepLevel;
     if (currentIndex === -1) {
       newChecked.push(value);
     } else {
@@ -125,25 +166,48 @@ class App extends Component {
     }
     this.setState({
       checkedExchanges: newChecked,
+      activeStep,
     });
   };
 
   handleSelection = (selection, propertyName) => {
     let currentSceneNum = this.state.currentSceneNumber;
+    let activeStep = WalkthroughConfig.scenesConfig[currentSceneNum].stepLevel;
     this.setState({
       [propertyName]: selection,
       currentSceneNumber: currentSceneNum + 1,
+      activeStep
     });
   };
 
+  // handlePastCryptoTrader = isPastCryptoTrader => {
+  //   let currentSceneNum = this.state.currentSceneNumber;
+  //   if (!isPastCryptoTrader) {
+  //     currentSceneNum = currentSceneNum + 2;
+  //   }
+  //   this.setState({
+  //     currentSceneNumber: currentSceneNum + 1,
+  //     isPastCryptoTrader
+  //   });
+  // };
+
   handlePastCryptoTrader = isPastCryptoTrader => {
     let currentSceneNum = this.state.currentSceneNumber;
-    if (!isPastCryptoTrader) {
-      currentSceneNum = currentSceneNum + 2;
-    }
+    let activeStep = WalkthroughConfig.scenesConfig[currentSceneNum].stepLevel;
     this.setState({
       currentSceneNumber: currentSceneNum + 1,
-      isPastCryptoTrader
+      isPastCryptoTrader,
+      activeStep,
+    });
+  };
+
+  handleUseOfTA = doesUseTSA => {
+    let currentSceneNum = this.state.currentSceneNumber;
+    let activeStep = WalkthroughConfig.scenesConfig[currentSceneNum].stepLevel;
+    this.setState({
+      currentSceneNumber: currentSceneNum + 1,
+      doesUseTSA,
+      activeStep
     });
   };
 
@@ -154,8 +218,12 @@ class App extends Component {
   handleKeyPress = e => {
     if (e.key === 'Enter') {
       let currentSceneNum = this.state.currentSceneNumber;
+      // TODO: potential bug here
+      let activeStep = WalkthroughConfig.scenesConfig[currentSceneNum + 1].stepLevel;
+      console.log('activeStep', activeStep);
       this.setState({
         currentSceneNumber: currentSceneNum + 1,
+        activeStep,
       });
     }
   };
@@ -166,11 +234,14 @@ class App extends Component {
     // <Chart />
     return (
       <Walkthrough
+        activeStep={this.state.activeStep}
+        goBack={this.goBack}
         changeToNextScene={this.changeToNextScene}
         handleChange={this.handleChange}
         handleExchangeListToggle={this.handleExchangeListToggle}
         handleSelection={this.handleSelection}
         handlePastCryptoTrader={this.handlePastCryptoTrader}
+        handleUseOfTA={this.handleUseOfTA}
         handleDiscoveryReasonSelection={this.handleDiscoveryReasonSelection}
         handleKeyPress={this.handleKeyPress}
         currentSceneNumber={this.state.currentSceneNumber}
@@ -185,6 +256,7 @@ class App extends Component {
   renderSummary() {
     return (
       <Summary
+        goBack={this.goBack}
         changePriceIncrease={this.changePriceIncrease}
         changePriceDecrease={this.changePriceDecrease}
         changeTimeOut={this.changeTimeOut}
@@ -194,6 +266,7 @@ class App extends Component {
         phone={this.state.phone}
         email={this.state.email}
         spareTimeAvailability={this.state.spareTimeAvailability}
+        packageSelected={this.state.packageSelected}
         priceIncrease={this.state.priceIncrease}
         priceDecrease={this.state.priceDecrease}
         timeOut={this.state.timeOut}
@@ -224,6 +297,7 @@ class App extends Component {
   }
 
   render() {
+    console.log('THIS STATE', this.state);
     return (
       <div className="App">
         {!this.state.enableWalkthrough ? this.renderSummary() : this.renderWalkthrough()}

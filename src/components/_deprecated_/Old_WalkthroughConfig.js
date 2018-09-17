@@ -1,112 +1,137 @@
-const WalkthroughConfig = {
+const Old_WalkthroughConfig = {
   exchangesList: {
-    0: 'Coinbase',
-    1: 'Binance',
-    2: 'OKex',
-    3: 'Kraken',
-    4: 'Huobi',
-    5: 'Poloniex',
-    // 5: 'Cryptopia',
-    // 5: 'HitBTC',
-    // 7: 'Kucoin',
+    0: 'Binance',
+    1: 'Bitfinex',
+    2: 'Bittrex',
+    3: 'Coinbase',
+    4: 'Cryptopia',
+    5: 'HitBTC',
+    6: 'Huobi',
+    7: 'Kucoin',
+    8: 'Poloniex',
     // 9: 'Okex',
   },
   scenesConfig: {
     0: {
       'headline': 'Hi there!',
-      'stepLevel': 0,
     },
-    1: {
+    2: {
       'arguments': ['name'],
       'headline': 'What\'s your first name?',
       'method': 'renderTextInput',
-      'stepLevel': 0,
-    },
-    2: {
-      'headline': 'Nice to meet you, ',
-      'stepLevel': 0,
     },
     3: {
-      'arguments': ['cryptoCurrentStatus'],
+      'headline': 'Nice to meet you, ',
+    },
+    6: {
+      'arguments': ['phoneTradeSetup'],
       'headline': 'When it comes to crypto, are you:',
       'method': 'renderButtons',
       'strings': ['Informed', 'Curious', 'Skeptical', 'Rekt'],
-      'stepLevel': 0,
     },
-    4: {
+    3: {
       'headline': 'NEED CUSTOMIZED RESPONSE HERE DEPENDING ON WHAT THEY PICKED',
-      'stepLevel': 0,
     },
     5: {
       'arguments': [],
       'headline': 'What exchanges do you use to trade?',
       'method': 'renderCheckboxList',
-      'stepLevel': 0,
     },
-    6: {
-      'arguments': ['handlePastCryptoTrader'],
+    4: {
+      'arguments': [],
       'headline': 'Have you traded crypto in the past?',
       'method': 'renderYesNo',
-      'stepLevel': 0,
     },
-    7: {
-      'arguments': ['handleUseOfTA'],
+    4: {
+      'arguments': [],
       'headline': 'Do you use TA to trade?',
       'method': 'renderYesNo',
-      'stepLevel': 0,
     },
-    8: {
+    11: {
       'arguments': ['email'],
       'headline': 'What\'s your email?',
       'method': 'renderTextInput',
-      'stepLevel': 0,
     },
-    9: {
-      'arguments': ['incorporatingCryptoLifeAnswer'],
+    6: {
+      'arguments': ['phoneTradeSetup'],
       'headline': 'When it comes to incorporating crypto in your life, are you:',
       'method': 'renderButtons',
       'strings': ['Dedicated', 'On a kick', 'Ready to learn'],
-      'stepLevel': 1,
     },
-    10: {
-      'arguments': ['spareTimeAvailability'],
+    6: {
+      'arguments': ['phoneTradeSetup'],
       'headline': 'When it comes to spare time for crypto, are you:',
       'method': 'renderButtons',
       'strings': ['Completely booked', 'Occasionally available', 'Pretty free'],
-      'stepLevel': 1,
     },
-    11: {
+    6: {
       'arguments': ['currenciesToExplore'],
       'headline': 'What currencies should we explore?',
       'method': 'renderButtons',
       'strings': ['Top currencies', 'Well known', 'All of them'],
-      'stepLevel': 2,
     },
-    12: {
-      'arguments': ['cryptoTradingHabit'],
+    6: {
+      'arguments': ['phoneTradeSetup'],
       'headline': 'When it comes to trading, do you prefer to:',
       'method': 'renderButtons',
       'strings': ['Trade quick', 'Hold for a bit', 'Sit back and relax'],
-      'stepLevel': 2,
+    },
+    6: {
+      'arguments': ['phoneTradeSetup'],
+      'headline': 'Are you setup to make trades from your phone?',
+      'method': 'renderButtons',
+      'strings': ['Yes', 'Partially', 'Not Yet'],
+    },
+    5: {
+      'arguments': [],
+      'headline': 'What exchange accounts do you currently have?',
+      'method': 'renderCheckboxList',
+    },
+    6: {
+      'arguments': ['phoneTradeSetup'],
+      'headline': 'Are you setup to make trades from your phone?',
+      'method': 'renderButtons',
+      'strings': ['Yes', 'Partially', 'Not Yet'],
+    },
+    7: {
+      'arguments': ['moneyWillingToInvest'],
+      'headline': 'Roughly how much money do you currently want to trade with in cryptocurrencies?',
+      'method': 'renderButtons',
+      'strings': ['Less than $500', '$501 - $5,000', '$5,001 - $25,000', '$25,000+'],
+    },
+    8: {
+      'arguments': ['spareTimeAvailability'],
+      'headline': 'If you begin to receive frequent alerts, what is the most frequent you would be able to log in to your exchanges to make trades?',
+      'method': 'renderButtons',
+      'strings': ['Multiple times a day', 'Once a day', 'Few times a week', 'Few times a month'],
+    },
+    9: {
+      'arguments': ['currenciesToExplore'],
+      'headline': 'When it comes to trading crypto, do you prefer to focus on a specific set of currencies?',
+      'method': 'renderButtons',
+      'strings': ['Safest', 'Moderate', 'High-risk, high-reward', 'Any and all'],
+      'subStrings': ['Top 5', 'Top 25', 'Top 100', 'Top 250'],
+    },
+    10: {
+      'arguments': ['technicalAnalysisUse'],
+      'headline': 'How much do you currently use technical analysis in your trading? (ex. RSI, MACD, etc.)',
+      'method': 'renderButtons',
+      'strings': ['None', 'Some', 'Heavily'],
+
+    },
+    11: {
+      'arguments': ['phone'],
+      'headline': 'What\'s your phone number?',
+      'method': 'renderTextInput',
+    },
+    12: {
+      'arguments': [],
+      'headline': 'How did you hear about us?',
+      'method': 'renderRadioButtons',
     },
     13: {
-      'arguments': ['cryptoRiskProfile'],
-      'headline': 'When you trade, are you:',
-      'method': 'renderButtons',
-      'strings': ['Risk averse', 'The middle', 'High risk, high reward'],
-      'stepLevel': 2,
-    },
-    14: {
-      'arguments': ['referralSource'],
-      'headline': 'Lastly, we\'re happy to have met you. How did you hear about us?',
-      'method': 'renderButtons',
-      'strings': ['Friend', 'Twitter', 'Product Hunt', 'Google', 'Facebook', 'Instagram'],
-      'stepLevel': 3,
-    },
-    15: {
-      'headline': 'Strategy',
+      'headline': 'Loading your strategy...',
       'method': '',
-      'stepLevel': 3,
     },
   },
   styles: theme => ({
@@ -117,9 +142,6 @@ const WalkthroughConfig = {
       margin: theme.spacing.unit,
       height: '300px',
       width: '260px',
-      backgroundColor: 'white',
-      border: '2px solid black',
-      color: 'black',
     },
     group: {
       margin: `${theme.spacing.unit}px 0`,
@@ -129,9 +151,6 @@ const WalkthroughConfig = {
       height: '200px',
       width: '200px',
       borderRadius: '50%',
-      backgroundColor: 'white',
-      border: '2px solid black',
-      color: 'black',
     },
     root: {
       flexGrow: 1,
@@ -156,34 +175,12 @@ const WalkthroughConfig = {
       marginLeft: theme.spacing.unit,
       marginRight: theme.spacing.unit,
       width: 480,
-      border: '1px solid black',
-      borderRadius: '10px',
-      padding: '40px',
     },
-    demo2: {
-      padding: '30px',
-      paddingTop: '0px',
-    },
-    progressLine: {
-      maxWidth: '200px',
-    },
-    stepper: {
-      maxWidth: '500px',
-      backgroundColor: '#fff6ed',
-      margin: '0 auto',
-    },
-    buttonLabel: {
-      fontSize: '25px',
-    },
-    header: {
-      marginBottom: '70px',
-    },
-    inputFieldFont: {
-      fontSize: '30px',
-      textAlign: 'center',
-    },
+    demo: {
+      marginTop: '15px',
+    }
   }),
 };
 
 
-export default WalkthroughConfig;
+export default Old_WalkthroughConfig;

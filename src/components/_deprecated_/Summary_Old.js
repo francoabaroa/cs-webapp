@@ -1,9 +1,5 @@
 import React, { Component } from 'react';
 import logo from '../cs-logo.png';
-import back from '../assets/arrow.png';
-import currenciesLogo from '../assets/Currencies-logo.png';
-import alertsIcon from '../assets/alertsicon.png';
-
 import '../App.css';
 
 import { withStyles } from '@material-ui/core/styles';
@@ -14,19 +10,14 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import FormGroup from '@material-ui/core/FormGroup';
-import FormControl from '@material-ui/core/FormControl';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Grid from '@material-ui/core/Grid';
-import Input from '@material-ui/core/Input';
 import Modal from '@material-ui/core/Modal';
 import Paper from '@material-ui/core/Paper';
 import Slider from '@material-ui/lab/Slider';
 import Tab from '@material-ui/core/Tab';
 import Tabs from '@material-ui/core/Tabs';
 import Typography from '@material-ui/core/Typography';
-
-import Slider2 from 'rc-slider/lib/Slider';
-import 'rc-slider/assets/index.css';
 
 import 'react-phone-number-input/style.css';
 import PhoneInput from 'react-phone-number-input';
@@ -38,10 +29,6 @@ import Image2 from '../assets/bckgrnd-image.png';
 import Image3 from '../assets/bckgrnd-image2.png';
 
 const colors = ['#4a90e2', 'rgba(255, 255, 255, 0.80)', '#244770', '#3da937'];
-
-function log(value) {
-  console.log(value); //eslint-disable-line
-}
 
 const styles = theme => ({
   card: {
@@ -118,7 +105,7 @@ const styles = theme => ({
     padding: theme.spacing.unit * 2,
     textAlign: 'left',
     color: theme.palette.text.secondary,
-    paddingBottom: '40px',
+    paddingBottom: 0,
   },
   paper2: {
     position: 'absolute',
@@ -165,63 +152,8 @@ const styles = theme => ({
     height: 240,
   },
   titleHeaders: {
-    paddingRight: '40px',
-    paddingLeft: '40px',
-  },
-  titleHeaderDiv: {
-    paddingTop: '10px',
-  },
-  backButtton: {
-    float: 'right',
-    paddingRight: '30px',
-  },
-  cardBottomPadding: {
-    paddingBottom: '50px',
-  },
-  bottomPadding: {
-    paddingBottom: '30px',
-  },
-  coinCheckboxes: {
-    margin: 'auto',
-  },
-  label: {
-    margin: '0 auto',
-  },
-  titleIcon: {
-    display: 'block',
-  },
-  negativeRightMargin: {
-    marginRight: '-10px',
-  },
-  slider: {
-    maxWidth: '200px',
-    paddingRight: '50px',
-  },
-  sliderTest: {
-    display: 'inline',
-  },
-  wrapper: {
-    display: 'flex',
-  },
-  wrapperLeft: {
-    flex: '0 0 65%',
-    paddingRight: '50px',
-  },
-  wrapperRight: {
-    flex: 1,
-  },
-  textField: {
-    marginLeft: theme.spacing.unit,
-    marginRight: theme.spacing.unit,
-    // width: 480,
-    border: '1px solid black',
-    borderRadius: '10px',
-    padding: '4px',
-  },
-  inputFieldFont: {
-    fontSize: '10px',
-    textAlign: 'center',
-  },
+    paddingRight: '20px',
+  }
 });
 
 function getModalStyle() {
@@ -233,69 +165,32 @@ function getModalStyle() {
   };
 }
 
-class Summary extends Component {
+class Summary_Old extends Component {
   constructor(props) {
     super(props);
     this.state = {
       checkBoxes: {},
       currencies: [],
-      currentTitleHeader: 'recommended',
       enableWalkthrough: true,
       open: false,
       phoneNumber: '',
-      showMore: false,
       userId: null,
       value: 0,
     };
   }
 
   componentDidMount() {
-    // let currencies = ['BTC', 'ETH', 'BCH', 'LTC', 'ETC'];
-    //     let checkboxes = {
-    //       'BTC': true,
-    //       'ETH': true,
-    //       'BCH': true,
-    //       'LTC': true,
-    //       'ETC': true,
-    //     };
-    //     this.setState({ currencies, checkBoxes: checkboxes });
-
     if (this.props.currenciesToExplore.length > 0) {
-      let currencyStrings = ['Top currencies', 'Well known', 'All of them'];
-      let currencyNum = 0;
-      // top 5 needs to be coinbase ones
-      if (this.props.currenciesToExplore === currencyStrings[0]) {
-        currencyNum = 5;
-      } else if (this.props.currenciesToExplore === currencyStrings[1]) {
-        currencyNum = 100;
-      } else if (this.props.currenciesToExplore === currencyStrings[2]) {
-        currencyNum = 250;
-      }
-
-      if (currencyNum === 5) {
-        let currencies = ['BTC', 'ETH', 'BCH', 'LTC', 'ETC'];
-        currencies.unshift(null);
-        let checkboxes = {
-          'BTC': true,
-          'ETH': true,
-          'BCH': true,
-          'LTC': true,
-          'ETC': true,
-        };
-        this.setState({ currencies, checkBoxes: checkboxes });
-      } else {
-        fetch('http://cs-price-alerts.herokuapp.com/top?top=' + currencyNum)
+      let currencies = this.props.currenciesToExplore.split(' ');
+      fetch('http://cs-price-alerts.herokuapp.com/top?top=' + currencies[1])
         .then((response) => {return response.json()})
         .then((data) => {
           let checkboxes = {};
           data.forEach((coin) => {
             checkboxes[coin] = true;
           });
-          let currencies = data;
-          currencies.unshift(null);
           this.setState({ currencies: data, checkBoxes: checkboxes });
         });
-      }
     }
   }
 
@@ -349,28 +244,13 @@ class Summary extends Component {
 
   }
 
-
-  handleShowMore = () => {
-    this.setState({
-      showMore: true,
-    })
-  };
-
-  handleShowLess = () => {
-    this.setState({
-      showMore: false,
-    })
-  };
-
   handleChange = (event, value) => {
     // TODO: go back button. Make sure
     let open = false;
-    let currentTitleHeader = this.state.currentTitleHeader;
     if (event === 'checkOut') {
-      currentTitleHeader = 'checkOut';
       open = true;
     }
-    this.setState({ open, currentTitleHeader });
+    this.setState({open});
 
     console.log('EVENT', event, 'value', value);
     // if (value === 2) {
@@ -401,145 +281,53 @@ class Summary extends Component {
     });
   }
 
-  renderCheckboxes(classes) {
+  renderCheckboxes() {
     const {currencies} = this.state;
     let checkboxes = [];
-    let tempCheckboxes = [];
-
     for (let i = 0; i < currencies.length; i++) {
-      if (i % 5 === 0 && i !== 0) {
-        tempCheckboxes.push(
-          <td>
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={this.state.checkBoxes[currencies[i]]}
-                onChange={this.handleCheckbox.bind(null, currencies[i])}
-                value={currencies[i]}
-                color="primary"
-              />
-            }
-            label={currencies[i]}
-            className={classes.label}
-          />
-          </td>
-        );
-
-        checkboxes.push(
-          <tr className={i > 15 && this.state.showMore === false ? classes.hide : null}>
-            {tempCheckboxes}
-          </tr>
-        );
-        tempCheckboxes = [];
-      } else if (currencies[i] !== null) {
-        tempCheckboxes.push(
-          <td>
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={this.state.checkBoxes[currencies[i]]}
-                onChange={this.handleCheckbox.bind(null, currencies[i])}
-                value={currencies[i]}
-                color="primary"
-              />
-            }
-            label={currencies[i]}
-            className={classes.label}
-          />
-          </td>
-        );
-      }
+      checkboxes.push(
+        <FormControlLabel
+          control={
+            <Checkbox
+              checked={this.state.checkBoxes[currencies[i]]}
+              onChange={this.handleCheckbox.bind(null, currencies[i])}
+              value={currencies[i]}
+              color="primary"
+            />
+          }
+          label={currencies[i]}
+        />
+      );
     }
     return (
-      <div>
-      <table className={classes.label}>
-        <tbody>
+      <FormGroup row>
         {checkboxes}
-        </tbody>
-      <span onClick={this.handleShowMore} className={this.state.showMore || this.props.packageSelected === 'Coinbase' ? classes.hide : null}>
-      Show More
-      </span>
-      <span onClick={this.handleShowLess} className={!this.state.showMore || this.props.packageSelected === 'Coinbase' ? classes.hide : null}>
-      Show Less
-      </span>
-      </table>
-      </div>
-    );
-  }
-
-
-
-  renderCheckboxes1(classes) {
-    const {currencies} = this.state;
-    let checkboxes = [];
-    let tempCheckboxes = [];
-    for (let i = 0; i < currencies.length; i++) {
-      if (i % 5 === 0 && i !== 0) {
-        tempCheckboxes.push(
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={this.state.checkBoxes[currencies[i]]}
-                onChange={this.handleCheckbox.bind(null, currencies[i])}
-                value={currencies[i]}
-                color="primary"
-              />
-            }
-            label={currencies[i]}
-            className={classes.label}
-          />
-        );
-
-        checkboxes.push(
-          <FormGroup row>
-            {tempCheckboxes}
-          </FormGroup>
-        );
-        tempCheckboxes = [];
-      } else if (currencies[i] !== null) {
-        tempCheckboxes.push(
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={this.state.checkBoxes[currencies[i]]}
-                onChange={this.handleCheckbox.bind(null, currencies[i])}
-                value={currencies[i]}
-                color="primary"
-              />
-            }
-            label={currencies[i]}
-            className={classes.label}
-          />
-        );
-      }
-    }
-    return (
-      <div>
-        {checkboxes}
-      </div>
+      </FormGroup>
     );
   }
 
   renderSummary() {
     const { classes, priceIncrease, priceDecrease, timeOut } = this.props;
-    let currencyCheckboxes = this.renderCheckboxes(classes);
-    let packageText = this.props.packageSelected === 'Coinbase' ?
-      '\n With a busy lifestyle, most of your trading needs can be solved for simply by solely tracking the Coinbase coins — that\’s why we keep it simple.'
-      : '\n Being a more experienced crypto trader, we give you the full power of our AI — you\’re given the ears and eyes that monitor the market 24/7.';
-
+    let currencyCheckboxes = this.renderCheckboxes();
     return (
      <Grid container className={classes.root} spacing={24}>
        <Grid item xs={12}>
-         <Paper className={classNames(classes.paper, classes.negativeRightMargin)}>
-         <div className={classes.titleHeaderDiv}>
+         <Paper className={classes.paper}>
          <span className={classes.titleHeaders} onClick={this.handleChange.bind(this, 'recommended')}>
          Recommended
          </span>
          <span onClick={this.handleChange.bind(this, 'checkOut')}>
          Check out
          </span>
-         <img className={classes.backButtton} src={back} />
-         </div>
+          <Tabs
+            value={this.state.value}
+            onChange={this.handleChange}
+            indicatorColor="primary"
+            textColor="primary"
+          >
+            <Tab label="Recommended" />
+            <Tab label="Check out" />
+            <Tab label="Back" />
             <Modal
               aria-labelledby="simple-modal-title"
               aria-describedby="simple-modal-description"
@@ -566,16 +354,17 @@ class Summary extends Component {
             </Button>
           </div>
         </Modal>
+          </Tabs>
          </Paper>
        </Grid>
-        <Grid item xs={3}>
+        <Grid item xs={4}>
           <Card className={classes.card2}>
             <CardContent>
-              <Typography component="p" className={classNames(classes.blackFont, classes.bold, classes.textLeft)}>
+              <Typography component="p" className={classNames(classes.blackFont, classes.bold)}>
                 {'Thanks for the feedback, ' + this.props.name + '.'}
               </Typography>
               <br />
-              <Typography component="p" className={classNames(classes.blackFont, classes.bold, classes.textLeft)}>
+              <Typography component="p" className={classNames(classes.blackFont, classes.bold)}>
                 {'Based on your answers, we\'ve crafted your tailored game plan.'}
               </Typography>
               <br />
@@ -635,7 +424,7 @@ class Summary extends Component {
             <div className={classes.textCenter}>$49</div>
             <div className={classes.textCenter}>monthly</div>
             <CardActions className={classes.textCenter}>
-              <Button size="small" color="primary" variant="contained" className={classNames(classes.margin, classes.cssRoot, classes.center)}>
+              <Button size="large" color="primary" variant="contained" className={classNames(classes.margin, classes.cssRoot, classes.center)}>
                 Subscribe
               </Button>
             </CardActions>
@@ -644,11 +433,10 @@ class Summary extends Component {
         <Grid item xs={8}>
         <Card className={classes.card}>
         <CardContent>
-          <Card className={classNames(classes.card, classes.cardBottomPadding)}>
+          <Card className={classes.card}>
             <CardContent className={classes.firstBackgroundImg}>
               <Typography gutterBottom variant="headline" component="h2" className={classNames(classes.whiteFont, classes.textLeft)}>
-                <img src={currenciesLogo} className={classes.titleIcon} />
-                {this.props.packageSelected + ' Package'}
+                {'PACKAGE'}
               </Typography>
               {/*
               <Typography gutterBottom variant="headline" component="h2" className={classNames(classes.whiteFont, classes.textLeft)}>
@@ -665,10 +453,16 @@ class Summary extends Component {
               </Typography>
               <br />
               <Typography component="p" className={classNames(classes.blackFont, classes.textLeft)}>
-                {'\n We\’ll track the currencies in the [top X] and alert you when our AI detects anomalies in these specific currencies.' + packageText}
+                {'[EXP TRADER - TRADER PACKAGE]'}
+                {'\n With a busy lifestyle, most of your trading needs can be solved for simply by solely tracking the Coinbase coins — that\’s why we keep it simple.'}
               </Typography>
               <br />
-              <Typography component="p" className={classNames(classes.bold, classes.textLeft, classes.bottomPadding)}>
+              <Typography component="p" className={classNames(classes.blackFont, classes.textLeft)}>
+                {'[BEGINNER TRADER - COINBASE PACKAGE]'}
+                {'\n Being a more experienced crypto trader, we give you the full power of our AI — you\’re given the ears and eyes that monitor the market 24/7.'}
+              </Typography>
+              <br />
+              <Typography component="p" className={classNames(classes.bold, classes.textLeft)}>
                 {'You\'re set to receive notifications for:'}
               </Typography>
               {currencyCheckboxes}
@@ -696,11 +490,10 @@ class Summary extends Component {
             </CardContent>
           </Card>
         */}
-          <Card className={classNames(classes.card, classes.cardBottomPadding)}>
+          <Card className={classes.card}>
             <CardContent className={classes.thirdBackgroundImg}>
-            <Typography gutterBottom variant="headline" component="h2" className={classNames(classes.whiteFont, classes.textLeft)}>
-                <img src={alertsIcon} className={classes.titleIcon}/>
-                Price Alerts
+              <Typography gutterBottom variant="headline" component="h2" className={classNames(classes.whiteFont, classes.textLeft)}>
+                  Price Alerts
               </Typography>
             </CardContent>
             <CardContent>
@@ -724,26 +517,22 @@ class Summary extends Component {
                {'These can be fully customized below:'}
               </Typography>
               <br />
-
-              <div className={classes.wrapper}>
-              <div className={classNames(classes.wrapperRight, classes.slider)}>
+              <div>
               <Typography id="label">Price Increase</Typography>
               <Slider value={priceIncrease} aria-labelledby="label" onChange={this.props.changePriceIncrease} />
               </div>
-              <div className={classNames(classes.wrapperRight, classes.slider)}>
+              <div>
               <Typography id="label2">Price Decrease</Typography>
               <Slider value={priceDecrease} aria-labelledby="label2" onChange={this.props.changePriceDecrease} />
               </div>
-              <div className={classNames(classes.wrapperRight, classes.slider)}>
+              <div>
               <Typography id="label3">Timeout</Typography>
               <Slider value={timeOut} min={2} max={168} aria-labelledby="label3" onChange={this.props.changeTimeOut} />
               </div>
-            </div>
-
             </CardContent>
           </Card>
           {/*
-          <Card className={classNames(classes.card, classes.cardBottomPadding)}>
+          <Card className={classes.card}>
             <CardContent>
               <Typography gutterBottom variant="headline" component="h2">
                 Monthly Recap
@@ -779,7 +568,7 @@ class Summary extends Component {
           color="primary"
           className={classes.button}
           onClick={this.getStarted}>
-          {'Summary Page'}
+          {'Summary_Old Page'}
         </Button>
       </div>
     );
@@ -794,4 +583,4 @@ class Summary extends Component {
   }
 }
 
-export default withStyles(styles)(Summary);
+export default withStyles(styles)(Summary_Old);
