@@ -284,7 +284,7 @@ class Summary extends Component {
         };
         this.setState({ currencies, checkBoxes: checkboxes });
       } else {
-        fetch('http://cs-price-alerts.herokuapp.com/top?top=' + currencyNum)
+        fetch('https://cs-price-alerts.herokuapp.com/top?top=' + currencyNum)
         .then((response) => {return response.json()})
         .then((data) => {
           let checkboxes = {};
@@ -310,7 +310,7 @@ class Summary extends Component {
       surveyAnswers: this.props.surveyAnswers,
     };
 
-    fetch('http://cs-price-alerts.herokuapp.com/createuser', {method: 'post', body: JSON.stringify(userInfo)})
+    fetch('https://cs-price-alerts.herokuapp.com/createuser', {method: 'post', body: JSON.stringify(userInfo)})
       .then((response) => {return response.json()})
       .then((data) => {
         // userID is returned, so that a user can save a strategy
@@ -336,7 +336,7 @@ class Summary extends Component {
       userId: this.state.userId,
     };
 
-    fetch('http://cs-price-alerts.herokuapp.com/savestrategy', {method: 'post', body: JSON.stringify(strategyInfo)})
+    fetch('https://cs-price-alerts.herokuapp.com/savestrategy', {method: 'post', body: JSON.stringify(strategyInfo)})
       .then((response) => {return response.json()})
       .then((data) => {
         // 'Strategy saved'
