@@ -144,6 +144,7 @@ const WalkthroughConfig = {
       minHeight: '300px',
       minWidth: '260px',
       border: '2px solid #000000',
+      backgroundColor: '#FFFFFF',
       borderRadius: '4px',
       color: 'black',
     },
@@ -245,8 +246,8 @@ const WalkthroughConfig = {
     },
     back: {
       position: 'fixed',
-      bottom: 100,
-      left: 100,
+      bottom: 28,
+      left: 28,
       fontSize: '1.5em',
     },
     backNoFixed: {
@@ -264,7 +265,7 @@ const WalkthroughConfig = {
       top: '4px',
       right: '8px',
       padding: '4px',
-      border: '1px solid black',
+      border: '1px solid white',
       backgroundColor: '#4f8463',
       color: 'white',
       borderRadius: '50%',
