@@ -171,7 +171,7 @@ const styles = theme => ({
   titleHeaderDiv: {
     paddingTop: '10px',
   },
-  backButtton: {
+  backButton: {
     float: 'right',
     paddingRight: '30px',
   },
@@ -539,7 +539,7 @@ class Summary extends Component {
          <span onClick={this.handleChange.bind(this, 'checkOut')}>
          Check out
          </span>
-         <img className={classes.backButtton} src={back} />
+         <img className={classes.backButton} src={back} />
          </div>
             <Modal
               aria-labelledby="simple-modal-title"

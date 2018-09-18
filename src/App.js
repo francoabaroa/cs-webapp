@@ -74,6 +74,7 @@ class App extends Component {
       let fiveSeconds = 5000;
       let secondsToWait = currentSceneNum === 1 ? fiveSeconds : twoSeconds;
       if (WalkthroughConfig.scenesConfig[currentSceneNum].method === undefined) {
+        console.log('CHANGING');
         setTimeout(() => {
           this.setState({
             currentSceneNumber: currentSceneNum + 1,
@@ -110,7 +111,9 @@ class App extends Component {
 
   goBack = () => {
     let currentSceneNum = this.state.currentSceneNumber;
+    console.log('currentSceneNum', currentSceneNum);
     let scenesToSubtract = 1;
+    // TODO: bug check?
     let activeStep = WalkthroughConfig.scenesConfig[currentSceneNum].stepLevel;
 
     if (WalkthroughConfig.scenesConfig[currentSceneNum - 1].method === undefined) {
@@ -185,11 +188,22 @@ class App extends Component {
   handleSelection = (selection, propertyName) => {
     let currentSceneNum = this.state.currentSceneNumber;
     let activeStep = WalkthroughConfig.scenesConfig[currentSceneNum].stepLevel;
-    this.setState({
-      [propertyName]: selection,
-      currentSceneNumber: currentSceneNum + 1,
+    let exchanges = this.state.checkedExchanges;
+
+    let stateObject = {
       activeStep
-    });
+    };
+
+    if (propertyName === undefined) {
+      // this is for exchange selection
+      exchanges.push(selection);
+      stateObject['checkedExchanges'] = exchanges;
+    } else {
+      stateObject['currentSceneNumber'] = currentSceneNum + 1;
+      stateObject[propertyName] = selection;
+    }
+
+    this.setState(stateObject);
   };
 
   // handlePastCryptoTrader = isPastCryptoTrader => {
@@ -249,6 +263,7 @@ class App extends Component {
         activeStep={this.state.activeStep}
         goBack={this.goBack}
         changeToNextScene={this.changeToNextScene}
+        cryptoCurrentStatus={this.state.cryptoCurrentStatus}
         handleChange={this.handleChange}
         handleExchangeListToggle={this.handleExchangeListToggle}
         handleSelection={this.handleSelection}

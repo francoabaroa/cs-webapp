@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import '../App.css';
 
 import Button from '@material-ui/core/Button';
+import ButtonBase from '@material-ui/core/ButtonBase';
 import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
@@ -23,7 +24,88 @@ import { withStyles } from '@material-ui/core/styles';
 
 import WalkthroughConfig from '../config/WalkthroughConfig';
 
+import informed from '../assets/informed.png';
+import curious from '../assets/curious.png';
+import skeptical from '../assets/skeptical.png';
+import rekt from '../assets/rekt.png';
+import coinbase from '../assets/Coinbase.png';
+import binance from '../assets/BNB.png';
+import okex from '../assets/OKex.png';
+import kraken from '../assets/Kraken.png';
+import huobi from '../assets/huobi.png';
+import poloniex from '../assets/polo.png';
+import completelyBooked from '../assets/completely-booked.png';
+import occasionallyAvailable from '../assets/Occasionally-available.png';
+import prettyFree from '../assets/pretty-free.png';
+import topCurrencies from '../assets/topcurrencies.png';
+import wellKnown from '../assets/wellknown.png';
+import allOfThem from '../assets/allofem.png';
+import noRisk from '../assets/norisk.png';
+import midRisk from '../assets/midrisk.png';
+import highRisk from '../assets/highrisk.png';
+import friend from '../assets/friend.png';
+import twitter from '../assets/twitter.png';
+import productHunt from '../assets/ph.png';
+import google from '../assets/google.png';
+import facebook from '../assets/fb.png';
+import instagram from '../assets/insta.png';
+import yes from '../assets/yep.png';
+import no from '../assets/nope.png';
+import wink2 from '../assets/wink2.png';
+
 import classNames from 'classnames';
+
+const cryptoCurrentStatus = {
+  informed,
+  curious,
+  skeptical,
+  rekt,
+};
+
+const exchangeImages = {
+  coinbase,
+  binance,
+  okex,
+  kraken,
+  huobi,
+  poloniex
+};
+
+const spareTimeAvailability = {
+  completelyBooked,
+  occasionallyAvailable,
+  prettyFree
+};
+
+const currenciesToExplore = {
+  topCurrencies,
+  wellKnown,
+  allOfThem,
+};
+
+const cryptoRiskProfile = {
+  noRisk,
+  midRisk,
+  highRisk
+};
+
+const referralSource = {
+  friend,
+  twitter,
+  productHunt,
+  google,
+  facebook,
+  instagram,
+};
+
+const images = {
+  cryptoCurrentStatus,
+  exchangeImages,
+  spareTimeAvailability,
+  currenciesToExplore,
+  cryptoRiskProfile,
+  referralSource,
+};
 
 function getSteps() {
   return ['Basics', 'Lifestyle', 'Values', 'Strategy'];
@@ -51,16 +133,27 @@ class Walkthrough extends Component {
 
   renderHeadline(classes) {
     let showName = this.props.currentSceneNumber === 2;
+    let currentStatus = ['Informed', 'Curious', 'Skeptical', 'Rekt'];
+    let showCustomizedResponse = this.props.currentSceneNumber === 4;
+
+    console.log('this.props.currentSceneNumber', this.props.currentSceneNumber);
+
     let text = WalkthroughConfig.scenesConfig[this.props.currentSceneNumber].headline;
     if (showName) {
       text = text + this.props.name;
     }
+    if (showCustomizedResponse && WalkthroughConfig.scenesConfig[this.props.currentSceneNumber].customizedResponses) {
+      let index = currentStatus.indexOf(this.props.cryptoCurrentStatus);
+      text = WalkthroughConfig.scenesConfig[this.props.currentSceneNumber].customizedResponses[index];
+    }
+
     return (
       <Grid key={this.props.currentSceneNumber} item>
         <header className="App-header2" className={classes.header}>
-          <h1>
-          {text}
-          </h1>
+          <div className={classes.surveyHeadline}>
+          <div style={showName ? {paddingBottom: '50px'} : null}> {text} </div>
+          {showName ? <img src={wink2} />: null}
+          </div>
         </header>
       </Grid>
     );
@@ -87,25 +180,46 @@ class Walkthrough extends Component {
     let argument = WalkthroughConfig.scenesConfig[this.props.currentSceneNumber].arguments[0];
     let buttonSubStrings = [];
     let hasSubStrings = false;
+    let className = null;
+    let smallButton = WalkthroughConfig.scenesConfig[this.props.currentSceneNumber].smallButton;
+    let isReferralQuestion = WalkthroughConfig.scenesConfig[this.props.currentSceneNumber].arguments[0] === 'referralSource';
+    let icons = WalkthroughConfig.scenesConfig[this.props.currentSceneNumber].icons;
+    let imagesToUse = images[argument];
+    let multipleSelections = WalkthroughConfig.scenesConfig[this.props.currentSceneNumber].multipleSelections;
 
     if (WalkthroughConfig.scenesConfig[this.props.currentSceneNumber].subStrings !== undefined) {
       hasSubStrings = true;
       buttonSubStrings = WalkthroughConfig.scenesConfig[this.props.currentSceneNumber].subStrings;
     }
 
+    if (smallButton) {
+      className = classes.smallButton;
+    } else if (multipleSelections || isReferralQuestion) {
+      className = classes.mediumButton;
+    } else {
+      className = classes.bigButton;
+    }
+
+    console.log(imagesToUse !== undefined, imagesToUse, argument);
+
     return buttonStrings.map((value, index) => {
     let selectionHandlerArgument = hasSubStrings ? buttonSubStrings[index] : buttonStrings[index];
       return (
-        <Grid key={index} item>
-          <Button
-            variant="outlined"
-            size="large"
-            color="primary"
-            className={classes.bigButton}
-            onClick={this.props.handleSelection.bind(this, selectionHandlerArgument, argument)}>
-            <div className={classes.buttonLabel}>{buttonStrings[index]}</div>
-            {hasSubStrings ? this.renderSubStrings(buttonSubStrings[index]) : []}
-          </Button>
+        <Grid key={index} item md={smallButton ? 12 : isReferralQuestion || multipleSelections ? 2 : null}>
+           <ButtonBase
+             className={multipleSelections && this.props.checkedExchanges.indexOf(buttonStrings[index]) !== -1 ? classNames(className, classes.root, classes.greenOutline) : classNames(className, classes.root)}
+             disabled={false}
+             focusRipple={false}
+             onClick={this.props.handleSelection.bind(this, selectionHandlerArgument, argument)}>
+              <div className={multipleSelections && this.props.checkedExchanges.indexOf(buttonStrings[index]) !== -1 ? classes.checkmark : classes.displayNone}>&#10003;</div>
+              <div style={{position:'relative'}}>
+                {imagesToUse !== undefined || multipleSelections ?
+                  <img src={multipleSelections ? exchangeImages[icons[index]] :
+                  imagesToUse[icons[index]]} /> : null}
+                <div className={imagesToUse !== undefined ? classes.buttonLabelPadding : classes.buttonLabel}>{buttonStrings[index]}</div>
+                {hasSubStrings ? this.renderSubStrings(buttonSubStrings[index]) : []}
+              </div>
+          </ButtonBase>
         </Grid>
     )});
   }
@@ -119,18 +233,21 @@ class Walkthrough extends Component {
   }
 
   renderYesNo(classes) {
-    let strings = ['Yes', 'No'];
+    let strings = ['Yep!', 'Nope'];
     let argument = WalkthroughConfig.scenesConfig[this.props.currentSceneNumber].arguments[0];
+
     return [0, 1].map(value => (
       <Grid key={value} item>
-        <Button
-          variant="outlined"
-          size="large"
-          color="primary"
-          className={classes.mediumButton}
-          onClick={this.props[argument].bind(this, strings[value] === 'Yes')}>
-          {strings[value]}
-        </Button>
+        <ButtonBase
+           className={classNames(classes.bigButton, classes.root)}
+           disabled={false}
+           focusRipple={false}
+           onClick={this.props[argument].bind(this, strings[value] === 'Yes')}>
+            <div style={{position:'relative'}}>
+              {strings[value] === 'Yes' ? <img src={yes} /> : <img src={no} />}
+              <div className={classes.buttonLabelPadding}>{strings[value]}</div>
+            </div>
+        </ButtonBase>
       </Grid>
     ));
   }
@@ -206,12 +323,27 @@ class Walkthrough extends Component {
 
   render() {
     const { classes, currentSceneNumber, activeStep } = this.props;
+    let isLastScene = WalkthroughConfig.scenesConfig[currentSceneNumber + 1] === undefined;
+    let isReferralScene = currentSceneNumber === 14;
+    let isFirstScene = currentSceneNumber === 0;
+    let isTextOnlyScene = WalkthroughConfig.scenesConfig[currentSceneNumber].method === undefined;
+    console.log('isFirstScene', isFirstScene);
     const { spacing } = this.state;
     let headline = this.renderHeadline(classes);
     const steps = getSteps();
     let args = [];
     let body = [];
     let button = [];
+    let submitButton = (
+      <Button
+        variant="outlined"
+        size="large"
+        color="primary"
+        className={classes.nextButton}
+        onClick={this.props.changeToNextScene}>
+        {'Next'}
+      </Button>
+    );
 
     if (WalkthroughConfig.scenesConfig[currentSceneNumber]) {
       if (WalkthroughConfig.scenesConfig[currentSceneNumber].arguments) {
@@ -235,8 +367,12 @@ class Walkthrough extends Component {
       // );
     }
 
+    let backClassName = isFirstScene || isReferralScene || isLastScene || isTextOnlyScene ? classes.backNoFixed : classes.back;
+
+    console.log('backClassName', backClassName);
+
     return (
-      <Grid container className={classes.root} spacing={16}>
+      <Grid container className={classes.gridRoot} spacing={16}>
         <Grid item md={12}>
           {button}
           <div className={classes.demo2}>
@@ -253,9 +389,15 @@ class Walkthrough extends Component {
           <Grid item className={classes.demo}>
             {headline}
           </Grid>
-          <Grid container className={classes.demo} justify="center" spacing={Number(spacing)}>
+          <Grid container className={classes.demo} justify="center" spacing={Number(16)}>
             {body}
           </Grid>
+          {WalkthroughConfig.scenesConfig[currentSceneNumber].multipleSelections ? submitButton : null }
+          <br />
+          {isFirstScene === false || isReferralScene === false || isLastScene === false ?
+            <div onClick={this.props.goBack} className={backClassName}>{'< Back'}</div> :
+            ''
+          }
         </Grid>
       </Grid>
     );
