@@ -229,6 +229,24 @@ const styles = theme => ({
     padding: '10px',
     marginTop: '15px',
   },
+  modalInput: {
+    marginLeft: theme.spacing.unit,
+    marginRight: theme.spacing.unit,
+    width: '90%',
+    border: '1px solid #b4b4b4',
+    borderRadius: '4px',
+    padding: '10px',
+    marginTop: '15px',
+  },
+  modalShared: {
+    marginLeft: theme.spacing.unit,
+    marginRight: theme.spacing.unit,
+    width: '80%',
+    border: '1px solid #b4b4b4',
+    borderRadius: '4px',
+    padding: '10px',
+    marginTop: '15px',
+  },
   inputFieldFont: {
     fontSize: '14px',
     textAlign: 'center',
@@ -616,9 +634,50 @@ class Summary extends Component {
               {'$' + prices[this.props.packageSelected] + ' \n monthly'}
             </Typography>
             <br />
-            <Typography variant="subheading" id="simple-modal-description" className={classes.textCenter}>
-              [CREDIT CARD INFO]
-            </Typography>
+            <Grid container spacing={0}>
+              <Grid item xs={6}>
+              <input
+                  className={classNames(classes.input, classes.modalShared, classes.inputFieldFont)}
+                  disableUnderline={true}
+                  placeholder={'First Name'}
+                />
+              </Grid>
+              <Grid item xs={6}>
+                <input
+                  className={classNames(classes.input, classes.modalShared, classes.inputFieldFont)}
+                  disableUnderline={true}
+                  placeholder={'Last Name'}
+                />
+              </Grid>
+              <Grid item xs={12}>
+              <input
+                  className={classNames(classes.input, classes.modalInput, classes.inputFieldFont)}
+                  disableUnderline={true}
+                  placeholder={'Card No.'}
+                />
+              </Grid>
+              <Grid item xs={6}>
+              <input
+                  className={classNames(classes.input, classes.modalShared, classes.inputFieldFont)}
+                  disableUnderline={true}
+                  placeholder={'Expiry Date'}
+                />
+              </Grid>
+              <Grid item xs={6}>
+                <input
+                  className={classNames(classes.input, classes.modalShared, classes.inputFieldFont)}
+                  disableUnderline={true}
+                  placeholder={'CVC'}
+                />
+              </Grid>
+              <Grid item xs={12}>
+              <input
+                  className={classNames(classes.input, classes.modalInput, classes.inputFieldFont)}
+                  disableUnderline={true}
+                  placeholder={'Phone'}
+                />
+              </Grid>
+            </Grid>
             <br />
             <Button size="large" variant="contained"  className={classNames(classes.cssRoot, classes.center)}>
                 Purchase
