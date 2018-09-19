@@ -365,7 +365,7 @@ class Walkthrough extends Component {
       // );
     }
 
-    let backClassName = isFirstScene || isLastScene || isTextOnlyScene ? classes.backNoFixed : classes.back;
+    let backClassName = isFirstScene || isLastScene || isTextOnlyScene || currentSceneNumber === 1 ? classes.backNoFixed : classes.back;
 
     console.log('backClassName', backClassName);
 
@@ -392,7 +392,7 @@ class Walkthrough extends Component {
           </Grid>
           {WalkthroughConfig.scenesConfig[currentSceneNumber].multipleSelections ? submitButton : null }
           <br />
-          {isFirstScene === false || isLastScene === false ?
+          {isFirstScene === false || isLastScene === false || currentSceneNumber !== 1 ?
             <div onClick={this.props.goBack} className={backClassName}>{'< Back'}</div> :
             ''
           }

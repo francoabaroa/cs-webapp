@@ -704,7 +704,7 @@ class Summary extends Component {
               </Grid>
             </Grid>
             <br />
-            <Button size="large" variant="contained"  className={classNames(classes.cssRoot, classes.center)}>
+            <Button size="large" variant="contained"  className={classNames(classes.cssRoot, classes.center)} style={{width: '100%'}}>
                 Purchase
             </Button>
           </div>
