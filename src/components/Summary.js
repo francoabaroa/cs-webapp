@@ -351,6 +351,7 @@ class Summary extends Component {
       }
 
       if (currencyNum === 5) {
+        console.log('in currencyNum === 5');
         let currencies = ['BTC', 'ETH', 'BCH', 'LTC', 'ETC'];
         currencies.unshift(null);
         let checkboxes = {
@@ -362,6 +363,7 @@ class Summary extends Component {
         };
         this.setState({ currencies, checkBoxes: checkboxes });
       } else {
+        console.log('in else bre');
         fetch('https://cs-price-alerts.herokuapp.com/top?top=' + currencyNum)
         .then((response) => {return response.json()})
         .then((data) => {
@@ -485,52 +487,74 @@ class Summary extends Component {
   }
 
   renderCheckboxes(classes) {
+    console.log('in render checkboxes!');
     const {currencies} = this.state;
     let checkboxes = [];
     let tempCheckboxes = [];
 
     for (let i = 0; i < currencies.length; i++) {
-      if (i % 8 === 0 && i !== 0) {
-        tempCheckboxes.push(
-          <td>
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={this.state.checkBoxes[currencies[i]]}
-                onChange={this.handleCheckbox.bind(null, currencies[i])}
-                value={currencies[i]}
-                color="primary"
-              />
-            }
-            label={currencies[i]}
-            className={classes.label}
-          />
-          </td>
-        );
+      if (this.props.packageSelected === 'Coinbase') {
+        if (i !== 0) {
+          checkboxes.push(
+            <td>
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={this.state.checkBoxes[currencies[i]]}
+                  onChange={this.handleCheckbox.bind(null, currencies[i])}
+                  value={currencies[i]}
+                  color="primary"
+                />
+              }
+              label={currencies[i]}
+              className={classes.label}
+            />
+            </td>
+          );
+        }
+      } else {
+        if (i % 8 === 0 && i !== 0) {
+          tempCheckboxes.push(
+            <td>
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={this.state.checkBoxes[currencies[i]]}
+                  onChange={this.handleCheckbox.bind(null, currencies[i])}
+                  value={currencies[i]}
+                  color="primary"
+                />
+              }
+              label={currencies[i]}
+              className={classes.label}
+            />
+            </td>
+          );
 
-        checkboxes.push(
-          <tr className={i > 16 && this.state.showMore === false ? classes.hide : null}>
-            {tempCheckboxes}
-          </tr>
-        );
-        tempCheckboxes = [];
-      } else if (currencies[i] !== null) {
-        tempCheckboxes.push(
-          <td>
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={this.state.checkBoxes[currencies[i]]}
-                onChange={this.handleCheckbox.bind(null, currencies[i])}
-                value={currencies[i]}
-                color="primary"
-              />
-            }
-            label={currencies[i]}
-            className={classes.label}
-          />
-          </td>
-        );
+          checkboxes.push(
+            <tr className={i > 16 && this.state.showMore === false ? classes.hide : null}>
+              {tempCheckboxes}
+            </tr>
+          );
+          tempCheckboxes = [];
+        } else if (currencies[i] !== null) {
+          tempCheckboxes.push(
+            <td>
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={this.state.checkBoxes[currencies[i]]}
+                  onChange={this.handleCheckbox.bind(null, currencies[i])}
+                  value={currencies[i]}
+                  color="primary"
+                />
+              }
+              label={currencies[i]}
+              className={classes.label}
+            />
+            </td>
+          );
+        }
       }
     }
     return (
@@ -608,6 +632,7 @@ class Summary extends Component {
     let currencyStrings = ['Top currencies', 'Well known currencies', 'All of them'];
     var riskProfiles = ['Risk averse', 'The middle', 'High risk, high reward'];
     let currencyCheckboxes = this.renderCheckboxes(classes);
+    console.log('currencyCheckboxes', currencyCheckboxes);
     let currencyNum = 0;
     let riskProfileText = '';
 
@@ -960,6 +985,7 @@ class Summary extends Component {
   }
 
   render() {
+    console.log('resetting state', this.state);
     return (
       <div className="App">
         {!this.state.enableWalkthrough ? this.renderWelcome() : this.renderSummary()}
