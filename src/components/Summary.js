@@ -39,6 +39,11 @@ import Image3 from '../assets/bckgrnd-image2.png';
 
 const colors = ['#4a90e2', 'rgba(255, 255, 255, 0.80)', '#244770', '#3da937'];
 
+const prices = {
+  Coinbase: 10,
+  Trader: 30,
+};
+
 function log(value) {
   console.log(value); //eslint-disable-line
 }
@@ -63,7 +68,7 @@ const styles = theme => ({
   button: {
     margin: theme.spacing.unit,
   },
-  root: {
+  gridRoot: {
     flexGrow: 1,
   },
   whiteFont: {
@@ -168,6 +173,9 @@ const styles = theme => ({
     paddingRight: '40px',
     paddingLeft: '40px',
   },
+  titleHeaderFont: {
+    fontSize: '1.65em',
+  },
   titleHeaderDiv: {
     paddingTop: '10px',
   },
@@ -215,14 +223,39 @@ const styles = theme => ({
     marginLeft: theme.spacing.unit,
     marginRight: theme.spacing.unit,
     // width: 480,
-    border: '1px solid black',
-    borderRadius: '10px',
-    padding: '4px',
+    maxWidth: '100px',
+    border: '3px solid black',
+    borderRadius: '4px',
+    padding: '10px',
+    marginTop: '15px',
   },
   inputFieldFont: {
     fontSize: '14px',
     textAlign: 'center',
+    fontWeight: 400,
   },
+  activeTab: {
+    color: '#4a90e2',
+  },
+  inactiveTab: {
+    color: '#b4b4b4',
+  },
+  alertLowerPadding: {
+    paddingBottom: '10px',
+  },
+  alertTitle: {
+    fontSize: '1.5rem',
+    fontWeight: 900,
+  },
+  alertTitleSub: {
+    fontSize: '0.85rem',
+  },
+  heavyFontWeight: {
+    fontWeight: 900,
+  },
+  input: {
+    textAlign: 'center',
+  }
 });
 
 function getModalStyle() {
@@ -262,7 +295,7 @@ class Summary extends Component {
     //     this.setState({ currencies, checkBoxes: checkboxes });
 
     if (this.props.currenciesToExplore.length > 0) {
-      let currencyStrings = ['Top currencies', 'Well known', 'All of them'];
+      let currencyStrings = ['Top currencies', 'Well known currencies', 'All of them'];
       let currencyNum = 0;
       // top 5 needs to be coinbase ones
       if (this.props.currenciesToExplore === currencyStrings[0]) {
@@ -301,6 +334,7 @@ class Summary extends Component {
   }
 
   createUser() {
+    // need to save user right away?
     let userInfo = {
       active: true,
       cellphone: this.props.phone,
@@ -327,6 +361,11 @@ class Summary extends Component {
   createStrategy() {
     // only if payment goes through can we save this
     // TODO: once we get success from stripe, we can process this!!
+
+    // need to use this.state.checkBoxes
+
+    const { checkboxes } = this.state;
+
     let strategyInfo = {
       active: true,
       currencies: this.state.currencies,
@@ -408,7 +447,7 @@ class Summary extends Component {
     let tempCheckboxes = [];
 
     for (let i = 0; i < currencies.length; i++) {
-      if (i % 5 === 0 && i !== 0) {
+      if (i % 8 === 0 && i !== 0) {
         tempCheckboxes.push(
           <td>
           <FormControlLabel
@@ -427,7 +466,7 @@ class Summary extends Component {
         );
 
         checkboxes.push(
-          <tr className={i > 15 && this.state.showMore === false ? classes.hide : null}>
+          <tr className={i > 16 && this.state.showMore === false ? classes.hide : null}>
             {tempCheckboxes}
           </tr>
         );
@@ -523,23 +562,42 @@ class Summary extends Component {
 
   renderSummary() {
     const { classes, priceIncrease, priceDecrease, timeOut } = this.props;
+    let currencyStrings = ['Top currencies', 'Well known currencies', 'All of them'];
     let currencyCheckboxes = this.renderCheckboxes(classes);
+    let currencyNum = 0;
+    if (this.props.currenciesToExplore === currencyStrings[0]) {
+      currencyNum = 5;
+    } else if (this.props.currenciesToExplore === currencyStrings[1]) {
+      currencyNum = 100;
+    } else if (this.props.currenciesToExplore === currencyStrings[2]) {
+      currencyNum = 250;
+    }
     let packageText = this.props.packageSelected === 'Coinbase' ?
       '\n With a busy lifestyle, most of your trading needs can be solved for simply by solely tracking the Coinbase coins — that\’s why we keep it simple.'
       : '\n Being a more experienced crypto trader, we give you the full power of our AI — you\’re given the ears and eyes that monitor the market 24/7.';
 
     return (
-     <Grid container className={classes.root} spacing={24}>
+     <Grid container className={classes.gridRoot} spacing={24}>
        <Grid item xs={12}>
          <Paper className={classNames(classes.paper, classes.negativeRightMargin)}>
          <div className={classes.titleHeaderDiv}>
-         <span className={classes.titleHeaders} onClick={this.handleChange.bind(this, 'recommended')}>
-         Recommended
+         <span
+            className={!this.state.open ?
+              classNames(classes.titleHeaders, classes.titleHeaderFont, classes.activeTab) :
+              classNames(classes.titleHeaders, classes.titleHeaderFont, classes.inactiveTab)
+            }
+            onClick={this.handleChange.bind(this, 'recommended')}>
+             Recommended
          </span>
-         <span onClick={this.handleChange.bind(this, 'checkOut')}>
-         Check out
+         <span
+           className={this.state.open ?
+             classNames(classes.titleHeaderFont, classes.activeTab) :
+             classNames(classes.titleHeaderFont, classes.inactiveTab)
+           }
+           onClick={this.handleChange.bind(this, 'checkOut')}>
+           Check out
          </span>
-         <img className={classes.backButton} src={back} />
+         <img className={classes.backButton} src={back} onClick={this.props.goBack}/>
          </div>
             <Modal
               aria-labelledby="simple-modal-title"
@@ -551,11 +609,11 @@ class Summary extends Component {
             <img src={logo} className={classes.centerImg} />
             <br />
             <Typography variant="title" id="modal-title" className={classes.textCenter}>
-              Package Name
+              {this.props.packageSelected + ' Package'}
             </Typography>
             <br />
             <Typography variant="subheading" id="simple-modal-description" className={classes.textCenter}>
-              Package Monthly Price
+              {'$' + prices[this.props.packageSelected] + ' \n monthly'}
             </Typography>
             <br />
             <Typography variant="subheading" id="simple-modal-description" className={classes.textCenter}>
@@ -572,46 +630,42 @@ class Summary extends Component {
         <Grid item xs={3}>
           <Card className={classes.card2}>
             <CardContent>
-              <Typography component="p" className={classNames(classes.blackFont, classes.bold, classes.textLeft)}>
-                {'Thanks for the feedback, ' + this.props.name + '.'}
-              </Typography>
-              <br />
-              <Typography component="p" className={classNames(classes.blackFont, classes.bold, classes.textLeft)}>
-                {'Based on your answers, we\'ve crafted your tailored game plan.'}
-              </Typography>
+              <div className={classNames(classes.blackFont, classes.textLeft, classes.bold, classes.alertLowerPadding, classes.alertTitleSub)}>
+              {'Thanks for the feedback, ' + this.props.name + '.'}
+              </div>
+              <div className={classNames(classes.blackFont, classes.textLeft, classes.bold, classes.alertLowerPadding, classes.alertTitleSub)}>
+              {'Based on your answers, we\'ve crafted your tailored game plan.'}
+              </div>
               <br />
               <div className={classes.nonActiveOverlay}>
-              <Typography gutterBottom variant="headline" component="h5" className={classNames(classes.blackFont, classes.textLeft)}>
-                Monitor:
-              </Typography>
-              <Typography component="p" className={classNames(classes.blackFont, classes.textLeft)}>
-            {/*  currenciesToExplore needs to call exchanges DB */}
-                {this.props.currenciesToExplore + ' by market cap'}
-              </Typography>
+              <div className={classNames(classes.blackFont, classes.textLeft, classes.alertLowerPadding, classes.alertTitle)}>
+              {'Monitor:'}
+              </div>
+              <div className={classNames(classes.blackFont, classes.textLeft, classes.alertLowerPadding, classes.alertTitleSub)}>
+              {this.props.currenciesToExplore === currencyStrings[2] ? this.props.currenciesToExplore : this.props.currenciesToExplore + ' by market cap'}
+              </div>
               </div>
               <div className={this.props.checkedExchanges.length > 0 ? classes.nonActiveOverlay: classes.hide}>
               <Typography gutterBottom variant="headline" component="h5" className={classNames(classes.blackFont, classes.textLeft)}>
                 Exchange(s):
               </Typography>
-              <Typography component="p" className={classNames(classes.blackFont, classes.textLeft)}>
-                {this.props.checkedExchanges.length > 0 ? this.props.checkedExchanges.join(', ') : 'None selected'}
-              </Typography>
+              <div className={classNames(classes.blackFont, classes.textLeft, classes.alertLowerPadding, classes.alertTitleSub)}>
+              {this.props.checkedExchanges.length > 0 ? this.props.checkedExchanges.join(', ') : 'None selected'}
+              </div>
               </div>
               <div className={classes.nonActiveOverlay}>
-              <Typography gutterBottom variant="headline" component="h5" className={classNames(classes.blackFont, classes.textLeft)}>
-                Alerts:
-              </Typography>
-              <Typography component="p" className={classNames(classes.blackFont, classes.textLeft)}>
-                {'Price Increase: ' + priceIncrease + '%'}
-              </Typography>
-              <br />
-              <Typography component="p" className={classNames(classes.blackFont, classes.textLeft)}>
-              {'Price Decrease: ' + priceDecrease + '%'}
-              </Typography>
-              <br />
-              <Typography component="p" className={classNames(classes.blackFont, classes.textLeft)}>
-                {'Timeout: ' + timeOut + ' hours'}
-              </Typography>
+              <div className={classNames(classes.blackFont, classes.textLeft, classes.alertLowerPadding, classes.alertTitle)}>
+              {'Alerts:'}
+              </div>
+              <div className={classNames(classes.blackFont, classes.textLeft, classes.alertLowerPadding, classes.alertTitleSub)}>
+              {'Price Increase: ' + priceIncrease + '%'}
+              </div>
+              <div className={classNames(classes.blackFont, classes.textLeft, classes.alertLowerPadding, classes.alertTitleSub)}>
+                {'Price Decrease: ' + priceDecrease + '%'}
+              </div>
+              <div className={classNames(classes.blackFont, classes.textLeft, classes.alertLowerPadding, classes.alertTitleSub)}>
+               {'Timeout: ' + timeOut + ' hours'}
+              </div>
               </div>
               {/*
               <div className={classes.nonActiveOverlay}>
@@ -624,9 +678,9 @@ class Summary extends Component {
               </div>
               */}
               <div className={classes.nonActiveOverlay}>
-              <Typography gutterBottom variant="headline" component="h5" className={classNames(classes.blackFont, classes.textLeft)}>
-                Phone Number
-              </Typography>
+              <div className={classNames(classes.blackFont, classes.textLeft, classes.alertLowerPadding, classes.alertTitle)}>
+              {'Phone Number'}
+              </div>
               <PhoneInput
                 placeholder="(111) 222-3333"
                 value={ this.state.phoneNumber }
@@ -666,7 +720,7 @@ class Summary extends Component {
               </Typography>
               <br />
               <Typography component="p" className={classNames(classes.blackFont, classes.textLeft)}>
-                {'\n We\’ll track the currencies in the [top X] and alert you when our AI detects anomalies in these specific currencies.' + packageText}
+                {'\n We\’ll track the currencies in the top ' + currencyNum + ' - ranked by market cap - and alert you when our AI detects anomalies in these specific currencies.' + packageText}
               </Typography>
               <br />
               <Typography component="p" className={classNames(classes.bold, classes.textLeft, classes.bottomPadding)}>
@@ -733,11 +787,11 @@ class Summary extends Component {
               <Typography id="label">Price Increase</Typography>
               <Slider value={parseInt(priceIncrease)} aria-labelledby="label" onChange={this.props.changePriceIncreaseSlider} />
               <FormControl>
-              <Input
+              <input
                 onChange={this.props.changePriceIncrease}
                 className={classNames(classes.textField, classes.inputFieldFont)}
                 disableUnderline={true}
-                value={priceIncrease}
+                value={priceIncrease + '%'}
               />
               </FormControl>
               </div>
@@ -745,11 +799,11 @@ class Summary extends Component {
               <Typography id="label2">Price Decrease</Typography>
               <Slider value={parseInt(priceDecrease)} aria-labelledby="label2" onChange={this.props.changePriceDecreaseSlider} />
               <FormControl>
-              <Input
+              <input
                 onChange={this.props.changePriceDecrease}
-                className={classNames(classes.textField, classes.inputFieldFont)}
+                className={classNames(classes.input, classes.textField, classes.inputFieldFont)}
                 disableUnderline={true}
-                value={priceDecrease}
+                value={priceDecrease  + '%'}
               />
               </FormControl>
               </div>
@@ -757,11 +811,11 @@ class Summary extends Component {
               <Typography id="label3">Timeout</Typography>
               <Slider value={parseInt(timeOut)} min={2} max={168} aria-labelledby="label3" onChange={this.props.changeTimeOutSlider} />
               <FormControl>
-              <Input
+              <input
                 onChange={this.props.changeTimeOut}
                 className={classNames(classes.textField, classes.inputFieldFont)}
                 disableUnderline={true}
-                value={timeOut}
+                value={timeOut + ' hours'}
               />
               </FormControl>
               </div>
@@ -813,6 +867,7 @@ class Summary extends Component {
   }
 
   render() {
+    console.log('summary state', this.state);
     return (
       <div className="App">
         {!this.state.enableWalkthrough ? this.renderWelcome() : this.renderSummary()}

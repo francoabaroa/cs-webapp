@@ -162,7 +162,6 @@ class Walkthrough extends Component {
   renderTextInput(classes, field) {
     return (
       <Grid key={this.props.currentSceneNumber} item>
-        <FormControl className={classes.margin}>
         <Input
           onKeyPress={this.props.handleKeyPress}
           onChange={this.props.handleChange(field[0])}
@@ -170,7 +169,6 @@ class Walkthrough extends Component {
           disableUnderline={true}
           value={this.props[field[0]]}
         />
-        </FormControl>
       </Grid>
     );
   }
@@ -367,7 +365,7 @@ class Walkthrough extends Component {
       // );
     }
 
-    let backClassName = isFirstScene || isReferralScene || isLastScene || isTextOnlyScene ? classes.backNoFixed : classes.back;
+    let backClassName = isFirstScene || isLastScene || isTextOnlyScene ? classes.backNoFixed : classes.back;
 
     console.log('backClassName', backClassName);
 
@@ -386,7 +384,7 @@ class Walkthrough extends Component {
               })}
             </Stepper>
           </div>
-          <Grid item className={classes.demo}>
+          <Grid item>
             {headline}
           </Grid>
           <Grid container className={classes.demo} justify="center" spacing={Number(16)}>
@@ -394,7 +392,7 @@ class Walkthrough extends Component {
           </Grid>
           {WalkthroughConfig.scenesConfig[currentSceneNumber].multipleSelections ? submitButton : null }
           <br />
-          {isFirstScene === false || isReferralScene === false || isLastScene === false ?
+          {isFirstScene === false || isLastScene === false ?
             <div onClick={this.props.goBack} className={backClassName}>{'< Back'}</div> :
             ''
           }

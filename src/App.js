@@ -11,6 +11,11 @@ import Summary from './components/Summary';
 
 import WalkthroughConfig from './config/WalkthroughConfig';
 
+const prices = {
+  Coinbase: 10,
+  Trader: 30,
+};
+
 const styles = theme => ({
   button: {
     margin: theme.spacing.unit,
@@ -36,6 +41,7 @@ class App extends Component {
       isPastCryptoTrader: false,
       moneyWillingToInvest: '', // unused
       name: '',
+      packagePrice: 0,
       packageSelected: null,
       phone: '',
       phoneTradeSetup: '',
@@ -72,7 +78,7 @@ class App extends Component {
 
     if (this.state.enableWalkthrough) {
       let fiveSeconds = 5000;
-      let secondsToWait = currentSceneNum === 1 ? fiveSeconds : twoSeconds;
+      let secondsToWait = currentSceneNum === 1 || currentSceneNum === 4 ? fiveSeconds : twoSeconds;
       if (WalkthroughConfig.scenesConfig[currentSceneNum].method === undefined) {
         console.log('CHANGING');
         setTimeout(() => {
@@ -196,7 +202,12 @@ class App extends Component {
 
     if (propertyName === undefined) {
       // this is for exchange selection
-      exchanges.push(selection);
+      let existingIndex = exchanges.indexOf(selection);
+      if (existingIndex !== -1) {
+        exchanges.splice(existingIndex, 1);
+      } else {
+        exchanges.push(selection);
+      }
       stateObject['checkedExchanges'] = exchanges;
     } else {
       stateObject['currentSceneNumber'] = currentSceneNum + 1;
@@ -220,8 +231,12 @@ class App extends Component {
   handlePastCryptoTrader = isPastCryptoTrader => {
     let currentSceneNum = this.state.currentSceneNumber;
     let activeStep = WalkthroughConfig.scenesConfig[currentSceneNum].stepLevel;
+    let stepOrSteps = 1;
+    if (!isPastCryptoTrader) {
+      stepOrSteps = 3;
+    }
     this.setState({
-      currentSceneNumber: currentSceneNum + 1,
+      currentSceneNumber: currentSceneNum + stepOrSteps,
       isPastCryptoTrader,
       activeStep,
     });

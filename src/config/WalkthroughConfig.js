@@ -39,31 +39,32 @@ const WalkthroughConfig = {
       'customizedResponses': ['An expert, huh? We\'ll see if we can show you something new.', 'We\'ll reward that curiosity, Goob. But first, let\'s get to know you!', 'Excellent, we built our research database with skeptics in mind (and in our office).', 'Oops, looks like you weren\'t using an indicator. Let\'s fix that.'],
       'stepLevel': 0,
     },
-        5: {
-      'arguments': [],
-      'multipleSelections': true,
-      'headline': 'What exchanges do you use to trade?',
-      'icons': ['coinbase', 'binance', 'okex', 'kraken', 'huobi', 'poloniex'],
-      'strings': ['Coinbase', 'Binance', 'OKex', 'Kraken', 'Huobi', 'Poloniex'],
-      'method': 'renderButtons',
-      'stepLevel': 0,
-    },
+
     // 5: {
     //   'arguments': [],
     //   'headline': 'What exchanges do you use to trade?',
     //   'method': 'renderCheckboxList',
     //   'stepLevel': 0,
     // },
-    6: {
+    5: {
       'arguments': ['handlePastCryptoTrader'],
       'headline': 'Have you traded crypto in the past?',
       'method': 'renderYesNo',
       'stepLevel': 0,
     },
-    7: {
+    6: {
       'arguments': ['handleUseOfTA'],
       'headline': 'Do you use TA to trade?',
       'method': 'renderYesNo',
+      'stepLevel': 0,
+    },
+    7: {
+      'arguments': [],
+      'multipleSelections': true,
+      'headline': 'What exchanges do you use to trade?',
+      'icons': ['coinbase', 'binance', 'okex', 'kraken', 'huobi', 'poloniex'],
+      'strings': ['Coinbase', 'Binance', 'OKex', 'Kraken', 'Huobi', 'Poloniex'],
+      'method': 'renderButtons',
       'stepLevel': 0,
     },
     8: {
@@ -94,7 +95,7 @@ const WalkthroughConfig = {
       'headline': 'What currencies should we explore?',
       'method': 'renderButtons',
       'icons': ['topCurrencies', 'wellKnown', 'allOfThem',],
-      'strings': ['Top currencies', 'Well known', 'All of them'],
+      'strings': ['Top currencies', 'Well known currencies', 'All of them'],
       'stepLevel': 2,
     },
     12: {
@@ -200,10 +201,11 @@ const WalkthroughConfig = {
     textField: {
       marginLeft: theme.spacing.unit,
       marginRight: theme.spacing.unit,
-      width: 480,
+      minWidth: 300,
+      minHeight: 10,
       border: '4px solid black',
       borderRadius: '6px',
-      padding: '40px',
+      padding: '20px',
       backgroundColor: '#FFFFFF',
     },
     demo2: {
@@ -257,7 +259,7 @@ const WalkthroughConfig = {
       fontSize: '1.5em',
     },
     demo: {
-      paddingBottom: '35px',
+      paddingBottom: '25px',
     },
     checkmark: {
       fontSize: '2.0em',
