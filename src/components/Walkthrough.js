@@ -242,9 +242,9 @@ class Walkthrough extends Component {
            className={classNames(classes.bigButton, classes.root)}
            disabled={false}
            focusRipple={false}
-           onClick={this.props[argument].bind(this, strings[value] === 'Yes')}>
+           onClick={this.props[argument].bind(this, strings[value] === 'Yep!')}>
             <div style={{position:'relative'}}>
-              {strings[value] === 'Yes' ? <img src={yes} /> : <img src={no} />}
+              {strings[value] === 'Yep!' ? <img src={yes} /> : <img src={no} />}
               <div className={classes.buttonLabelPadding}>{strings[value]}</div>
             </div>
         </ButtonBase>
