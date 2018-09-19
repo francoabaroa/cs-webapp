@@ -80,7 +80,6 @@ class App extends Component {
       let fiveSeconds = 5000;
       let secondsToWait = currentSceneNum === 1 || currentSceneNum === 4 ? fiveSeconds : twoSeconds;
       if (WalkthroughConfig.scenesConfig[currentSceneNum].method === undefined) {
-        console.log('CHANGING');
         setTimeout(() => {
           this.setState({
             currentSceneNumber: currentSceneNum + 1,
@@ -117,7 +116,6 @@ class App extends Component {
 
   goBack = () => {
     let currentSceneNum = this.state.currentSceneNumber;
-    console.log('currentSceneNum', currentSceneNum);
     let scenesToSubtract = 1;
     // TODO: bug check?
     let activeStep = WalkthroughConfig.scenesConfig[currentSceneNum].stepLevel;
@@ -143,7 +141,14 @@ class App extends Component {
   };
 
   changePriceIncrease = (event) => {
-    this.setState({ priceIncrease: event.target.value });
+    let entry = event.target.value.replace('%', '');
+    const re = /^[0-9\b]+$/;
+
+    if (entry == '' || re.test(entry)) {
+      if (entry <= 100) {
+        this.setState({ priceIncrease: entry });
+      }
+    }
   }
 
   changePriceIncreaseSlider = (event, value) => {
@@ -151,7 +156,14 @@ class App extends Component {
   }
 
   changePriceDecrease = (event) => {
-    this.setState({ priceDecrease: event.target.value });
+    let entry = event.target.value.replace('%', '');
+    const re = /^[0-9\b]+$/;
+
+    if (entry == '' || re.test(entry)) {
+      if (entry <= 100) {
+        this.setState({ priceDecrease: entry });
+      }
+    }
   }
 
   changePriceDecreaseSlider = (event, value) => {
@@ -159,7 +171,14 @@ class App extends Component {
   }
 
   changeTimeOut = (event) => {
-    this.setState({ timeOut: event.target.value });
+    let entry = event.target.value.replace(' hours', '');
+    const re = /^[0-9\b]+$/;
+
+    if (entry == '' || re.test(entry)) {
+      if (entry <= 168) {
+        this.setState({ timeOut: entry });
+      }
+    }
   }
 
   changeTimeOutSlider = (event, value) => {
@@ -261,7 +280,6 @@ class App extends Component {
       let currentSceneNum = this.state.currentSceneNumber;
       // TODO: potential bug here
       let activeStep = WalkthroughConfig.scenesConfig[currentSceneNum + 1].stepLevel;
-      console.log('activeStep', activeStep);
       this.setState({
         currentSceneNumber: currentSceneNum + 1,
         activeStep,

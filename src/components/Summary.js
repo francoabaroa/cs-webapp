@@ -286,6 +286,18 @@ const styles = theme => ({
   greyishBackground: {
     backgroundColor: '#f5f1ed',
   },
+  thinLines: {
+    display: 'inline-block',
+    minWidth: '90px',
+    height: '5px',
+    borderBottom: '1px solid #e8e8e8',
+    margin: '4px',
+    marginRight: '20px',
+    marginLeft: '20px',
+  },
+  subscribeButton: {
+    minWidth: '200px',
+  },
 });
 
 function getModalStyle() {
@@ -442,7 +454,6 @@ class Summary extends Component {
     }
     this.setState({ open, currentTitleHeader });
 
-    console.log('EVENT', event, 'value', value);
     // if (value === 2) {
     //   this.props.goBack();
     // } else {
@@ -642,9 +653,11 @@ class Summary extends Component {
               {this.props.packageSelected + ' Package'}
             </Typography>
             <br />
-            <Typography variant="subheading" id="simple-modal-description" className={classes.textCenter}>
-              {'$' + prices[this.props.packageSelected] + ' \n monthly'}
-            </Typography>
+            <div style={{paddingLeft: '45px'}}>
+            <div className={classes.thinLines}></div><span className={classes.textCenter} style={{fontSize: '1.55em', color: '#4A90E2'}}>{'$' + prices[this.props.packageSelected]}</span><div className={classes.thinLines}></div>
+            </div>
+            <div className={classes.textCenter} style={{fontSize: '0.80em', color: '#4A90E2'}}>monthly</div>
+
             <br />
             <Grid container spacing={0}>
               <Grid item xs={6}>
@@ -758,10 +771,10 @@ class Summary extends Component {
                 onChange={phoneNumber => this.setState({ phoneNumber })} />
               </div>
             </CardContent>
-            <div className={classes.textCenter}>{'$' + prices[this.props.packageSelected]}</div>
-            <div className={classes.textCenter}>monthly</div>
+            <div className={classes.thinLines}></div><span className={classes.textCenter} style={{fontSize: '1.55em', color: '#4A90E2'}}>{'$' + prices[this.props.packageSelected]}</span><div className={classes.thinLines}></div>
+            <div className={classes.textCenter} style={{fontSize: '0.80em', color: '#4A90E2'}}>monthly</div>
             <CardActions className={classes.textCenter}>
-              <Button size="small" color="primary" variant="contained" className={classNames(classes.margin, classes.cssRoot, classes.center)}>
+              <Button size="small" color="primary" variant="contained" className={classNames(classes.margin, classes.cssRoot, classes.center, classes.subscribeButton)}>
                 Subscribe
               </Button>
             </CardActions>
@@ -862,7 +875,7 @@ class Summary extends Component {
                 onChange={this.props.changePriceIncrease}
                 className={classNames(classes.textField, classes.inputFieldFont)}
                 disableUnderline={true}
-                value={priceIncrease + '%'}
+                value={priceIncrease.toString().indexOf('%') === -1 ? priceIncrease  + '%' : priceIncrease}
               />
               </FormControl>
               </div>
@@ -874,8 +887,9 @@ class Summary extends Component {
                 onChange={this.props.changePriceDecrease}
                 className={classNames(classes.input, classes.textField, classes.inputFieldFont)}
                 disableUnderline={true}
-                value={priceDecrease  + '%'}
-              />
+                value={priceDecrease.toString().indexOf('%') === -1 ? priceDecrease  + '%' : priceDecrease}
+              >
+              </input>
               </FormControl>
               </div>
               <div className={classNames(classes.wrapperRight, classes.slider)}>
@@ -886,7 +900,7 @@ class Summary extends Component {
                 onChange={this.props.changeTimeOut}
                 className={classNames(classes.textField, classes.inputFieldFont)}
                 disableUnderline={true}
-                value={timeOut + ' hours'}
+                value={timeOut.toString().indexOf(' hours') === -1 ? timeOut  + ' hours' : timeOut}
               />
               </FormControl>
               </div>
@@ -938,7 +952,6 @@ class Summary extends Component {
   }
 
   render() {
-    console.log('summary state', this.state);
     return (
       <div className="App">
         {!this.state.enableWalkthrough ? this.renderWelcome() : this.renderSummary()}
