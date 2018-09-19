@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import logo from '../cs-logo.png';
+import logoBorder from '../assets/Logo.png';
 import back from '../assets/arrow.png';
 import currenciesLogo from '../assets/Currencies-logo.png';
 import alertsIcon from '../assets/alertsicon.png';
@@ -174,7 +175,8 @@ const styles = theme => ({
     paddingLeft: '40px',
   },
   titleHeaderFont: {
-    fontSize: '1.65em',
+    fontSize: '1.45em',
+    fontWeight: 700,
   },
   titleHeaderDiv: {
     paddingTop: '10px',
@@ -263,7 +265,7 @@ const styles = theme => ({
   },
   alertTitle: {
     fontSize: '1.5rem',
-    fontWeight: 900,
+    fontWeight: 500,
   },
   alertTitleSub: {
     fontSize: '0.85rem',
@@ -275,7 +277,7 @@ const styles = theme => ({
     textAlign: 'center',
   },
   paddingTopPackageSide: {
-    paddingTop: '60px',
+    paddingTop: '95px',
   },
   beigeBackground: {
     backgroundColor: '#fff6ed',
@@ -716,6 +718,9 @@ class Summary extends Component {
           </div>
         </Modal>
          </Paper>
+       </Grid>
+       <Grid item xs={12} style={{height: '0px', paddingBottom: '0px', paddingTop: '0px'}}>
+       <img src={logoBorder} className="App-logo3" alt="logo" style={{marginTop: '-70px', position: 'absolute', marginLeft: '250px'}} />
        </Grid>
         <Grid item xs={4}>
           <Card className={classes.card2}>
