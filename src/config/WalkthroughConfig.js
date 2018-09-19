@@ -201,12 +201,15 @@ const WalkthroughConfig = {
     textField: {
       marginLeft: theme.spacing.unit,
       marginRight: theme.spacing.unit,
-      minWidth: 300,
-      minHeight: 10,
+      minWidth: 400,
+      height: 54,
       border: '4px solid black',
       borderRadius: '6px',
-      padding: '20px',
+      padding: '5px',
       backgroundColor: '#FFFFFF',
+      '&:focus': {
+        outline: 'none !important',
+      },
     },
     demo2: {
       padding: '30px',
@@ -231,7 +234,7 @@ const WalkthroughConfig = {
       marginBottom: '70px',
     },
     inputFieldFont: {
-      fontSize: '30px',
+      fontSize: '26px',
       textAlign: 'center',
     },
     surveyHeadline: {

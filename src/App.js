@@ -94,15 +94,43 @@ class App extends Component {
     if (this.state.enableWalkthrough && isLastScene) {
       // TODO: better way to determine package
       let pkg = '';
+      let priceIncrease = 0;
+      let priceDecrease = 0;
+      let timeOut = 0;
       if (this.state.currenciesToExplore === 'Top currencies') {
         pkg = 'Coinbase';
       } else {
         pkg = 'Trader';
       }
+
+      var tradingHabits = ['Trade quick', 'Hold for a bit', 'Sit back and relax'];
+      if (this.state.cryptoTradingHabit === tradingHabits[0]) {
+        timeOut = 24;
+      } else if (this.state.cryptoTradingHabit === tradingHabits[1]) {
+        timeOut = 48;
+      } else if (this.state.cryptoTradingHabit === tradingHabits[2]) {
+        timeOut = 96;
+      }
+
+      var riskProfiles = ['Risk averse', 'The middle', 'High risk, high reward'];
+      if (this.state.cryptoRiskProfile === riskProfiles[0]) {
+        priceIncrease = 5;
+        priceDecrease = 2;
+      } else if (this.state.cryptoRiskProfile === riskProfiles[1]) {
+        priceIncrease = 8;
+        priceDecrease = 3;
+      } else if (this.state.cryptoRiskProfile === riskProfiles[2]) {
+        priceIncrease = 10;
+        priceDecrease = 4;
+      }
+
         setTimeout(() => {
           this.setState({
             enableWalkthrough: false,
             packageSelected: pkg,
+            priceIncrease,
+            priceDecrease,
+            timeOut,
           });
         }, twoSeconds)
       }
@@ -317,6 +345,7 @@ class App extends Component {
     return (
       <Summary
         goBack={this.goBack}
+        cryptoRiskProfile={this.state.cryptoRiskProfile}
         changePriceIncrease={this.changePriceIncrease}
         changePriceIncreaseSlider={this.changePriceIncreaseSlider}
         changePriceDecrease={this.changePriceDecrease}

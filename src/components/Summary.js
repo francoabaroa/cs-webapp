@@ -604,8 +604,11 @@ class Summary extends Component {
   renderSummary() {
     const { classes, priceIncrease, priceDecrease, timeOut } = this.props;
     let currencyStrings = ['Top currencies', 'Well known currencies', 'All of them'];
+    var riskProfiles = ['Risk averse', 'The middle', 'High risk, high reward'];
     let currencyCheckboxes = this.renderCheckboxes(classes);
     let currencyNum = 0;
+    let riskProfileText = '';
+
     if (this.props.currenciesToExplore === currencyStrings[0]) {
       currencyNum = 5;
     } else if (this.props.currenciesToExplore === currencyStrings[1]) {
@@ -613,6 +616,15 @@ class Summary extends Component {
     } else if (this.props.currenciesToExplore === currencyStrings[2]) {
       currencyNum = 250;
     }
+
+    if (this.props.cryptoRiskProfile === riskProfiles[0]) {
+      riskProfileText = 'low';
+    } else if (this.props.cryptoRiskProfile === riskProfiles[1]) {
+      riskProfileText = 'medium';
+    } else if (this.props.cryptoRiskProfile === riskProfiles[2]) {
+      riskProfileText = 'higher than most';
+    }
+
     let packageText = this.props.packageSelected === 'Coinbase' ?
       '\n With a busy lifestyle, most of your trading needs can be solved for simply by solely tracking the Coinbase coins — that\’s why we keep it simple.'
       : '\n Being a more experienced crypto trader, we give you the full power of our AI — you\’re given the ears and eyes that monitor the market 24/7.';
@@ -663,42 +675,36 @@ class Summary extends Component {
               <Grid item xs={6}>
               <input
                   className={classNames(classes.input, classes.modalShared, classes.inputFieldFont)}
-                  disableUnderline={true}
                   placeholder={'First Name'}
                 />
               </Grid>
               <Grid item xs={6}>
                 <input
                   className={classNames(classes.input, classes.modalShared, classes.inputFieldFont)}
-                  disableUnderline={true}
                   placeholder={'Last Name'}
                 />
               </Grid>
               <Grid item xs={12}>
               <input
                   className={classNames(classes.input, classes.modalInput, classes.inputFieldFont)}
-                  disableUnderline={true}
                   placeholder={'Card No.'}
                 />
               </Grid>
               <Grid item xs={6}>
               <input
                   className={classNames(classes.input, classes.modalShared, classes.inputFieldFont)}
-                  disableUnderline={true}
                   placeholder={'Expiry Date'}
                 />
               </Grid>
               <Grid item xs={6}>
                 <input
                   className={classNames(classes.input, classes.modalShared, classes.inputFieldFont)}
-                  disableUnderline={true}
                   placeholder={'CVC'}
                 />
               </Grid>
               <Grid item xs={12}>
               <input
                   className={classNames(classes.input, classes.modalInput, classes.inputFieldFont)}
-                  disableUnderline={true}
                   placeholder={'Phone'}
                 />
               </Grid>
@@ -852,7 +858,7 @@ class Summary extends Component {
               </Typography>
               <br />
               <Typography component="p" className={classNames(classes.blackFont, classes.bold, classes.textLeft)}>
-               {'Based on your answers, your risk tolerance seems [INSERT], so we have set your strategy notifications accordingly.'}
+               {'Based on your answers, your risk tolerance seems ' + riskProfileText + ', so we have set your strategy notifications accordingly.'}
               </Typography>
               <br />
               <Typography component="p" className={classNames(classes.blackFont, classes.textLeft)}>
@@ -874,7 +880,6 @@ class Summary extends Component {
               <input
                 onChange={this.props.changePriceIncrease}
                 className={classNames(classes.textField, classes.inputFieldFont)}
-                disableUnderline={true}
                 value={priceIncrease.toString().indexOf('%') === -1 ? priceIncrease  + '%' : priceIncrease}
               />
               </FormControl>
@@ -886,7 +891,6 @@ class Summary extends Component {
               <input
                 onChange={this.props.changePriceDecrease}
                 className={classNames(classes.input, classes.textField, classes.inputFieldFont)}
-                disableUnderline={true}
                 value={priceDecrease.toString().indexOf('%') === -1 ? priceDecrease  + '%' : priceDecrease}
               >
               </input>
@@ -899,7 +903,6 @@ class Summary extends Component {
               <input
                 onChange={this.props.changeTimeOut}
                 className={classNames(classes.textField, classes.inputFieldFont)}
-                disableUnderline={true}
                 value={timeOut.toString().indexOf(' hours') === -1 ? timeOut  + ' hours' : timeOut}
               />
               </FormControl>

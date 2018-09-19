@@ -162,11 +162,10 @@ class Walkthrough extends Component {
   renderTextInput(classes, field) {
     return (
       <Grid key={this.props.currentSceneNumber} item>
-        <Input
+        <input
           onKeyPress={this.props.handleKeyPress}
           onChange={this.props.handleChange(field[0])}
           className={classNames(classes.textField, classes.inputFieldFont)}
-          disableUnderline={true}
           value={this.props[field[0]]}
         />
       </Grid>
