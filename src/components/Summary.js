@@ -273,7 +273,19 @@ const styles = theme => ({
   },
   input: {
     textAlign: 'center',
-  }
+  },
+  paddingTopPackageSide: {
+    paddingTop: '60px',
+  },
+  beigeBackground: {
+    backgroundColor: '#fff6ed',
+  },
+  noPaddingBottom: {
+    paddingBottom: '0px !important',
+  },
+  greyishBackground: {
+    backgroundColor: '#f5f1ed',
+  },
 });
 
 function getModalStyle() {
@@ -595,8 +607,8 @@ class Summary extends Component {
       : '\n Being a more experienced crypto trader, we give you the full power of our AI — you\’re given the ears and eyes that monitor the market 24/7.';
 
     return (
-     <Grid container className={classes.gridRoot} spacing={24}>
-       <Grid item xs={12}>
+     <Grid container className={classNames(classes.gridRoot, classes.greyishBackground)} spacing={24}>
+       <Grid item xs={12} className={classes.noPaddingBottom}>
          <Paper className={classNames(classes.paper, classes.negativeRightMargin)}>
          <div className={classes.titleHeaderDiv}>
          <span
@@ -686,7 +698,7 @@ class Summary extends Component {
         </Modal>
          </Paper>
        </Grid>
-        <Grid item xs={3}>
+        <Grid item xs={4}>
           <Card className={classes.card2}>
             <CardContent>
               <div className={classNames(classes.blackFont, classes.textLeft, classes.bold, classes.alertLowerPadding, classes.alertTitleSub)}>
@@ -746,7 +758,7 @@ class Summary extends Component {
                 onChange={phoneNumber => this.setState({ phoneNumber })} />
               </div>
             </CardContent>
-            <div className={classes.textCenter}>$49</div>
+            <div className={classes.textCenter}>{'$' + prices[this.props.packageSelected]}</div>
             <div className={classes.textCenter}>monthly</div>
             <CardActions className={classes.textCenter}>
               <Button size="small" color="primary" variant="contained" className={classNames(classes.margin, classes.cssRoot, classes.center)}>
@@ -757,7 +769,7 @@ class Summary extends Component {
         </Grid>
         <Grid item xs={8}>
         <Card className={classes.card}>
-        <CardContent>
+        <CardContent className={classNames(classes.paddingTopPackageSide, classes.beigeBackground)}>
           <Card className={classNames(classes.card, classes.cardBottomPadding)}>
             <CardContent className={classes.firstBackgroundImg}>
               <Typography gutterBottom variant="headline" component="h2" className={classNames(classes.whiteFont, classes.textLeft)}>
