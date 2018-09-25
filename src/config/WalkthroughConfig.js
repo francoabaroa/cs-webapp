@@ -24,9 +24,15 @@ const WalkthroughConfig = {
     },
     2: {
       'headline': 'Nice to meet you, ',
+      'icons': ['wink3'],
       'stepLevel': 0,
     },
     3: {
+      'headline': 'Nice to meet you, ',
+      'icons': ['wink2'],
+      'stepLevel': 0,
+    },
+    4: {
       'arguments': ['cryptoCurrentStatus'],
       'headline': 'When it comes to crypto, are you:',
       'method': 'renderButtons',
@@ -34,10 +40,18 @@ const WalkthroughConfig = {
       'strings': ['Informed', 'Curious', 'Skeptical', 'Rekt'],
       'stepLevel': 0,
     },
-    4: {
+    5: {
       'headline': 'NEED CUSTOMIZED RESPONSE HERE DEPENDING ON WHAT THEY PICKED',
       'customizedResponses': ['An expert, huh? We\'ll see if we can show you something new.', 'We\'ll reward that curiosity, Goob. But first, let\'s get to know you!', 'Excellent, we built our research database with skeptics in mind (and in our office).', 'Oops, looks like you weren\'t using an indicator. Let\'s fix that.'],
       'stepLevel': 0,
+    },
+    6: {
+      'headline': 'Don\'t worry, it\'ll only take a few minutes.',
+      'stepLevel': 0,
+    },
+    7: {
+      'stepLevel': 0,
+      'stepperLabels': ['BASICS', 'LIFESTYLE', 'VALUES', 'STRATEGY'],
     },
 
     // 5: {
@@ -46,19 +60,19 @@ const WalkthroughConfig = {
     //   'method': 'renderCheckboxList',
     //   'stepLevel': 0,
     // },
-    5: {
+    8: {
       'arguments': ['handlePastCryptoTrader'],
       'headline': 'Have you traded crypto in the past?',
       'method': 'renderYesNo',
       'stepLevel': 0,
     },
-    6: {
+    9: {
       'arguments': ['handleUseOfTA'],
       'headline': 'Do you use TA to trade?',
       'method': 'renderYesNo',
       'stepLevel': 0,
     },
-    7: {
+    10: {
       'arguments': [],
       'multipleSelections': true,
       'headline': 'What exchanges do you use to trade?',
@@ -67,13 +81,17 @@ const WalkthroughConfig = {
       'method': 'renderButtons',
       'stepLevel': 0,
     },
-    8: {
+    11: {
       'arguments': ['email'],
       'headline': 'What\'s your email?',
       'method': 'renderTextInput',
       'stepLevel': 0,
     },
-    9: {
+    12: {
+      'stepLevel': 1,
+      'stepperLabels': ['BASICS', 'LIFESTYLE', 'VALUES', 'STRATEGY'],
+    },
+    13: {
       'arguments': ['incorporatingCryptoLifeAnswer'],
       'headline': 'When it comes to incorporating crypto in your life, are you:',
       'method': 'renderButtons',
@@ -82,23 +100,28 @@ const WalkthroughConfig = {
       'stepLevel': 1,
       'smallButton': true,
     },
-    10: {
+    14: {
       'arguments': ['spareTimeAvailability'],
       'headline': 'When it comes to spare time for crypto, are you:',
       'method': 'renderButtons',
       'icons': ['completelyBooked', 'occasionallyAvailable', 'prettyFree'],
-      'strings': ['Completely booked', 'Occasionally available', 'Pretty free'],
+      'strings': ['Completely', 'Occasionally', 'Pretty'],
+      'subStrings': ['booked', 'available', 'free'],
       'stepLevel': 1,
     },
-    11: {
+    15: {
+      'stepLevel': 2,
+      'stepperLabels': ['BASICS', 'LIFESTYLE', 'VALUES', 'STRATEGY'],
+    },
+    16: {
       'arguments': ['currenciesToExplore'],
       'headline': 'What currencies should we explore?',
       'method': 'renderButtons',
       'icons': ['topCurrencies', 'wellKnown', 'allOfThem',],
-      'strings': ['Top currencies', 'Well known currencies', 'All of them'],
+      'strings': ['Top currencies', 'Well known', 'All of them'],
       'stepLevel': 2,
     },
-    12: {
+    17: {
       'arguments': ['cryptoTradingHabit'],
       'headline': 'When it comes to trading, do you prefer to:',
       'method': 'renderButtons',
@@ -107,23 +130,28 @@ const WalkthroughConfig = {
       'stepLevel': 2,
       'smallButton': true,
     },
-    13: {
+    18: {
       'arguments': ['cryptoRiskProfile'],
       'headline': 'When you trade, are you:',
       'method': 'renderButtons',
       'icons': ['noRisk', 'midRisk', 'highRisk'],
-      'strings': ['Risk averse', 'The middle', 'High risk, high reward'],
+      'strings': ['Risk averse', 'The middle', 'High risk,'],
+      'subStrings': [null, null, 'high reward'],
       'stepLevel': 2,
     },
-    14: {
+    19: {
       'arguments': ['referralSource'],
       'headline': 'Lastly, we\'re happy to have met you. How did you hear about us?',
       'method': 'renderButtons',
       'icons': ['friend', 'twitter', 'productHunt', 'google', 'facebook', 'instagram'],
       'strings': ['Friend', 'Twitter', 'Product Hunt', 'Google', 'Facebook', 'Instagram'],
-      'stepLevel': 3,
+      'stepLevel': 2,
     },
-    15: {
+    20: {
+      'stepLevel': 3,
+      'stepperLabels': ['BASICS', 'LIFESTYLE', 'VALUES', 'STRATEGY'],
+    },
+    21: {
       'headline': 'Strategy',
       'method': '',
       'stepLevel': 3,
@@ -136,15 +164,24 @@ const WalkthroughConfig = {
     nextButton: {
       margin: theme.spacing.unit,
       fontSize: '1.4em',
-      backgroundColor: '#FFFFFF',
+      fontFamily: 'Roboto, sans-serif',
+      backgroundColor: '#fff6ed',
       border: '3px solid #000000',
       color: 'black',
+      '&:hover': {
+        margin: theme.spacing.unit,
+        fontSize: '1.4em',
+        fontFamily: 'Roboto, sans-serif',
+        backgroundColor: '#fff6ed',
+        border: '3px solid #000000',
+        color: 'black',
+      },
     },
     bigButton: {
       margin: theme.spacing.unit,
-      minHeight: '300px',
-      minWidth: '260px',
-      border: '2px solid #000000',
+      minHeight: '260px',
+      minWidth: '220px',
+      border: '3px solid #000000',
       backgroundColor: '#FFFFFF',
       borderRadius: '4px',
       color: 'black',
@@ -158,7 +195,7 @@ const WalkthroughConfig = {
       minWidth: '200px',
       borderRadius: '50%',
       backgroundColor: 'white',
-      border: '2px solid black',
+      border: '3px solid #000000',
       color: 'black',
     },
     mediumButton: {
@@ -168,7 +205,18 @@ const WalkthroughConfig = {
       borderRadius: '4px',
       backgroundColor: 'white',
       border: '2px solid black',
+      fontFamily: 'Roboto, sans-serif',
       color: 'black',
+      '&:hover': {
+        margin: theme.spacing.unit,
+        minHeight: '150px',
+        minWidth: '200px',
+        borderRadius: '4px',
+        backgroundColor: 'white',
+        border: '2px solid black',
+        fontFamily: 'Roboto, sans-serif',
+        color: 'black',
+      },
     },
     smallButton: {
       margin: theme.spacing.unit,
@@ -177,7 +225,18 @@ const WalkthroughConfig = {
       borderRadius: '4px',
       backgroundColor: 'white',
       border: '2px solid #000000',
+      fontFamily: 'Roboto, sans-serif',
       color: 'black',
+      '&:hover': {
+        margin: theme.spacing.unit,
+        minHeight: '98px',
+        minWidth: '210px',
+        borderRadius: '4px',
+        backgroundColor: 'white',
+        border: '2px solid #000000',
+        fontFamily: 'Roboto, sans-serif',
+        color: 'black',
+      },
     },
     gridRoot: {
       flexGrow: 1,
@@ -203,7 +262,7 @@ const WalkthroughConfig = {
       marginRight: theme.spacing.unit,
       minWidth: 400,
       height: 54,
-      border: '4px solid black',
+      border: '3px solid black',
       borderRadius: '6px',
       padding: '5px',
       backgroundColor: '#FFFFFF',
@@ -214,6 +273,11 @@ const WalkthroughConfig = {
     demo2: {
       padding: '30px',
       paddingTop: '0px',
+    },
+    demo3: {
+      // [theme.breakpoints.up("lg")]: {
+      //   width: 1170
+      // },
     },
     progressLine: {
       maxWidth: '200px',
@@ -227,24 +291,39 @@ const WalkthroughConfig = {
       fontSize: '25px',
     },
     buttonLabelPadding: {
-      fontSize: '25px',
+      fontSize: '30px',
       paddingTop: '40px',
+      fontFamily: 'Roboto, sans-serif',
+      fontStyle: 'normal',
+    },
+    buttonLabelPaddingNoTop: {
+      fontSize: '30px',
+      fontFamily: 'Roboto, sans-serif',
+      fontStyle: 'normal',
     },
     header: {
       marginBottom: '70px',
     },
     inputFieldFont: {
       fontSize: '26px',
+      fontFamily: 'proxima-nova, sans-serif',
+      fontStyle: 'normal',
       textAlign: 'center',
     },
     surveyHeadline: {
       fontSize: '2.0em',
-      fontWeight: 900,
+      fontWeight: 600,
+    },
+    surveySubHeadline: {
+      paddingTop: '10px',
+      fontSize: '0.75em',
+      fontFamily: 'proxima-nova, sans-serif',
+      fontWeight: 100,
     },
     root: {
       '&:hover': {
         backgroundColor: '#FFFFFF',
-        border: '2px solid #000000',
+        border: '3px solid #000000',
         borderRadius: '4px',
         color: 'black',
       },
@@ -278,11 +357,95 @@ const WalkthroughConfig = {
       lineHeight: '20px',
       textAlign: 'center',
     },
+    enterButton: {
+      top: '-24px',
+      left: '178px',
+      color: 'white',
+      width: '1px',
+      padding: '4px',
+      position: 'relative',
+      fontSize: '0.83em',
+      textAlign: 'center',
+      lineHeight: '1px',
+      borderRadius: '50%',
+      backgroundColor: '#4f8463',
+    },
+    enterButton2: {
+      display: 'inline-block',
+      padding: 0,
+      fontSize: '12px',
+      fontWeight: 'lighter !important',
+      lineHeight: '32px',
+      color: '#fff !important',
+      textAlign: 'center',
+      whiteSpace: 'nowrap',
+      verticalAlign: 'baseline',
+      backgroundColor: 'grey',
+      borderRadius: '32px',
+      position: 'relative',
+      top: '-32px',
+      left: '178px',
+      height: '32px',
+      width: '32px',
+    },
+    enterButton3: {
+      display: 'inline-block',
+      padding: 0,
+      fontSize: '12px',
+      fontWeight: 'lighter !important',
+      lineHeight: '32px',
+      color: '#fff !important',
+      textAlign: 'center',
+      whiteSpace: 'nowrap',
+      verticalAlign: 'baseline',
+      backgroundColor: '#4f8463',
+      borderRadius: '32px',
+      position: 'relative',
+      top: '-32px',
+      left: '178px',
+      height: '32px',
+      width: '32px',
+    },
     displayNone: {
       display: 'none',
     },
     greenOutline: {
       border: '2px solid #4f8463',
+    },
+    divInput: {
+      marginLeft: theme.spacing.unit,
+      marginRight: theme.spacing.unit,
+      minWidth: 400,
+      height: 54,
+      border: '3px solid black',
+      borderRadius: '6px',
+      padding: '5px',
+      '&:focus': {
+        outline: 'none !important',
+      },
+      paddingTop: '25px',
+      fontSize: '26px',
+      fontFamily: 'proxima-nova, sans-serif',
+      fontStyle: 'normal',
+      mozAppearance: 'textfield',
+      webkitAppearance: 'textfield',
+      backgroundColor: '-moz-field',
+      backgroundColor: '#FFFFFF',
+      font: '-moz-field',
+      font: '-webkit-small-control',
+      marginTop: '5px',
+    },
+    divInputBox: {
+      '&:focus': {
+        outline: 'none !important',
+      },
+      completed: {
+        backgroundColor: 'black !important',
+      },
+    },
+    purpleFont: {
+      color: '#2d59b0',
+      fontWeight: 600,
     },
   }),
 };

@@ -26,6 +26,8 @@ import Tab from '@material-ui/core/Tab';
 import Tabs from '@material-ui/core/Tabs';
 import Typography from '@material-ui/core/Typography';
 
+import SummaryConfig from '../config/SummaryConfig';
+
 import Slider2 from 'rc-slider/lib/Slider';
 import 'rc-slider/assets/index.css';
 
@@ -37,8 +39,312 @@ import classNames from 'classnames';
 import Image from '../assets/Background-currency.png';
 import Image2 from '../assets/bckgrnd-image.png';
 import Image3 from '../assets/bckgrnd-image2.png';
+import BlueCircle from '../assets/blue-circle.png';
 
 const colors = ['#4a90e2', 'rgba(255, 255, 255, 0.80)', '#244770', '#3da937'];
+
+const styles = theme => ({
+    card: {
+      minWidth: 275,
+    },
+    cssRoot: {
+      color: 'white',
+      backgroundColor: colors[0],
+      '&:hover': {
+        backgroundColor: colors[0],
+      },
+    },
+    card2: {
+      // maxWidth: 375,
+      // height: '100%',
+      position: 'sticky',
+    },
+    hide: {
+      display: 'none',
+    },
+    button: {
+      margin: theme.spacing.unit,
+    },
+    gridRoot: {
+      flexGrow: 1,
+    },
+    whiteFont: {
+      color: 'white',
+    },
+    cardHeadline: {
+      fontSize: '1.5em',
+      fontFamily: 'Roboto !important',
+    },
+    blackFont: {
+      color: 'black',
+    },
+    bold: {
+      fontWeight: 'bold',
+    },
+    buttonBackground: {
+      backgroundColor: colors[0],
+    },
+    activeOverlay: {
+      color: 'white',
+      backgroundColor: colors[0],
+    },
+    nonActiveOverlay: {
+      border: '4px solid #ECECEC',
+      backgroundColor: colors[1],
+      padding: '10px',
+    },
+    test: {
+      border: '4px solid #ECECEC',
+      backgroundColor: colors[0],
+      padding: '10px',
+    },
+    test2: {
+      border: '4px solid #ECECEC',
+      backgroundColor: colors[1],
+      padding: '10px',
+    },
+    test3: {
+      border: '4px solid #ECECEC',
+      backgroundColor: colors[1],
+      padding: '10px',
+    },
+    test4: {
+      border: '4px solid #ECECEC',
+      backgroundColor: colors[3],
+      padding: '10px',
+    },
+    test5: {
+      border: '4px solid #ECECEC',
+      padding: '15px',
+    },
+    demo: {
+      marginTop: '15px',
+    },
+    paper: {
+      padding: theme.spacing.unit * 2,
+      textAlign: 'left',
+      color: theme.palette.text.secondary,
+      paddingBottom: '40px',
+    },
+    paper2: {
+      position: 'absolute',
+      width: theme.spacing.unit * 50,
+      backgroundColor: theme.palette.background.paper,
+      boxShadow: theme.shadows[5],
+      padding: theme.spacing.unit * 4,
+    },
+    root2: {
+      width: 300,
+    },
+    center: {
+      display: 'block',
+      marginLeft: 'auto',
+      marginRight: 'auto',
+    },
+    centerImg: {
+      display: 'block',
+      margin: 'auto',
+      height: '60px',
+    },
+    textCenter: {
+      textAlign: 'center',
+    },
+    textLeft: {
+      textAlign: 'left',
+      paddingLeft: '10px',
+    },
+    firstBackgroundImg: {
+      backgroundImage: `url(${Image})`,
+      backgroundRepeat: 'no-repeat',
+      height: '170px',
+    },
+    secondBackgroundImg: {
+      backgroundImage: `url(${Image2})`,
+      backgroundRepeat: 'no-repeat',
+      height: '170px',
+    },
+    thirdBackgroundImg: {
+      backgroundImage: `url(${Image3})`,
+      backgroundRepeat: 'no-repeat',
+      height: '170px',
+    },
+     media: {
+      height: 240,
+    },
+    titleHeaders: {
+      paddingRight: '40px',
+      paddingLeft: '10px',
+    },
+    titleHeaderFont: {
+      fontSize: '1.45em',
+      fontWeight: 700,
+    },
+    titleHeaderDiv: {
+      paddingTop: '10px',
+    },
+    backButton: {
+      float: 'right',
+      paddingRight: '30px',
+    },
+    cardBottomPadding: {
+      paddingBottom: '50px',
+    },
+    bottomPadding: {
+      paddingBottom: '30px',
+    },
+    coinCheckboxes: {
+      margin: 'auto',
+    },
+    label: {
+      margin: '0 auto',
+    },
+    titleIcon: {
+      display: 'block',
+    },
+    negativeRightMargin: {
+      marginRight: '-10px',
+    },
+    slider: {
+      maxWidth: '200px',
+      paddingRight: '50px',
+      '&:focus': {
+        outline: 'none !important',
+      },
+    },
+    sliderTest: {
+      display: 'inline',
+    },
+    wrapper: {
+      display: 'flex',
+      justifyContent: 'center',
+    },
+    wrapperLeft: {
+      flex: '0 0 65%',
+      paddingRight: '50px',
+    },
+    wrapperRight: {
+      flex: 1,
+    },
+    textField: {
+      marginLeft: theme.spacing.unit,
+      marginRight: theme.spacing.unit,
+      // width: 480,
+      maxWidth: '100px',
+      border: '3px solid black',
+      borderRadius: '4px',
+      padding: '10px',
+      marginTop: '15px',
+    },
+    modalInput: {
+      marginLeft: theme.spacing.unit,
+      marginRight: theme.spacing.unit,
+      width: '90%',
+      border: '1px solid #b4b4b4',
+      borderRadius: '4px',
+      padding: '10px',
+      marginTop: '15px',
+    },
+    modalShared: {
+      marginLeft: theme.spacing.unit,
+      marginRight: theme.spacing.unit,
+      width: '80%',
+      border: '1px solid #b4b4b4',
+      borderRadius: '4px',
+      padding: '10px',
+      marginTop: '15px',
+    },
+    inputFieldFont: {
+      fontSize: '14px',
+      textAlign: 'center',
+      fontWeight: 400,
+      '&:focus': {
+        outline: 'none !important',
+      },
+    },
+    activeTab: {
+      color: '#4a90e2',
+    },
+    inactiveTab: {
+      color: '#b4b4b4',
+    },
+    alertLowerPadding: {
+      paddingBottom: '10px',
+    },
+    alertTitle: {
+      fontSize: '1.5rem',
+      fontWeight: 500,
+    },
+    alertTitleSub: {
+      fontSize: '0.85rem',
+      fontFamily: 'Roboto !important',
+    },
+    heavyFontWeight: {
+      fontWeight: 900,
+    },
+    input: {
+      textAlign: 'center',
+    },
+    paddingTopPackageSide: {
+      paddingTop: '95px',
+    },
+    beigeBackground: {
+      backgroundColor: '#fff6ed',
+    },
+    noPaddingBottom: {
+      paddingBottom: '0px !important',
+    },
+    greyishBackground: {
+      backgroundColor: '#f5f1ed',
+    },
+    thinLines: {
+      display: 'inline-block',
+      minWidth: '90px',
+      height: '5px',
+      borderBottom: '1px solid #e8e8e8',
+      margin: '4px',
+      marginRight: '20px',
+      marginLeft: '20px',
+    },
+    subscribeButton: {
+      minWidth: '200px',
+    },
+    sliderLabel: {
+      fontFamily: 'Roboto !important',
+      fontSize: '1.05rem',
+      paddingBottom: '10px',
+    },
+    thumbIconWrapper: {
+    },
+    thumb: {
+      backgroundColor: 'white',
+      border: '1px solid grey',
+      color: 'white',
+      height: '20px',
+      width: '20px',
+    },
+    track: {
+      color: 'red',
+    },
+    thumbIcon: {
+      borderRadius: '50%',
+    },
+    root: {
+      color: 'black',
+      backgroundColor: 'black',
+    },
+    trackBefore: {
+      backgroundColor: '#53c4bc',
+      height: '8px',
+      borderRadius: '5px',
+      color: '#53c4bc',
+    },
+    trackAfter: {
+      backgroundColor: '#e6e6e6',
+      height: '8px',
+      borderRadius: '5px',
+      color: '#e6e6e6',
+    },
+  });
 
 const prices = {
   Coinbase: 10,
@@ -48,259 +354,6 @@ const prices = {
 function log(value) {
   console.log(value); //eslint-disable-line
 }
-
-const styles = theme => ({
-  card: {
-    minWidth: 275,
-  },
-  cssRoot: {
-    color: 'white',
-    backgroundColor: colors[0],
-    '&:hover': {
-      backgroundColor: colors[0],
-    },
-  },
-  card2: {
-    // maxWidth: 375,
-  },
-  hide: {
-    display: 'none',
-  },
-  button: {
-    margin: theme.spacing.unit,
-  },
-  gridRoot: {
-    flexGrow: 1,
-  },
-  whiteFont: {
-    color: 'white',
-  },
-  blackFont: {
-    color: 'black',
-  },
-  bold: {
-    fontWeight: 'bold',
-  },
-  buttonBackground: {
-    backgroundColor: colors[0],
-  },
-  activeOverlay: {
-    color: 'white',
-    backgroundColor: colors[0],
-  },
-  nonActiveOverlay: {
-    border: '4px solid #ECECEC',
-    backgroundColor: colors[1],
-    padding: '10px',
-  },
-  test: {
-    border: '4px solid #ECECEC',
-    backgroundColor: colors[0],
-    padding: '10px',
-  },
-  test2: {
-    border: '4px solid #ECECEC',
-    backgroundColor: colors[1],
-    padding: '10px',
-  },
-  test3: {
-    border: '4px solid #ECECEC',
-    backgroundColor: colors[1],
-    padding: '10px',
-  },
-  test4: {
-    border: '4px solid #ECECEC',
-    backgroundColor: colors[3],
-    padding: '10px',
-  },
-  test5: {
-    border: '4px solid #ECECEC',
-    padding: '15px',
-  },
-  demo: {
-    marginTop: '15px',
-  },
-  paper: {
-    padding: theme.spacing.unit * 2,
-    textAlign: 'left',
-    color: theme.palette.text.secondary,
-    paddingBottom: '40px',
-  },
-  paper2: {
-    position: 'absolute',
-    width: theme.spacing.unit * 50,
-    backgroundColor: theme.palette.background.paper,
-    boxShadow: theme.shadows[5],
-    padding: theme.spacing.unit * 4,
-  },
-  root2: {
-    width: 300,
-  },
-  center: {
-    display: 'block',
-    marginLeft: 'auto',
-    marginRight: 'auto',
-  },
-  centerImg: {
-    display: 'block',
-    margin: 'auto',
-    height: '60px',
-  },
-  textCenter: {
-    textAlign: 'center',
-  },
-  textLeft: {
-    textAlign: 'left',
-  },
-  firstBackgroundImg: {
-    backgroundImage: `url(${Image})`,
-    backgroundRepeat: 'no-repeat',
-    height: '130px',
-  },
-  secondBackgroundImg: {
-    backgroundImage: `url(${Image2})`,
-    backgroundRepeat: 'no-repeat',
-    height: '130px',
-  },
-  thirdBackgroundImg: {
-    backgroundImage: `url(${Image3})`,
-    backgroundRepeat: 'no-repeat',
-    height: '130px',
-  },
-   media: {
-    height: 240,
-  },
-  titleHeaders: {
-    paddingRight: '40px',
-    paddingLeft: '40px',
-  },
-  titleHeaderFont: {
-    fontSize: '1.45em',
-    fontWeight: 700,
-  },
-  titleHeaderDiv: {
-    paddingTop: '10px',
-  },
-  backButton: {
-    float: 'right',
-    paddingRight: '30px',
-  },
-  cardBottomPadding: {
-    paddingBottom: '50px',
-  },
-  bottomPadding: {
-    paddingBottom: '30px',
-  },
-  coinCheckboxes: {
-    margin: 'auto',
-  },
-  label: {
-    margin: '0 auto',
-  },
-  titleIcon: {
-    display: 'block',
-  },
-  negativeRightMargin: {
-    marginRight: '-10px',
-  },
-  slider: {
-    maxWidth: '200px',
-    paddingRight: '50px',
-  },
-  sliderTest: {
-    display: 'inline',
-  },
-  wrapper: {
-    display: 'flex',
-    justifyContent: 'center',
-  },
-  wrapperLeft: {
-    flex: '0 0 65%',
-    paddingRight: '50px',
-  },
-  wrapperRight: {
-    flex: 1,
-  },
-  textField: {
-    marginLeft: theme.spacing.unit,
-    marginRight: theme.spacing.unit,
-    // width: 480,
-    maxWidth: '100px',
-    border: '3px solid black',
-    borderRadius: '4px',
-    padding: '10px',
-    marginTop: '15px',
-  },
-  modalInput: {
-    marginLeft: theme.spacing.unit,
-    marginRight: theme.spacing.unit,
-    width: '90%',
-    border: '1px solid #b4b4b4',
-    borderRadius: '4px',
-    padding: '10px',
-    marginTop: '15px',
-  },
-  modalShared: {
-    marginLeft: theme.spacing.unit,
-    marginRight: theme.spacing.unit,
-    width: '80%',
-    border: '1px solid #b4b4b4',
-    borderRadius: '4px',
-    padding: '10px',
-    marginTop: '15px',
-  },
-  inputFieldFont: {
-    fontSize: '14px',
-    textAlign: 'center',
-    fontWeight: 400,
-  },
-  activeTab: {
-    color: '#4a90e2',
-  },
-  inactiveTab: {
-    color: '#b4b4b4',
-  },
-  alertLowerPadding: {
-    paddingBottom: '10px',
-  },
-  alertTitle: {
-    fontSize: '1.5rem',
-    fontWeight: 500,
-  },
-  alertTitleSub: {
-    fontSize: '0.85rem',
-  },
-  heavyFontWeight: {
-    fontWeight: 900,
-  },
-  input: {
-    textAlign: 'center',
-  },
-  paddingTopPackageSide: {
-    paddingTop: '95px',
-  },
-  beigeBackground: {
-    backgroundColor: '#fff6ed',
-  },
-  noPaddingBottom: {
-    paddingBottom: '0px !important',
-  },
-  greyishBackground: {
-    backgroundColor: '#f5f1ed',
-  },
-  thinLines: {
-    display: 'inline-block',
-    minWidth: '90px',
-    height: '5px',
-    borderBottom: '1px solid #e8e8e8',
-    margin: '4px',
-    marginRight: '20px',
-    marginLeft: '20px',
-  },
-  subscribeButton: {
-    minWidth: '200px',
-  },
-});
 
 function getModalStyle() {
   return {
@@ -322,6 +375,7 @@ class Summary extends Component {
       open: false,
       phoneNumber: '',
       showMore: false,
+      showMoreIndex: 16,
       userId: null,
       value: 0,
     };
@@ -339,7 +393,7 @@ class Summary extends Component {
     //     this.setState({ currencies, checkBoxes: checkboxes });
 
     if (this.props.currenciesToExplore.length > 0) {
-      let currencyStrings = ['Top currencies', 'Well known currencies', 'All of them'];
+      let currencyStrings = ['Top currencies', 'Well known', 'All of them'];
       let currencyNum = 0;
       // top 5 needs to be coinbase ones
       if (this.props.currenciesToExplore === currencyStrings[0]) {
@@ -377,6 +431,37 @@ class Summary extends Component {
         });
       }
     }
+
+    var handler = window.StripeCheckout.configure({
+      key: 'pk_test_TYooMQauvdEDq54NiTphI7jx',
+      image: logo,
+      locale: 'auto',
+      token: function(token) {
+        // this [token.id] needs to be saved into user DB?
+        // TODO: do we need to create customer objects in stripe? how to save reference in our own DB?
+
+        // You can access the token ID with `token.id`.
+        // Get the token ID to your server-side code for use.
+      }
+    });
+
+    const self = this;
+
+    document.getElementById('customButton').addEventListener('click', function(e) {
+      // Open Checkout with further options:
+      handler.open({
+        name: 'CryptoSpotlight',
+        description: self.props.packageSelected + ' Package',
+        zipCode: true,
+        amount: prices[self.props.packageSelected] + '00',
+      });
+      e.preventDefault();
+    });
+
+    // Close Checkout on page navigation:
+    window.addEventListener('popstate', function() {
+      handler.close();
+    });
   }
 
   createUser() {
@@ -436,16 +521,44 @@ class Summary extends Component {
   }
 
 
-  handleShowMore = () => {
+  handleShowMore = (currenciesLength) => {
+    let currentShowMoreIndex = this.state.showMoreIndex;
+    let updatedShowMoreIndex = currentShowMoreIndex + 8;
+    let showMore = false;
+
+    if (updatedShowMoreIndex >= currenciesLength) {
+      showMore = true;
+    }
+
+    console.log('this.state', this.state, showMore, 'updatedShowMoreIndex', updatedShowMoreIndex);
+
     this.setState({
-      showMore: true,
+      showMoreIndex: updatedShowMoreIndex,
+      showMore,
     })
   };
 
-  handleShowLess = () => {
+  handleShowLess = (currenciesLength) => {
+    let currentShowMoreIndex = this.state.showMoreIndex;
+    let updatedShowMoreIndex = currentShowMoreIndex - 8;
+    let showMore = false;
+
+    if (updatedShowMoreIndex >= currenciesLength) {
+      showMore = true;
+    }
+
+    console.log('this.state', this.state, showMore, 'updatedShowMoreIndex', updatedShowMoreIndex);
+
+    this.setState({
+      showMoreIndex: updatedShowMoreIndex,
+      showMore,
+    });
+
+
+
     this.setState({
       showMore: false,
-    })
+    });
   };
 
   handleChange = (event, value) => {
@@ -532,7 +645,7 @@ class Summary extends Component {
           );
 
           checkboxes.push(
-            <tr className={i > 16 && this.state.showMore === false ? classes.hide : null}>
+            <tr className={i > 16 && this.state.showMore === false && (i > this.state.showMoreIndex) ? classes.hide : null}>
               {tempCheckboxes}
             </tr>
           );
@@ -563,11 +676,8 @@ class Summary extends Component {
         <tbody>
         {checkboxes}
         </tbody>
-      <span onClick={this.handleShowMore} className={this.state.showMore || this.props.packageSelected === 'Coinbase' ? classes.hide : null}>
+      <span onClick={this.handleShowMore.bind(this, currencies.length)} className={this.state.showMore || this.props.packageSelected === 'Coinbase' ? classes.hide : null}>
       Show More
-      </span>
-      <span onClick={this.handleShowLess} className={!this.state.showMore || this.props.packageSelected === 'Coinbase' ? classes.hide : null}>
-      Show Less
       </span>
       </table>
       </div>
@@ -628,9 +738,10 @@ class Summary extends Component {
   }
 
   renderSummary() {
+    console.log('THIS PROPS', this.props);
     const { classes, priceIncrease, priceDecrease, timeOut } = this.props;
-    let currencyStrings = ['Top currencies', 'Well known currencies', 'All of them'];
-    var riskProfiles = ['Risk averse', 'The middle', 'High risk, high reward'];
+    let currencyStrings = ['Top currencies', 'Well known', 'All of them'];
+    var riskProfiles = ['Risk averse', 'The middle', 'High risk,'];
     let currencyCheckboxes = this.renderCheckboxes(classes);
     console.log('currencyCheckboxes', currencyCheckboxes);
     let currencyNum = 0;
@@ -662,20 +773,9 @@ class Summary extends Component {
          <Paper className={classNames(classes.paper, classes.negativeRightMargin)}>
          <div className={classes.titleHeaderDiv}>
          <span
-            className={!this.state.open ?
-              classNames(classes.titleHeaders, classes.titleHeaderFont, classes.activeTab) :
-              classNames(classes.titleHeaders, classes.titleHeaderFont, classes.inactiveTab)
-            }
+            className={classNames(classes.titleHeaders, classes.titleHeaderFont, classes.activeTab)}
             onClick={this.handleChange.bind(this, 'recommended')}>
              Recommended
-         </span>
-         <span
-           className={this.state.open ?
-             classNames(classes.titleHeaderFont, classes.activeTab) :
-             classNames(classes.titleHeaderFont, classes.inactiveTab)
-           }
-           onClick={this.handleChange.bind(this, 'checkOut')}>
-           Check out
          </span>
          <img className={classes.backButton} src={back} onClick={this.props.goBack}/>
          </div>
@@ -684,6 +784,7 @@ class Summary extends Component {
               aria-describedby="simple-modal-description"
               open={this.state.open}
               onClose={this.handleClose}
+              style={{display:'none'}}
             >
           <div style={getModalStyle()} className={classes.paper2}>
             <img src={logo} className={classes.centerImg} />
@@ -696,7 +797,6 @@ class Summary extends Component {
             <div className={classes.thinLines}></div><span className={classes.textCenter} style={{fontSize: '1.55em', color: '#4A90E2'}}>{'$' + prices[this.props.packageSelected]}</span><div className={classes.thinLines}></div>
             </div>
             <div className={classes.textCenter} style={{fontSize: '0.80em', color: '#4A90E2'}}>monthly</div>
-
             <br />
             <Grid container spacing={0}>
               <Grid item xs={6}>
@@ -745,9 +845,9 @@ class Summary extends Component {
          </Paper>
        </Grid>
        <Grid item xs={12} style={{height: '0px', paddingBottom: '0px', paddingTop: '0px'}}>
-       <img src={logoBorder} className="App-logo3" alt="logo" style={{marginTop: '-70px', position: 'absolute', marginLeft: '250px'}} />
+       <img src={logoBorder} className="App-logo3" alt="logo" style={{marginTop: '-70px', position: 'absolute', marginLeft: '50px'}} />
        </Grid>
-        <Grid item xs={4}>
+        <Grid item xs={4} id="rightdiv" style={{padding: '5px'}}>
           <Card className={classes.card2}>
             <CardContent>
               <div className={classNames(classes.blackFont, classes.textLeft, classes.bold, classes.alertLowerPadding, classes.alertTitleSub)}>
@@ -765,7 +865,7 @@ class Summary extends Component {
               {this.props.currenciesToExplore === currencyStrings[2] ? this.props.currenciesToExplore : this.props.currenciesToExplore + ' by market cap'}
               </div>
               </div>
-              <div className={this.props.checkedExchanges.length > 0 ? classes.nonActiveOverlay: classes.hide}>
+              <div className={this.props.checkedExchanges.length > 0 ? classes.nonActiveOverlay: classes.hide} style={{display: 'none'}}>
               <Typography gutterBottom variant="headline" component="h5" className={classNames(classes.blackFont, classes.textLeft)}>
                 Exchange(s):
               </Typography>
@@ -810,21 +910,21 @@ class Summary extends Component {
             <div className={classes.thinLines}></div><span className={classes.textCenter} style={{fontSize: '1.55em', color: '#4A90E2'}}>{'$' + prices[this.props.packageSelected]}</span><div className={classes.thinLines}></div>
             <div className={classes.textCenter} style={{fontSize: '0.80em', color: '#4A90E2'}}>monthly</div>
             <CardActions className={classes.textCenter}>
-              <Button size="small" color="primary" variant="contained" className={classNames(classes.margin, classes.cssRoot, classes.center, classes.subscribeButton)}>
+              <Button id="customButton" onClick={this.handleChange.bind(this, 'checkOut')} size="small" color="primary" variant="contained" className={classNames(classes.margin, classes.cssRoot, classes.center, classes.subscribeButton)}>
                 Subscribe
               </Button>
             </CardActions>
           </Card>
         </Grid>
-        <Grid item xs={8}>
+        <Grid item xs={8} id="leftdiv" style={{padding: '5px'}}>
         <Card className={classes.card}>
         <CardContent className={classNames(classes.paddingTopPackageSide, classes.beigeBackground)}>
           <Card className={classNames(classes.card, classes.cardBottomPadding)}>
             <CardContent className={classes.firstBackgroundImg}>
-              <Typography gutterBottom variant="headline" component="h2" className={classNames(classes.whiteFont, classes.textLeft)}>
-                <img src={currenciesLogo} className={classes.titleIcon} />
+              <div className={classNames(classes.whiteFont, classes.textLeft, classes.cardHeadline)}>
+                <img src={currenciesLogo} className={classes.titleIcon} style={{paddingBottom: '20px', paddingTop: '25px'}} />
                 {this.props.packageSelected + ' Package'}
-              </Typography>
+              </div>
               {/*
               <Typography gutterBottom variant="headline" component="h2" className={classNames(classes.whiteFont, classes.textLeft)}>
                 {this.props.currenciesToExplore + ' currencies'}
@@ -873,10 +973,10 @@ class Summary extends Component {
         */}
           <Card className={classNames(classes.card, classes.cardBottomPadding)}>
             <CardContent className={classes.thirdBackgroundImg}>
-            <Typography gutterBottom variant="headline" component="h2" className={classNames(classes.whiteFont, classes.textLeft)}>
-                <img src={alertsIcon} className={classes.titleIcon}/>
-                Price Alerts
-              </Typography>
+            <div className={classNames(classes.whiteFont, classes.textLeft, classes.cardHeadline)} style={{border:'none'}}>
+                <img src={alertsIcon} className={classes.titleIcon} style={{paddingBottom: '20px', paddingTop: '38px'}}/>
+                {'Price Alerts'}
+              </div>
             </CardContent>
             <CardContent>
               <Typography component="p" className={classNames(classes.blackFont, classes.bold, classes.textLeft)}>
@@ -901,11 +1001,14 @@ class Summary extends Component {
               <br />
               <br />
               <br />
-
               <div className={classes.wrapper}>
               <div className={classNames(classes.wrapperRight, classes.slider)}>
-              <Typography id="label">Price Increase</Typography>
-              <Slider value={parseInt(priceIncrease)} aria-labelledby="label" onChange={this.props.changePriceIncreaseSlider} />
+              <div id="label" className={classes.sliderLabel}>Price Increase</div>
+              <Slider classes={{
+            thumb: classes.thumb,
+            trackBefore: classes.trackBefore,
+            trackAfter: classes.trackAfter,
+          }} value={parseInt(priceIncrease)} aria-labelledby="label" onChange={this.props.changePriceIncreaseSlider} />
               <FormControl>
               <input
                 onChange={this.props.changePriceIncrease}
@@ -915,8 +1018,12 @@ class Summary extends Component {
               </FormControl>
               </div>
               <div className={classNames(classes.wrapperRight, classes.slider)}>
-              <Typography id="label2">Price Decrease</Typography>
-              <Slider value={parseInt(priceDecrease)} aria-labelledby="label2" onChange={this.props.changePriceDecreaseSlider} />
+              <div id="label2" className={classes.sliderLabel}>Price Decrease</div>
+              <Slider classes={{
+            thumb: classes.thumb,
+            trackBefore: classes.trackBefore,
+            trackAfter: classes.trackAfter,
+          }} value={parseInt(priceDecrease)} aria-labelledby="label2" onChange={this.props.changePriceDecreaseSlider} />
               <FormControl>
               <input
                 onChange={this.props.changePriceDecrease}
@@ -927,8 +1034,12 @@ class Summary extends Component {
               </FormControl>
               </div>
               <div className={classNames(classes.wrapperRight, classes.slider)}>
-              <Typography id="label3">Timeout</Typography>
-              <Slider value={parseInt(timeOut)} min={2} max={168} aria-labelledby="label3" onChange={this.props.changeTimeOutSlider} />
+              <div id="label3" className={classes.sliderLabel}>Timeout</div>
+              <Slider classes={{
+            thumb: classes.thumb,
+            trackBefore: classes.trackBefore,
+            trackAfter: classes.trackAfter,
+          }} value={parseInt(timeOut)} min={2} max={168} aria-labelledby="label3" onChange={this.props.changeTimeOutSlider} />
               <FormControl>
               <input
                 onChange={this.props.changeTimeOut}

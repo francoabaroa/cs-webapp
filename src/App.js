@@ -4,6 +4,7 @@ import './App.css';
 
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
+import Grid from '@material-ui/core/Grid';
 
 import Chart from './components/Chart';
 import Walkthrough from './components/Walkthrough';
@@ -48,6 +49,8 @@ class App extends Component {
       priceIncrease: 15,
       priceDecrease: 5,
       referralSource: '',
+      showEmailField: false,
+      showNameField: false,
       spacing: '40',
       spareTimeAvailability: '',
       technicalAnalysisUse: '', // unused
@@ -57,7 +60,7 @@ class App extends Component {
 
   componentDidMount() {
     if (this.state.enableWalkthrough) {
-      let twoSeconds = 2000;
+      let twoAndAHalfSeconds = 2500;
       let currentSceneNum = this.state.currentSceneNumber;
       let activeStep = WalkthroughConfig.scenesConfig[currentSceneNum].stepLevel;
       if (WalkthroughConfig.scenesConfig[currentSceneNum].method === undefined) {
@@ -66,19 +69,29 @@ class App extends Component {
             currentSceneNumber: currentSceneNum + 1,
             activeStep: activeStep,
           });
-        }, twoSeconds)
+        }, twoAndAHalfSeconds)
       }
     }
   }
 
   componentDidUpdate() {
-    let twoSeconds = 2000;
+    let twoAndAHalfSeconds = 2500;
     let currentSceneNum = this.state.currentSceneNumber;
     let isLastScene = WalkthroughConfig.scenesConfig[currentSceneNum + 1] === undefined;
 
+    if (this.state.activeStep !== WalkthroughConfig.scenesConfig[currentSceneNum].stepLevel) {
+      this.setState({activeStep: WalkthroughConfig.scenesConfig[currentSceneNum].stepLevel});
+    }
+
     if (this.state.enableWalkthrough) {
       let fiveSeconds = 5000;
-      let secondsToWait = currentSceneNum === 1 || currentSceneNum === 4 ? fiveSeconds : twoSeconds;
+      let halfASecond = 500;
+      let oneSecond = 1000;
+      let secondsToWait = currentSceneNum === 1 || currentSceneNum === 5 ?
+        fiveSeconds :
+        currentSceneNum === 2 || currentSceneNum === 3 ?
+        oneSecond :
+        twoAndAHalfSeconds;
       if (WalkthroughConfig.scenesConfig[currentSceneNum].method === undefined) {
         setTimeout(() => {
           this.setState({
@@ -89,6 +102,10 @@ class App extends Component {
       if (isLastScene) {
         console.log('componentDidUpdate()', this.state);
       }
+    }
+
+    if (WalkthroughConfig.scenesConfig[currentSceneNum].multipleSelections && this.state.checkedExchanges.length > 0) {
+      window.scrollTo(0,document.body.scrollHeight);
     }
 
     if (this.state.enableWalkthrough && isLastScene) {
@@ -112,7 +129,7 @@ class App extends Component {
         timeOut = 96;
       }
 
-      var riskProfiles = ['Risk averse', 'The middle', 'High risk, high reward'];
+      var riskProfiles = ['Risk averse', 'The middle', 'High risk,'];
       if (this.state.cryptoRiskProfile === riskProfiles[0]) {
         priceIncrease = 5;
         priceDecrease = 2;
@@ -132,7 +149,7 @@ class App extends Component {
             priceDecrease,
             timeOut,
           });
-        }, twoSeconds)
+        }, twoAndAHalfSeconds)
       }
   }
 
@@ -148,12 +165,14 @@ class App extends Component {
     // TODO: bug check?
     let activeStep = WalkthroughConfig.scenesConfig[currentSceneNum].stepLevel;
 
-    if (WalkthroughConfig.scenesConfig[currentSceneNum - 1].method === undefined) {
+    if (WalkthroughConfig.scenesConfig[currentSceneNum].arguments && WalkthroughConfig.scenesConfig[currentSceneNum].arguments[0] === 'email') {
+      scenesToSubtract = 3;
+    } else if (WalkthroughConfig.scenesConfig[currentSceneNum - 1].method === undefined) {
       scenesToSubtract = 2;
     }
 
     this.setState({
-      currentSceneNumber: currentSceneNum - scenesToSubtract,
+      currentSceneNumber: 1,
       enableWalkthrough: true,
       activeStep,
     });
@@ -161,18 +180,46 @@ class App extends Component {
 
   changeToNextScene = () => {
     let currentSceneNum = this.state.currentSceneNumber;
+    const name = document.getElementById('nameContent') ? document.getElementById('nameContent').textContent : '';
+    const email = document.getElementById('emailContent') ? document.getElementById('emailContent').textContent : '';
     let activeStep = WalkthroughConfig.scenesConfig[currentSceneNum].stepLevel;
-    this.setState({
-      currentSceneNumber: currentSceneNum + 1,
-      activeStep,
-    });
+    let stateObject = {};
+
+    stateObject['currentSceneNumber'] = currentSceneNum + 1;
+    stateObject['activeStep'] = activeStep;
+
+    if (name.length > 0) {
+      stateObject['name'] = name;
+    }
+
+    if (email.length > 0) {
+      stateObject['email'] = email;
+    }
+
+    if (
+      WalkthroughConfig.scenesConfig[currentSceneNum].arguments && (
+        WalkthroughConfig.scenesConfig[currentSceneNum].arguments[0] === 'email' ||
+        WalkthroughConfig.scenesConfig[currentSceneNum].arguments[0] === 'name')
+      ) {
+      if (WalkthroughConfig.scenesConfig[currentSceneNum].arguments[0] === 'email') {
+        if (email.length > 0) {
+          this.setState(stateObject);
+        }
+      } else {
+        if (name.length > 0) {
+          this.setState(stateObject);
+        }
+      }
+    } else {
+      this.setState(stateObject);
+    }
   };
 
   changePriceIncrease = (event) => {
     let entry = event.target.value.replace('%', '');
     const re = /^[0-9\b]+$/;
 
-    if (entry == '' || re.test(entry)) {
+    if (entry === '' || re.test(entry)) {
       if (entry <= 100) {
         this.setState({ priceIncrease: entry });
       }
@@ -187,7 +234,7 @@ class App extends Component {
     let entry = event.target.value.replace('%', '');
     const re = /^[0-9\b]+$/;
 
-    if (entry == '' || re.test(entry)) {
+    if (entry === '' || re.test(entry)) {
       if (entry <= 100) {
         this.setState({ priceDecrease: entry });
       }
@@ -202,7 +249,7 @@ class App extends Component {
     let entry = event.target.value.replace(' hours', '');
     const re = /^[0-9\b]+$/;
 
-    if (entry == '' || re.test(entry)) {
+    if (entry === '' || re.test(entry)) {
       if (entry <= 168) {
         this.setState({ timeOut: entry });
       }
@@ -304,14 +351,65 @@ class App extends Component {
   };
 
   handleKeyPress = e => {
+    const name = document.getElementById('nameContent') ? document.getElementById('nameContent').textContent : '';
+    const email = document.getElementById('emailContent') ? document.getElementById('emailContent').textContent : '';
+
+    var contenteditable = document.querySelector('[contenteditable]'),
+    text = contenteditable.textContent;
+    let stateObject = {};
+
     if (e.key === 'Enter') {
       let currentSceneNum = this.state.currentSceneNumber;
       // TODO: potential bug here
       let activeStep = WalkthroughConfig.scenesConfig[currentSceneNum + 1].stepLevel;
-      this.setState({
-        currentSceneNumber: currentSceneNum + 1,
-        activeStep,
-      });
+
+      stateObject['currentSceneNumber'] = currentSceneNum + 1;
+      stateObject['activeStep'] = activeStep;
+
+      if (name.length > 0) {
+        stateObject['name'] = name;
+      }
+
+      if (email.length > 0 && email.indexOf('.') !== -1) {
+        stateObject['email'] = email;
+      }
+
+      if (
+        WalkthroughConfig.scenesConfig[currentSceneNum].arguments && (
+          WalkthroughConfig.scenesConfig[currentSceneNum].arguments[0] === 'email' ||
+          WalkthroughConfig.scenesConfig[currentSceneNum].arguments[0] === 'name')
+        ) {
+        if (WalkthroughConfig.scenesConfig[currentSceneNum].arguments[0] === 'email') {
+          if (email.length > 0 && email.indexOf('.') !== -1) {
+            this.setState(stateObject);
+          } else {
+            e.preventDefault();
+          }
+        } else {
+          if (name.length > 0) {
+            this.setState(stateObject);
+          } else {
+            e.preventDefault();
+          }
+        }
+      } else {
+        this.setState(stateObject);
+      }
+
+    } else {
+      if (name.length > 0) {
+        stateObject['showNameField'] = true;
+      } else if (name.length === 0) {
+        stateObject['showNameField'] = false;
+      }
+
+      if (email.length > 0 && email.indexOf('.') !== -1) {
+        stateObject['showEmailField'] = true;
+      } else if (email.length === 0) {
+        stateObject['showEmailField'] = false;
+      }
+
+      this.setState(stateObject);
     }
   };
 
@@ -334,7 +432,10 @@ class App extends Component {
         handleKeyPress={this.handleKeyPress}
         currentSceneNumber={this.state.currentSceneNumber}
         name={this.state.name}
+        email={this.state.email}
         phone={this.state.phone}
+        showEmailField={this.state.showEmailField}
+        showNameField={this.state.showNameField}
         checkedExchanges={this.state.checkedExchanges}
         discoveryReason={this.state.discoveryReason}
        />
@@ -392,7 +493,7 @@ class App extends Component {
     console.log('THIS STATE', this.state);
     return (
       <div className="App">
-        {!this.state.enableWalkthrough ? this.renderSummary() : this.renderWalkthrough()}
+      {!this.state.enableWalkthrough ? this.renderSummary() : this.renderWalkthrough()}
       </div>
     );
   }
