@@ -128,29 +128,20 @@ class Walkthrough extends Component {
     };
   }
 
-  componentDidUpdate(prevProps) {
-    // if (this.props.currentSceneNumber !== prevProps.currentSceneNumber) {
-    //   console.log('in here!!');
-    //   let step = this.state.activeStep;
-    //   this.setState({
-    //     activeStep: step++,
-    //   });
-    // }
-  }
-
-
   renderHeadline(classes) {
+    let isLastScene = WalkthroughConfig.scenesConfig[this.props.currentSceneNumber + 1] === undefined;
     let showName = this.props.currentSceneNumber === 2 || this.props.currentSceneNumber === 3;
     let isFirstSlide = this.props.currentSceneNumber === 0;
     let currentStatus = ['Informed', 'Curious', 'Skeptical', 'Rekt'];
     let showCustomizedResponse = this.props.currentSceneNumber === 5;
-    let text = WalkthroughConfig.scenesConfig[this.props.currentSceneNumber].headline;
-    let multipleSelections = WalkthroughConfig.scenesConfig[this.props.currentSceneNumber].multipleSelections;
-    let winkImageToUse = WalkthroughConfig.scenesConfig[this.props.currentSceneNumber].icons ?
-      winks[WalkthroughConfig.scenesConfig[this.props.currentSceneNumber].icons[0]] :
-      null;
-
-    console.log('headline props', this.props, winkImageToUse);
+    let text =
+      WalkthroughConfig.scenesConfig[this.props.currentSceneNumber].headline;
+    let multipleSelections =
+      WalkthroughConfig.scenesConfig[this.props.currentSceneNumber].multipleSelections;
+    let winkImageToUse =
+      WalkthroughConfig.scenesConfig[this.props.currentSceneNumber].icons ?
+        winks[WalkthroughConfig.scenesConfig[this.props.currentSceneNumber].icons[0]] :
+        null;
 
     if (showName) {
       text = text + this.props.name;
@@ -161,6 +152,8 @@ class Walkthrough extends Component {
     }
 
     let stepperLabels = WalkthroughConfig.scenesConfig[this.props.currentSceneNumber].stepperLabels;
+
+    console.log('isLastScene', isLastScene);
 
     if (stepperLabels && stepperLabels.length > 0) {
       return (
@@ -190,6 +183,18 @@ class Walkthrough extends Component {
             <header className="App-header2" className={classes.header}>
               <div className={classes.surveyHeadline}>
               {stepperLabels[3]}
+              </div>
+            </header>
+          </Grid>
+        </Grid>
+      );
+    } else if (isLastScene) {
+      return (
+        <Grid container className={classes.demo} justify="center" spacing={Number(0)}>
+          <Grid item lg={12}>
+            <header className="App-header2" className={classes.header}>
+              <div id="pulsating-circle">
+                {WalkthroughConfig.scenesConfig[this.props.currentSceneNumber].headline}
               </div>
             </header>
           </Grid>
@@ -441,7 +446,7 @@ class Walkthrough extends Component {
         <Grid item xs={12}>
           {button}
           <div className={classes.demo2}>
-           <Stepper activeStep={activeStep} alternativeLabel className={currentSceneNumber > 6 ? classes.stepper : classes.displayNone}>
+           <Stepper activeStep={activeStep} alternativeLabel className={currentSceneNumber > 6 && !isLastScene ? classes.stepper : classes.displayNone}>
               {steps.map(label => {
                 return (
                   <Step key={label} className={classes.completed}>

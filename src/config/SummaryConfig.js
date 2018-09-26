@@ -123,7 +123,7 @@ const SummaryConfig = {
     },
     textLeft: {
       textAlign: 'left',
-      paddingLeft: '10px',
+      paddingLeft: '5px',
     },
     firstBackgroundImg: {
       backgroundImage: `url(${Image})`,

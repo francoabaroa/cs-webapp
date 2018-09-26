@@ -102,7 +102,7 @@ class App extends Component {
     }
 
     if (WalkthroughConfig.scenesConfig[currentSceneNum].multipleSelections && this.state.checkedExchanges.length > 0) {
-      window.scrollTo(0,document.body.scrollHeight);
+      window.scrollTo(0, document.body.scrollHeight);
     }
 
     if (this.state.enableWalkthrough && isLastScene) {
@@ -267,7 +267,6 @@ class App extends Component {
   };
 
   setPhoneNumber = phone => {
-    console.log('phone!!', phone);
     this.setState({ phone });
   }
 

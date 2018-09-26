@@ -152,7 +152,7 @@ const WalkthroughConfig = {
       'stepperLabels': ['BASICS', 'LIFESTYLE', 'VALUES', 'STRATEGY'],
     },
     21: {
-      'headline': 'Strategy',
+      'headline': 'STRATEGY',
       'method': '',
       'stepLevel': 3,
     },

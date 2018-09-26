@@ -356,10 +356,10 @@ class Summary extends Component {
       <Grid item xs={4} id="rightdiv" style={{padding: '5px'}}>
         <Card className={classes.card2}>
           <CardContent>
-            <div className={classNames(classes.blackFont, classes.textLeft, classes.bold, classes.alertLowerPadding, classes.alertTitleSub)}>
+            <div className={classNames(classes.blackFont, classes.textLeft, classes.bold, classes.alertLowerPadding, classes.alertTitleSub)} style={{fontSize: '0.95em', paddingLeft: '10px'}}>
             {'Thanks for the feedback, ' + this.props.name + '.'}
             </div>
-            <div className={classNames(classes.blackFont, classes.textLeft, classes.bold, classes.alertLowerPadding, classes.alertTitleSub)}>
+            <div className={classNames(classes.blackFont, classes.textLeft, classes.bold, classes.alertLowerPadding, classes.alertTitleSub)} style={{fontSize: '0.95em', paddingBottom: '2px', paddingLeft: '10px'}}>
             {'Based on your answers, we\'ve crafted your tailored game plan.'}
             </div>
             <br />
@@ -407,7 +407,7 @@ class Summary extends Component {
           <div className={classes.thinLines}></div><span className={classes.textCenter} style={{fontSize: '1.55em', color: '#4A90E2'}}>{'$' + SummaryConfig.prices[this.props.packageSelected]}</span><div className={classes.thinLines}></div>
           <div className={classes.textCenter} style={{fontSize: '0.80em', color: '#4A90E2'}}>monthly</div>
           <CardActions className={classes.textCenter}>
-            <Button id="customButton" onClick={this.saveUser} size="small" color="primary" variant="contained" className={classNames(classes.margin, classes.cssRoot, classes.center, classes.subscribeButton)}>
+            <Button disabled={this.props.phone === ''} id="customButton" onClick={this.saveUser} size="small" color="primary" variant="contained" className={classNames(classes.margin, classes.cssRoot, classes.center, classes.subscribeButton)}>
               Subscribe
             </Button>
           </CardActions>
@@ -594,7 +594,7 @@ class Summary extends Component {
   }
 
   render() {
-    console.log('resetting state', this.state);
+    console.log('resetting state', this.state, 'this.props', this.props);
     return (
       <div className="App">
         {!this.state.enableWalkthrough ? this.renderWelcome() : this.renderSummary()}
