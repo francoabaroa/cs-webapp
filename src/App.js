@@ -35,12 +35,10 @@ class App extends Component {
       cryptoTradingHabit: '',
       currenciesToExplore: '',
       currentSceneNumber: 0,
-      discoveryReason: '', // unused
-      doesUseTSA: false,
+      doesUseTA: false,
       email: '',
       incorporatingCryptoLifeAnswer: '',
       isPastCryptoTrader: false,
-      moneyWillingToInvest: '', // unused
       name: '',
       packagePrice: 0,
       packageSelected: null,
@@ -53,7 +51,6 @@ class App extends Component {
       showNameField: false,
       spacing: '40',
       spareTimeAvailability: '',
-      technicalAnalysisUse: '', // unused
       timeOut: 24,
     };
   }
@@ -109,7 +106,7 @@ class App extends Component {
     }
 
     if (this.state.enableWalkthrough && isLastScene) {
-      // TODO: better way to determine package
+      // TODO: need better way to determine package
       let pkg = '';
       let priceIncrease = 0;
       let priceDecrease = 0;
@@ -120,7 +117,7 @@ class App extends Component {
         pkg = 'Trader';
       }
 
-      var tradingHabits = ['Trade quick', 'Hold for a bit', 'Sit back and relax'];
+      const tradingHabits = ['Trade quick', 'Hold for a bit', 'Sit back and relax'];
       if (this.state.cryptoTradingHabit === tradingHabits[0]) {
         timeOut = 24;
       } else if (this.state.cryptoTradingHabit === tradingHabits[1]) {
@@ -129,7 +126,7 @@ class App extends Component {
         timeOut = 96;
       }
 
-      var riskProfiles = ['Risk averse', 'The middle', 'High risk,'];
+      const riskProfiles = ['Risk averse', 'The middle', 'High risk,'];
       if (this.state.cryptoRiskProfile === riskProfiles[0]) {
         priceIncrease = 5;
         priceDecrease = 2;
@@ -269,6 +266,11 @@ class App extends Component {
     });
   };
 
+  setPhoneNumber = phone => {
+    console.log('phone!!', phone);
+    this.setState({ phone });
+  }
+
   handleExchangeListToggle = value => () => {
     const { checkedExchanges, currentSceneNumber } = this.state;
     const currentIndex = checkedExchanges.indexOf(value);
@@ -311,17 +313,6 @@ class App extends Component {
     this.setState(stateObject);
   };
 
-  // handlePastCryptoTrader = isPastCryptoTrader => {
-  //   let currentSceneNum = this.state.currentSceneNumber;
-  //   if (!isPastCryptoTrader) {
-  //     currentSceneNum = currentSceneNum + 2;
-  //   }
-  //   this.setState({
-  //     currentSceneNumber: currentSceneNum + 1,
-  //     isPastCryptoTrader
-  //   });
-  // };
-
   handlePastCryptoTrader = isPastCryptoTrader => {
     let currentSceneNum = this.state.currentSceneNumber;
     let activeStep = WalkthroughConfig.scenesConfig[currentSceneNum].stepLevel;
@@ -336,25 +327,20 @@ class App extends Component {
     });
   };
 
-  handleUseOfTA = doesUseTSA => {
+  handleUseOfTA = doesUseTA => {
     let currentSceneNum = this.state.currentSceneNumber;
     let activeStep = WalkthroughConfig.scenesConfig[currentSceneNum].stepLevel;
     this.setState({
       currentSceneNumber: currentSceneNum + 1,
-      doesUseTSA,
+      doesUseTA,
       activeStep
     });
-  };
-
-   handleDiscoveryReasonSelection = event => {
-    this.setState({ discoveryReason: event.target.value });
   };
 
   handleKeyPress = e => {
     const name = document.getElementById('nameContent') ? document.getElementById('nameContent').textContent : '';
     const email = document.getElementById('emailContent') ? document.getElementById('emailContent').textContent : '';
-
-    var contenteditable = document.querySelector('[contenteditable]'),
+    const contenteditable = document.querySelector('[contenteditable]'),
     text = contenteditable.textContent;
     let stateObject = {};
 
@@ -415,8 +401,6 @@ class App extends Component {
 
 
   renderWalkthrough() {
-    // <Walkthrough />
-    // <Chart />
     return (
       <Walkthrough
         activeStep={this.state.activeStep}
@@ -428,7 +412,6 @@ class App extends Component {
         handleSelection={this.handleSelection}
         handlePastCryptoTrader={this.handlePastCryptoTrader}
         handleUseOfTA={this.handleUseOfTA}
-        handleDiscoveryReasonSelection={this.handleDiscoveryReasonSelection}
         handleKeyPress={this.handleKeyPress}
         currentSceneNumber={this.state.currentSceneNumber}
         name={this.state.name}
@@ -457,6 +440,7 @@ class App extends Component {
         checkedExchanges={this.state.checkedExchanges}
         name={this.state.name}
         phone={this.state.phone}
+        setPhoneNumber={this.setPhoneNumber}
         email={this.state.email}
         spareTimeAvailability={this.state.spareTimeAvailability}
         packageSelected={this.state.packageSelected}

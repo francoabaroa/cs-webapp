@@ -1,9 +1,20 @@
+import Image from '../assets/Background-currency.png';
 import Image2 from '../assets/bckgrnd-image.png';
 import Image3 from '../assets/bckgrnd-image2.png';
 
 const colors = ['#4a90e2', 'rgba(255, 255, 255, 0.80)', '#244770', '#3da937'];
 
 const SummaryConfig = {
+  applicationJson: 'application/json',
+  coinbasePackageText: '\n With a busy lifestyle, most of your trading needs can be solved for simply by solely tracking the Coinbase coins — that\’s why we keep it simple.',
+  traderPackageText: '\n Being a more experienced crypto trader, we give you the full power of our AI — you\’re given the ears and eyes that monitor the market 24/7.',
+  saveStrategyUrl: 'https://cs-price-alerts.herokuapp.com/saveteststrategy',
+  saveUserUrl: 'https://cs-price-alerts.herokuapp.com/createtestuser',
+  POST: 'POST',
+  prices: {
+    Coinbase: 10,
+    Trader: 30,
+  },
   styles: theme => ({
     card: {
       minWidth: 275,
@@ -17,6 +28,8 @@ const SummaryConfig = {
     },
     card2: {
       // maxWidth: 375,
+      // height: '100%',
+      position: 'sticky',
     },
     hide: {
       display: 'none',
@@ -166,6 +179,9 @@ const SummaryConfig = {
     slider: {
       maxWidth: '200px',
       paddingRight: '50px',
+      '&:focus': {
+        outline: 'none !important',
+      },
     },
     sliderTest: {
       display: 'inline',
@@ -213,6 +229,9 @@ const SummaryConfig = {
       fontSize: '14px',
       textAlign: 'center',
       fontWeight: 400,
+      '&:focus': {
+        outline: 'none !important',
+      },
     },
     activeTab: {
       color: '#4a90e2',

@@ -111,8 +111,8 @@ const images = {
 };
 
 const winks = {
-  wink2,
   wink3,
+  wink2,
 };
 
 function getSteps() {

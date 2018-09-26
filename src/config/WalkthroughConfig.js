@@ -185,6 +185,15 @@ const WalkthroughConfig = {
       backgroundColor: '#FFFFFF',
       borderRadius: '4px',
       color: 'black',
+      '&:hover': {
+        margin: theme.spacing.unit,
+        minHeight: '260px',
+        minWidth: '220px',
+        border: '3px solid #000000',
+        backgroundColor: '#FFFFFF',
+        borderRadius: '4px',
+        color: 'black',
+      },
     },
     group: {
       margin: `${theme.spacing.unit}px 0`,
