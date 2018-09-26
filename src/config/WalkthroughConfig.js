@@ -6,14 +6,11 @@ const WalkthroughConfig = {
     3: 'Kraken',
     4: 'Huobi',
     5: 'Poloniex',
-    // 5: 'Cryptopia',
-    // 5: 'HitBTC',
-    // 7: 'Kucoin',
-    // 9: 'Okex',
   },
   scenesConfig: {
     0: {
       'headline': 'Hi there!',
+      'subHeadline': 'We\'d like to ask you a few questions so we can generate the perfect alerts for your trading style.',
       'stepLevel': 0,
     },
     1: {
@@ -42,7 +39,7 @@ const WalkthroughConfig = {
     },
     5: {
       'headline': 'NEED CUSTOMIZED RESPONSE HERE DEPENDING ON WHAT THEY PICKED',
-      'customizedResponses': ['An expert, huh? We\'ll see if we can show you something new.', 'We\'ll reward that curiosity, Goob. But first, let\'s get to know you!', 'Excellent, we built our research database with skeptics in mind (and in our office).', 'Oops, looks like you weren\'t using an indicator. Let\'s fix that.'],
+      'customizedResponses': ['An expert, huh? We\'ll see if we can show you something new.', 'We\'ll reward that curiosity! But first, let\'s get to know you.', 'Excellent, we built our research database with skeptics in mind (and in our office).', 'Oops, looks like you weren\'t using an indicator. Let\'s fix that.'],
       'stepLevel': 0,
     },
     6: {
@@ -76,6 +73,7 @@ const WalkthroughConfig = {
       'arguments': [],
       'multipleSelections': true,
       'headline': 'What exchanges do you use to trade?',
+      'subHeadline': 'Select all that apply!',
       'icons': ['coinbase', 'binance', 'okex', 'kraken', 'huobi', 'poloniex'],
       'strings': ['Coinbase', 'Binance', 'OKex', 'Kraken', 'Huobi', 'Poloniex'],
       'method': 'renderButtons',
@@ -84,6 +82,7 @@ const WalkthroughConfig = {
     11: {
       'arguments': ['email'],
       'headline': 'What\'s your email?',
+      'subHeadline': 'So we can save your answers.',
       'method': 'renderTextInput',
       'stepLevel': 0,
     },
@@ -115,7 +114,7 @@ const WalkthroughConfig = {
     },
     16: {
       'arguments': ['currenciesToExplore'],
-      'headline': 'What currencies should we explore?',
+      'headline': 'Which currencies are you interested in trading?',
       'method': 'renderButtons',
       'icons': ['topCurrencies', 'wellKnown', 'allOfThem',],
       'strings': ['Top currencies', 'Well known', 'All of them'],
@@ -455,6 +454,9 @@ const WalkthroughConfig = {
     purpleFont: {
       color: '#2d59b0',
       fontWeight: 600,
+    },
+    headlineTopPadding: {
+      paddingTop: '130px',
     },
   }),
 };

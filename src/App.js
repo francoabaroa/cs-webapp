@@ -57,7 +57,7 @@ class App extends Component {
 
   componentDidMount() {
     if (this.state.enableWalkthrough) {
-      let twoAndAHalfSeconds = 2500;
+      let fiveSeconds = 5000;
       let currentSceneNum = this.state.currentSceneNumber;
       let activeStep = WalkthroughConfig.scenesConfig[currentSceneNum].stepLevel;
       if (WalkthroughConfig.scenesConfig[currentSceneNum].method === undefined) {
@@ -66,7 +66,7 @@ class App extends Component {
             currentSceneNumber: currentSceneNum + 1,
             activeStep: activeStep,
           });
-        }, twoAndAHalfSeconds)
+        }, fiveSeconds)
       }
     }
   }

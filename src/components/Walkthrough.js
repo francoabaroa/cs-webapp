@@ -130,10 +130,16 @@ class Walkthrough extends Component {
 
   renderHeadline(classes) {
     let isLastScene = WalkthroughConfig.scenesConfig[this.props.currentSceneNumber + 1] === undefined;
-    let showName = this.props.currentSceneNumber === 2 || this.props.currentSceneNumber === 3;
+    let showName =
+      this.props.currentSceneNumber === 2 ||
+      this.props.currentSceneNumber === 3;
     let isFirstSlide = this.props.currentSceneNumber === 0;
     let currentStatus = ['Informed', 'Curious', 'Skeptical', 'Rekt'];
     let showCustomizedResponse = this.props.currentSceneNumber === 5;
+    let hasSubHeadline =
+      WalkthroughConfig.scenesConfig[this.props.currentSceneNumber].subHeadline ?
+        true :
+        false;
     let text =
       WalkthroughConfig.scenesConfig[this.props.currentSceneNumber].headline;
     let multipleSelections =
@@ -194,7 +200,6 @@ class Walkthrough extends Component {
           <Grid item lg={12}>
             <header className="App-header2" className={classes.header}>
               <div id="pulsating-circle">
-                {WalkthroughConfig.scenesConfig[this.props.currentSceneNumber].headline}
               </div>
             </header>
           </Grid>
@@ -206,7 +211,13 @@ class Walkthrough extends Component {
           <header className="App-header2" className={classes.header}>
             <div className={classes.surveyHeadline}>
             <div style={showName ? {paddingBottom: '50px'} : null}> {text} </div>
-            {multipleSelections ? <div className={classes.surveySubHeadline}> {'Select all that apply!'} </div> : null}
+            {
+              hasSubHeadline ?
+                <div className={classes.surveySubHeadline}>
+                  { WalkthroughConfig.scenesConfig[this.props.currentSceneNumber].subHeadline }
+                </div>
+                : null
+            }
             {showName ? <img src={winkImageToUse} /> : null}
             {isFirstSlide ? <img src={wave} style={{paddingTop: '45px'}} />: null}
             </div>
@@ -463,7 +474,7 @@ class Walkthrough extends Component {
           alignItems="center"
           justify="center"
         >
-           <Grid item>
+           <Grid className={currentSceneNumber < 7 ? classes.headlineTopPadding : null} item>
             {headline}
           </Grid>
         </Grid>

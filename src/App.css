@@ -42,12 +42,12 @@
 
 #pulsating-circle {
   margin-top: 75px;
-  width: 250px;
-  height: 250px;
+  width: 320px;
+  height: 320px;
   border-radius: 50%;
-  font-size: 1.75em;
+  font-size: 1.25em;
   color: #2d59b0;
-  line-height: 250px;
+  line-height: 320px;
   text-align: 'center';
   background: #efeae9;
   position: absolute;
@@ -56,7 +56,7 @@
   transform: translateX(-50%) translateY(-50%);
 }
 #pulsating-circle:before {
-  content: 'STRATEGY';
+  content: 'GENERATING YOUR STRATEGY...';
   position: relative;
   display: block;
   width: 300%;
@@ -69,7 +69,7 @@
   animation: pulse-ring 1.25s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
 }
 #pulsating-circle:after {
-  content: 'STRATEGY';
+  content: 'GENERATING YOUR STRATEGY...';
   position: absolute;
   left: 0;
   top: 0;
