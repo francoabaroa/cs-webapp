@@ -158,18 +158,19 @@ class App extends Component {
 
   goBack = () => {
     let currentSceneNum = this.state.currentSceneNumber;
-    let scenesToSubtract = 1;
-    // TODO: bug check?
+    let numberOfScenesToSubtract = 1;
     let activeStep = WalkthroughConfig.scenesConfig[currentSceneNum].stepLevel;
 
-    if (WalkthroughConfig.scenesConfig[currentSceneNum].arguments && WalkthroughConfig.scenesConfig[currentSceneNum].arguments[0] === 'email') {
-      scenesToSubtract = 3;
-    } else if (WalkthroughConfig.scenesConfig[currentSceneNum - 1].method === undefined) {
-      scenesToSubtract = 2;
+    for (let i = currentSceneNum - 1; i >= 0; i--) {
+      if (WalkthroughConfig.scenesConfig[i].method === undefined) {
+        numberOfScenesToSubtract++;
+      } else if (WalkthroughConfig.scenesConfig[i].method !== undefined) {
+        break;
+      }
     }
 
     this.setState({
-      currentSceneNumber: 1,
+      currentSceneNumber: currentSceneNum - numberOfScenesToSubtract,
       enableWalkthrough: true,
       activeStep,
     });

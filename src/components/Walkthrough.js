@@ -482,6 +482,10 @@ class Walkthrough extends Component {
             {body}
           </Grid>
           {WalkthroughConfig.scenesConfig[currentSceneNumber].multipleSelections && this.props.checkedExchanges.length > 0 ? submitButton : null }
+          {isFirstScene === false || isLastScene === false || currentSceneNumber !== 1 ?
+            <div onClick={this.props.goBack} className={backClassName}>{'< Back'}</div> :
+            ''
+          }
         </Grid>
       </Grid>
     ) : (<Grid container spacing={24} style={{margin: 'auto', fontSize: '35px', fontFamily: 'Roboto, sans-serif', marginTop: '250px'}}>
