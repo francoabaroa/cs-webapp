@@ -198,7 +198,6 @@ class Summary extends Component {
 
   }
 
-
   handleShowMore = (currenciesLength) => {
     let currentShowMoreIndex = this.state.showMoreIndex;
     let updatedShowMoreIndex = currentShowMoreIndex + 8;
@@ -322,10 +321,23 @@ class Summary extends Component {
        <Paper className={classNames(classes.paper, classes.negativeRightMargin)}>
        <div className={classes.titleHeaderDiv}>
        <span
-          className={classNames(classes.titleHeaders, classes.titleHeaderFont, classes.activeTab)}>
-           Recommended
+         className={classNames(
+           classes.titleHeaders,
+           classes.titleHeaderFont,
+           classes.activeTab
+          )}>
+           Your Personalized Alerts Plan
        </span>
-       <img className={classes.backButton} src={back} onClick={this.props.goBack}/>
+       <span
+         onClick={this.props.goBack}
+         className={classNames(
+           classes.titleHeaders,
+           classes.titleHeaderFont,
+           classes.inactiveTab,
+           classes.backButton
+          )}>
+            {'Back'}
+       </span>
        </div>
        </Paper>
      </Grid>
@@ -351,24 +363,35 @@ class Summary extends Component {
   renderLeftCard() {
     const { classes, priceIncrease, priceDecrease, timeOut } = this.props;
     const currencyStrings = ['Top currencies', 'Well known', 'All of them'];
+    let coinsNumber = this.props.currenciesToExplore === currencyStrings[0] ?
+      '5' :
+      this.props.currenciesToExplore === currencyStrings[1] ?
+      '100' :
+      this.props.currenciesToExplore === currencyStrings[2] ?
+      '250' :
+      '';
+    let currencyString = this.props.currenciesToExplore === currencyStrings[2] ?
+      'All Top ' + coinsNumber + ' Currencies' :
+      'Top ' + coinsNumber + ' Currencies';
+
 
     return (
       <Grid item xs={4} id="rightdiv" style={{padding: '5px'}}>
         <Card className={classes.card2}>
           <CardContent>
-            <div className={classNames(classes.blackFont, classes.textLeft, classes.bold, classes.alertLowerPadding, classes.alertTitleSub)} style={{fontSize: '0.95em', paddingLeft: '10px'}}>
+            <div className={classNames(classes.blackFont, classes.textLeft, classes.bold, classes.alertLowerPadding, classes.alertTitleSub)} style={{fontSize: '1.1rem', paddingLeft: '10px'}}>
             {'Thanks for the feedback, ' + this.props.name + '.'}
             </div>
-            <div className={classNames(classes.blackFont, classes.textLeft, classes.bold, classes.alertLowerPadding, classes.alertTitleSub)} style={{fontSize: '0.95em', paddingBottom: '2px', paddingLeft: '10px'}}>
+            <div className={classNames(classes.blackFont, classes.textLeft, classes.bold, classes.alertLowerPadding, classes.alertTitleSub)} style={{fontSize: '1.1rem', paddingBottom: '2px', paddingLeft: '10px'}}>
             {'Based on your answers, we\'ve crafted your tailored game plan.'}
             </div>
             <br />
             <div className={classes.nonActiveOverlay}>
             <div className={classNames(classes.blackFont, classes.textLeft, classes.alertLowerPadding, classes.alertTitle)}>
-            {'Monitor:'}
+            {'Cryptocurrencies:'}
             </div>
             <div className={classNames(classes.blackFont, classes.textLeft, classes.alertLowerPadding, classes.alertTitleSub)}>
-            {this.props.currenciesToExplore === currencyStrings[2] ? this.props.currenciesToExplore : this.props.currenciesToExplore + ' by market cap'}
+            {currencyString}
             </div>
             </div>
             <div className={this.props.checkedExchanges.length > 0 ? classes.nonActiveOverlay: classes.hide} style={{display: 'none'}}>
@@ -462,7 +485,7 @@ class Summary extends Component {
             </Typography>
             <br />
             <Typography component="p" className={classNames(classes.blackFont, classes.textLeft)}>
-              {'\n We\’ll track the currencies in the top ' + currencyNum + ' - ranked by market cap - and alert you when our AI detects anomalies in these specific currencies.' + packageText}
+              {'\n We\’ll track the top ' + currencyNum + ' currencies and alert you when our AI detects anomalies in these specific currencies.' + packageText}
             </Typography>
             <br />
             <Typography component="p" className={classNames(classes.bold, classes.textLeft, classes.bottomPadding)}>

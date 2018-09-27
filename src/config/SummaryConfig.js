@@ -305,10 +305,10 @@ const SummaryConfig = {
       backgroundColor: 'black',
     },
     trackBefore: {
-      backgroundColor: '#53c4bc',
+      backgroundColor: '#3f51b5',
       height: '8px',
       borderRadius: '5px',
-      color: '#53c4bc',
+      color: '#3f51b5',
     },
     trackAfter: {
       backgroundColor: '#e6e6e6',
