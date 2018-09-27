@@ -101,6 +101,8 @@ const WalkthroughConfig = {
     },
     14: {
       'arguments': ['spareTimeAvailability'],
+      'hasCustomPadding': true,
+      'customPaddings': [40, 40, 40],
       'headline': 'When it comes to spare time for crypto, are you:',
       'method': 'renderButtons',
       'icons': ['completelyBooked', 'occasionallyAvailable', 'prettyFree'],
@@ -114,6 +116,8 @@ const WalkthroughConfig = {
     },
     16: {
       'arguments': ['currenciesToExplore'],
+      'hasCustomPadding': true,
+      'customPaddings': [60, 40, 10],
       'headline': 'Which currencies are you interested in trading?',
       'method': 'renderButtons',
       'icons': ['topCurrencies', 'wellKnown', 'allOfThem',],
@@ -131,6 +135,8 @@ const WalkthroughConfig = {
     },
     18: {
       'arguments': ['cryptoRiskProfile'],
+      'hasCustomPadding': true,
+      'customPaddings': [60, 40, 40],
       'headline': 'When you trade, are you:',
       'method': 'renderButtons',
       'icons': ['noRisk', 'midRisk', 'highRisk'],

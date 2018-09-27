@@ -5,6 +5,11 @@ import Image3 from '../assets/bckgrnd-image2.png';
 const colors = ['#4a90e2', 'rgba(255, 255, 255, 0.80)', '#244770', '#3da937'];
 
 const SummaryConfig = {
+  cryptospotlight: 'CryptoSpotlight',
+  coinbaseCurrencies: ['BTC', 'ETH', 'BCH', 'LTC', 'ETC'],
+  currencyStrings: ['Top currencies', 'Well known', 'All of them'],
+  riskProfiles: ['Risk averse', 'The middle', 'High risk,'],
+  topXCoinsApiUrl: 'https://cs-price-alerts.herokuapp.com/top?top=',
   applicationJson: 'application/json',
   coinbasePackageText: '\n With a busy lifestyle, most of your trading needs can be solved for simply by solely tracking the Coinbase coins — that\’s why we keep it simple.',
   traderPackageText: '\n Being a more experienced crypto trader, we give you the full power of our AI — you\’re given the ears and eyes that monitor the market 24/7.',

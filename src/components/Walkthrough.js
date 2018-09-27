@@ -278,6 +278,13 @@ class Walkthrough extends Component {
       className = classes.bigButton;
     }
 
+    let topPadding = 40;
+    let hasCustomPadding = WalkthroughConfig.scenesConfig[this.props.currentSceneNumber].hasCustomPadding;
+    let customPadding = [40, 40, 40];
+    if (hasCustomPadding) {
+      customPadding = WalkthroughConfig.scenesConfig[this.props.currentSceneNumber].customPaddings;
+    }
+
     return buttonStrings.map((value, index) => {
       let selectionHandlerArgument = buttonStrings[index];
       return (
@@ -322,7 +329,8 @@ class Walkthrough extends Component {
                     imagesToUse !== undefined ?
                       classes.buttonLabelPadding :
                       classes.buttonLabel
-                  }>
+                  }
+                  style={hasCustomPadding ? {paddingTop: customPadding[index] + 'px'} : {paddingTop: '0px'} }>
                   {buttonStrings[index]}
                 </div>
                 {

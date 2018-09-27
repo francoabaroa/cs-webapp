@@ -74,21 +74,19 @@ class Summary extends Component {
       }
     });
 
-
     if (this.props.currenciesToExplore.length > 0) {
-      const currencyStrings = ['Top currencies', 'Well known', 'All of them'];
       let currencyNum = 0;
       // top 5 needs to be coinbase ones
-      if (this.props.currenciesToExplore === currencyStrings[0]) {
+      if (this.props.currenciesToExplore === SummaryConfig.currencyStrings[0]) {
         currencyNum = 5;
-      } else if (this.props.currenciesToExplore === currencyStrings[1]) {
+      } else if (this.props.currenciesToExplore === SummaryConfig.currencyStrings[1]) {
         currencyNum = 100;
-      } else if (this.props.currenciesToExplore === currencyStrings[2]) {
+      } else if (this.props.currenciesToExplore === SummaryConfig.currencyStrings[2]) {
         currencyNum = 250;
       }
 
       if (currencyNum === 5) {
-        let currencies = ['BTC', 'ETH', 'BCH', 'LTC', 'ETC'];
+        let currencies = SummaryConfig.coinbaseCurrencies;
         currencies.unshift(null);
         let checkboxes = {
           'BTC': true,
@@ -99,7 +97,7 @@ class Summary extends Component {
         };
         this.setState({ currencies, checkBoxes: checkboxes });
       } else {
-        fetch('https://cs-price-alerts.herokuapp.com/top?top=' + currencyNum)
+        fetch(SummaryConfig.topXCoinsApiUrl + currencyNum)
         .then((response) => {return response.json()})
         .then((data) => {
           let checkboxes = {};
@@ -115,7 +113,7 @@ class Summary extends Component {
 
     document.getElementById('customButton').addEventListener('click', function(e) {
       handler.open({
-        name: 'CryptoSpotlight',
+        name: SummaryConfig.cryptospotlight,
         description: self.props.packageSelected + ' Package',
         zipCode: true,
         amount: SummaryConfig.prices[self.props.packageSelected] + '00',
@@ -362,15 +360,14 @@ class Summary extends Component {
 
   renderLeftCard() {
     const { classes, priceIncrease, priceDecrease, timeOut } = this.props;
-    const currencyStrings = ['Top currencies', 'Well known', 'All of them'];
-    let coinsNumber = this.props.currenciesToExplore === currencyStrings[0] ?
+    let coinsNumber = this.props.currenciesToExplore === SummaryConfig.currencyStrings[0] ?
       '5' :
-      this.props.currenciesToExplore === currencyStrings[1] ?
+      this.props.currenciesToExplore === SummaryConfig.currencyStrings[1] ?
       '100' :
-      this.props.currenciesToExplore === currencyStrings[2] ?
+      this.props.currenciesToExplore === SummaryConfig.currencyStrings[2] ?
       '250' :
       '';
-    let currencyString = this.props.currenciesToExplore === currencyStrings[2] ?
+    let currencyString = this.props.currenciesToExplore === SummaryConfig.currencyStrings[2] ?
       'All Top ' + coinsNumber + ' Currencies' :
       'Top ' + coinsNumber + ' Currencies';
 
@@ -441,32 +438,30 @@ class Summary extends Component {
 
   renderRightCard() {
     const { classes, priceIncrease, priceDecrease, timeOut } = this.props;
-    const currencyStrings = ['Top currencies', 'Well known', 'All of them'];
-    const riskProfiles = ['Risk averse', 'The middle', 'High risk,'];
 
     let currencyCheckboxes = this.renderCheckboxes(classes);
     let currencyNum = 0;
     let riskProfileText = '';
 
-    if (this.props.currenciesToExplore === currencyStrings[0]) {
+    if (this.props.currenciesToExplore === SummaryConfig.currencyStrings[0]) {
       currencyNum = 5;
-    } else if (this.props.currenciesToExplore === currencyStrings[1]) {
+    } else if (this.props.currenciesToExplore === SummaryConfig.currencyStrings[1]) {
       currencyNum = 100;
-    } else if (this.props.currenciesToExplore === currencyStrings[2]) {
+    } else if (this.props.currenciesToExplore === SummaryConfig.currencyStrings[2]) {
       currencyNum = 250;
     }
 
-    if (this.props.cryptoRiskProfile === riskProfiles[0]) {
+    if (this.props.cryptoRiskProfile === SummaryConfig.riskProfiles[0]) {
       riskProfileText = 'low';
-    } else if (this.props.cryptoRiskProfile === riskProfiles[1]) {
+    } else if (this.props.cryptoRiskProfile === SummaryConfig.riskProfiles[1]) {
       riskProfileText = 'medium';
-    } else if (this.props.cryptoRiskProfile === riskProfiles[2]) {
+    } else if (this.props.cryptoRiskProfile === SummaryConfig.riskProfiles[2]) {
       riskProfileText = 'higher than most';
     }
 
     let packageText = this.props.packageSelected === 'Coinbase' ?
-      SummaryConfig['coinbasePackageText'] :
-      SummaryConfig['traderPackageText'];
+      SummaryConfig.coinbasePackageText :
+      SummaryConfig.traderPackageText;
 
     return (
       <Grid item xs={8} id="leftdiv" style={{padding: '5px'}}>
@@ -528,10 +523,10 @@ class Summary extends Component {
             <div className={classNames(classes.wrapperRight, classes.slider)}>
             <div id="label" className={classes.sliderLabel}>Price Increase</div>
             <Slider classes={{
-          thumb: classes.thumb,
-          trackBefore: classes.trackBefore,
-          trackAfter: classes.trackAfter,
-        }} value={parseInt(priceIncrease)} aria-labelledby="label" onChange={this.props.changePriceIncreaseSlider} />
+              thumb: classes.thumb,
+              trackBefore: classes.trackBefore,
+              trackAfter: classes.trackAfter,
+            }} value={parseInt(priceIncrease)} aria-labelledby="label" onChange={this.props.changePriceIncreaseSlider} />
             <FormControl>
             <input
               onChange={this.props.changePriceIncrease}
@@ -542,11 +537,15 @@ class Summary extends Component {
             </div>
             <div className={classNames(classes.wrapperRight, classes.slider)}>
             <div id="label2" className={classes.sliderLabel}>Price Decrease</div>
-            <Slider classes={{
-          thumb: classes.thumb,
-          trackBefore: classes.trackBefore,
-          trackAfter: classes.trackAfter,
-        }} value={parseInt(priceDecrease)} aria-labelledby="label2" onChange={this.props.changePriceDecreaseSlider} />
+            <Slider
+              classes={{
+                thumb: classes.thumb,
+                trackBefore: classes.trackBefore,
+                trackAfter: classes.trackAfter,
+              }}
+              value={parseInt(priceDecrease)}
+              aria-labelledby="label2"
+              onChange={this.props.changePriceDecreaseSlider} />
             <FormControl>
             <input
               onChange={this.props.changePriceDecrease}
@@ -558,11 +557,17 @@ class Summary extends Component {
             </div>
             <div className={classNames(classes.wrapperRight, classes.slider)}>
             <div id="label3" className={classes.sliderLabel}>Timeout</div>
-            <Slider classes={{
-          thumb: classes.thumb,
-          trackBefore: classes.trackBefore,
-          trackAfter: classes.trackAfter,
-        }} value={parseInt(timeOut)} min={2} max={168} aria-labelledby="label3" onChange={this.props.changeTimeOutSlider} />
+            <Slider
+              classes={{
+                thumb: classes.thumb,
+                trackBefore: classes.trackBefore,
+                trackAfter: classes.trackAfter,
+              }}
+              value={parseInt(timeOut)}
+              min={2}
+              max={168}
+              aria-labelledby="label3"
+              onChange={this.props.changeTimeOutSlider} />
             <FormControl>
             <input
               onChange={this.props.changeTimeOut}
