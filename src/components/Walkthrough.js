@@ -497,7 +497,7 @@ class Walkthrough extends Component {
           }
         </Grid>
       </Grid>
-    ) : (<Grid container spacing={24} style={{margin: 'auto', fontSize: '35px', fontFamily: 'Roboto, sans-serif', marginTop: '250px'}}>
+    ) : (<Grid container justify="center" spacing={24} style={{margin: 'auto', fontSize: '35px', fontFamily: 'Roboto, sans-serif', marginTop: '250px'}}>
         <Grid item lg={3} className={this.props.activeStep === 0 ? classes.purpleFont : null}>
           {WalkthroughConfig.scenesConfig[currentSceneNumber].stepperLabels[0]}
         </Grid>
