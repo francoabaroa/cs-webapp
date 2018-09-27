@@ -53,7 +53,6 @@ class Summary extends Component {
       currentTitleHeader: 'recommended',
       enableWalkthrough: true,
       open: false,
-      phoneNumber: '',
       showMore: false,
       showMoreIndex: 16,
       userId: null,
@@ -112,13 +111,28 @@ class Summary extends Component {
     }
 
     document.getElementById('customButton').addEventListener('click', function(e) {
-      handler.open({
-        name: SummaryConfig.cryptospotlight,
-        description: self.props.packageSelected + ' Package',
-        zipCode: true,
-        amount: SummaryConfig.prices[self.props.packageSelected] + '00',
-      });
-      e.preventDefault();
+      let scrubbedPhone = self.props.phone.split('+')[1];
+      fetch(SummaryConfig.checkIfValidPhoneApiUrl + scrubbedPhone)
+        .then((response) => {return response.json()})
+        .then((data) => {
+          if (data.valid) {
+            if (self.props.phoneNumberError) {
+              self.props.removePhoneErrorMessage();
+            }
+            self.saveUser();
+            handler.open({
+              name: SummaryConfig.cryptospotlight,
+              description: self.props.packageSelected + ' Package',
+              zipCode: true,
+              amount: SummaryConfig.prices[self.props.packageSelected] + '00',
+            });
+            e.preventDefault();
+          } else if (!data.valid) {
+            self.props.triggerPhoneErrorMessage();
+            handler.close();
+            e.preventDefault();
+          }
+        });
     });
 
     window.addEventListener('popstate', function() {
@@ -417,17 +431,26 @@ class Summary extends Component {
             <div className={classNames(classes.blackFont, classes.textLeft, classes.alertLowerPadding, classes.alertTitle)}>
             {'Phone Number'}
             </div>
-            <PhoneInput
-              // TODO: make placeholder interactive
-              placeholder="(111) 222-3333"
-              value={this.props.phone}
-              onChange={this.props.setPhoneNumber} />
+              <PhoneInput
+                // TODO: make placeholder interactive
+                placeholder="Enter phone number"
+                value={this.props.phone}
+                onChange={this.props.setPhoneNumber} />
+              {
+                this.props.phoneNumberError ?
+                  <div
+                    style={{color: 'red', paddingTop: '7px', fontSize: '0.85em'}}>
+                    Phone number invalid. Enter a valid number to proceed.
+                  </div> :
+                  null
+              }
+
             </div>
           </CardContent>
           <div className={classes.thinLines}></div><span className={classes.textCenter} style={{fontSize: '1.55em', color: '#4A90E2'}}>{'$' + SummaryConfig.prices[this.props.packageSelected]}</span><div className={classes.thinLines}></div>
           <div className={classes.textCenter} style={{fontSize: '0.80em', color: '#4A90E2'}}>monthly</div>
           <CardActions className={classes.textCenter}>
-            <Button disabled={this.props.phone === ''} id="customButton" onClick={this.saveUser} size="small" color="primary" variant="contained" className={classNames(classes.margin, classes.cssRoot, classes.center, classes.subscribeButton)}>
+            <Button disabled={this.props.phone === ''} id="customButton" size="small" color="primary" variant="contained" className={classNames(classes.margin, classes.cssRoot, classes.center, classes.subscribeButton)}>
               Subscribe
             </Button>
           </CardActions>

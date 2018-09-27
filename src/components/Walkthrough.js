@@ -55,6 +55,7 @@ import no from '../assets/nope.png';
 import wink2 from '../assets/wink2.png';
 import wink3 from '../assets/wink3.png';
 import wave from '../assets/Wave.png';
+import animation_wave from '../assets/animation_wave.gif';
 
 import classNames from 'classnames';
 

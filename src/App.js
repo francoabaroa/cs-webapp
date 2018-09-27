@@ -43,6 +43,7 @@ class App extends Component {
       packagePrice: 0,
       packageSelected: null,
       phone: '',
+      phoneNumberError: false,
       phoneTradeSetup: '',
       priceIncrease: 15,
       priceDecrease: 5,
@@ -268,6 +269,7 @@ class App extends Component {
   };
 
   setPhoneNumber = phone => {
+
     this.setState({ phone });
   }
 
@@ -337,6 +339,7 @@ class App extends Component {
     });
   };
 
+
   handleKeyPress = e => {
     const name = document.getElementById('nameContent') ? document.getElementById('nameContent').textContent : '';
     const email = document.getElementById('emailContent') ? document.getElementById('emailContent').textContent : '';
@@ -399,6 +402,18 @@ class App extends Component {
     }
   };
 
+  triggerPhoneErrorMessage = () => {
+    this.setState({
+      phoneNumberError: true,
+    });
+  }
+
+  removePhoneErrorMessage = () => {
+    this.setState({
+      phoneNumberError: false,
+    });
+  }
+
 
   renderWalkthrough() {
     return (
@@ -440,6 +455,9 @@ class App extends Component {
         checkedExchanges={this.state.checkedExchanges}
         name={this.state.name}
         phone={this.state.phone}
+        phoneNumberError={this.state.phoneNumberError}
+        triggerPhoneErrorMessage={this.triggerPhoneErrorMessage}
+        removePhoneErrorMessage={this.removePhoneErrorMessage}
         setPhoneNumber={this.setPhoneNumber}
         email={this.state.email}
         spareTimeAvailability={this.state.spareTimeAvailability}

@@ -5,6 +5,7 @@ import Image3 from '../assets/bckgrnd-image2.png';
 const colors = ['#4a90e2', 'rgba(255, 255, 255, 0.80)', '#244770', '#3da937'];
 
 const SummaryConfig = {
+  checkIfValidPhoneApiUrl: 'https://cs-price-alerts.herokuapp.com/check/',
   cryptospotlight: 'CryptoSpotlight',
   coinbaseCurrencies: ['BTC', 'ETH', 'BCH', 'LTC', 'ETC'],
   currencyStrings: ['Top currencies', 'Well known', 'All of them'],
