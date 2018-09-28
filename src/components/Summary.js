@@ -246,6 +246,7 @@ class Summary extends Component {
     const {currencies} = this.state;
     let checkboxes = [];
     let tempCheckboxes = [];
+    let numberOfCheckboxesPerRow = this.props.widthLessThan452PX ? 3 : 8;
 
     for (let i = 0; i < currencies.length; i++) {
       if (this.props.packageSelected === 'Coinbase') {
@@ -268,7 +269,7 @@ class Summary extends Component {
           );
         }
       } else {
-        if (i % 8 === 0 && i !== 0) {
+        if (i % numberOfCheckboxesPerRow === 0 && i !== 0) {
           tempCheckboxes.push(
             <td>
             <FormControlLabel
@@ -287,7 +288,10 @@ class Summary extends Component {
           );
 
           checkboxes.push(
-            <tr className={i > 16 && this.state.showMore === false && (i > this.state.showMoreIndex) ? classes.hide : null}>
+            <tr
+              className={i > (numberOfCheckboxesPerRow * 2) && this.state.showMore === false && (i > this.state.showMoreIndex) ?
+                classes.hide : null
+              }>
               {tempCheckboxes}
             </tr>
           );
@@ -314,7 +318,7 @@ class Summary extends Component {
     }
     return (
       <div>
-      <table className={classes.label}>
+      <table className={this.props.widthLessThan452PX ? classes.label452PX : classes.label}>
         <tbody>
         {checkboxes}
         </tbody>
@@ -328,26 +332,27 @@ class Summary extends Component {
 
   renderAppBar() {
     const { classes } = this.props;
+    let classnames = this.props.widthLessThan452PX ?
+      classNames(classes.titleHeaders, classes.titleHeaderFont, classes.activeTab, classes.appBar452PX) :
+      classNames(classes.titleHeaders, classes.titleHeaderFont, classes.activeTab);
+
+    let backButtonClassnames = this.props.widthLessThan452PX ?
+      classNames(classes.titleHeaders, classes.titleHeaderFont, classes.inactiveTab, classes.backButton452PX) :
+      classNames(classes.titleHeaders, classes.titleHeaderFont, classes.inactiveTab);
+
+    // backButton452PX
     return (
      <Grid item xs={12} className={classes.noPaddingBottom}>
        <Paper className={classNames(classes.paper, classes.negativeRightMargin)}>
        <div className={classes.titleHeaderDiv}>
        <span
-         className={classNames(
-           classes.titleHeaders,
-           classes.titleHeaderFont,
-           classes.activeTab
-          )}>
+         className={classnames}>
            Your Personalized Alerts Plan
        </span>
        <span
          onClick={this.props.goBack}
-         className={classNames(
-           classes.titleHeaders,
-           classes.titleHeaderFont,
-           classes.inactiveTab,
-           classes.backButton
-          )}>
+         className={backButtonClassnames}
+         style={{float: 'right'}}>
             {'Back'}
        </span>
        </div>
@@ -357,6 +362,8 @@ class Summary extends Component {
   }
 
   renderLogo() {
+    const { classes } = this.props;
+
     return (
      <Grid
        item
@@ -364,9 +371,10 @@ class Summary extends Component {
        style={{height: '0px', paddingBottom: '0px', paddingTop: '0px'}}>
        <img
          src={logoBorder}
-         className="App-logo3"
+         className={"App-logo3"}
          alt="logo"
-         style={{marginTop: '-70px', position: 'absolute', marginLeft: '50px'}}
+         style={this.props.widthLessThan452PX ? {marginTop: '-40px', position: 'absolute', marginLeft: '74px', height: '60px',
+    zIndex: '10'} : {marginTop: '-70px', position: 'absolute', marginLeft: '50px'}}
        />
       </Grid>
     );
@@ -385,15 +393,14 @@ class Summary extends Component {
       'All Top ' + coinsNumber + ' Currencies' :
       'Top ' + coinsNumber + ' Currencies';
 
-
     return (
       <Grid item xs={this.props.widthLessThan1222PX || this.props.widthLessThan452PX ? null : 4} id="one" style={{padding: '5px'}}>
         <Card className={classes.card2}>
           <CardContent>
-            <div className={classNames(classes.blackFont, classes.textLeft, classes.bold, classes.alertLowerPadding, classes.alertTitleSub)} style={{fontSize: '1.1rem', paddingLeft: '10px'}}>
+            <div className={classNames(classes.blackFont, classes.textLeft, classes.bold, classes.alertLowerPadding, classes.alertTitleSub)} style={this.props.widthLessThan452PX ? {fontSize: '0.96rem', paddingLeft: '10px'} : {fontSize: '1.1rem', paddingLeft: '10px'}}>
             {'Thanks for the feedback, ' + this.props.name + '.'}
             </div>
-            <div className={classNames(classes.blackFont, classes.textLeft, classes.bold, classes.alertLowerPadding, classes.alertTitleSub)} style={{fontSize: '1.1rem', paddingBottom: '2px', paddingLeft: '10px'}}>
+            <div className={classNames(classes.blackFont, classes.textLeft, classes.bold, classes.alertLowerPadding, classes.alertTitleSub)} style={this.props.widthLessThan452PX ? {fontSize: '0.96rem', paddingBottom: '2px', paddingLeft: '10px'} : {fontSize: '1.1rem', paddingBottom: '2px', paddingLeft: '10px'}}>
             {'Based on your answers, we\'ve crafted your tailored game plan.'}
             </div>
             <br />
@@ -486,10 +493,14 @@ class Summary extends Component {
       SummaryConfig.coinbasePackageText :
       SummaryConfig.traderPackageText;
 
+    let rightCardClassNames = this.props.widthLessThan452PX ?
+      classNames(classes.paddingTopPackageSide452PX, classes.beigeBackground) :
+      classNames(classes.paddingTopPackageSide, classes.beigeBackground);
+
     return (
       <Grid item xs={this.props.widthLessThan1222PX || this.props.widthLessThan452PX ? null : 8} id="two" style={{padding: '5px'}}>
       <Card className={classes.card}>
-      <CardContent className={classNames(classes.paddingTopPackageSide, classes.beigeBackground)}>
+      <CardContent className={rightCardClassNames}>
         <Card className={classNames(classes.card, classes.cardBottomPadding)}>
           <CardContent className={classes.firstBackgroundImg}>
             <div className={classNames(classes.whiteFont, classes.textLeft, classes.cardHeadline)}>
@@ -497,7 +508,7 @@ class Summary extends Component {
               {this.props.packageSelected + ' Package'}
             </div>
           </CardContent>
-          <CardContent>
+          <CardContent className={this.props.widthLessThan452PX ? classes.card452PX : null}>
             <Typography component="p" className={classNames(classes.blackFont, classes.bold, classes.textLeft)}>
               {'Stay Informed.'}
             </Typography>
@@ -519,7 +530,7 @@ class Summary extends Component {
               {'Price Alerts'}
             </div>
           </CardContent>
-          <CardContent>
+          <CardContent className={this.props.widthLessThan452PX ? classes.card452PX : null}>
             <Typography component="p" className={classNames(classes.blackFont, classes.bold, classes.textLeft)}>
              {'A seamless strategy.'}
             </Typography>
@@ -542,7 +553,16 @@ class Summary extends Component {
             <br />
             <br />
             <br />
-            <div className={classes.wrapper}>
+
+            <Grid
+              container
+              alignItems="center"
+              justify="center"
+              className={classes.gridRoot}
+              spacing={16}
+              style={{paddingBottom: '40px'}}>
+
+            <Grid item xs={this.props.widthLessThan452PX ? null : 3} className={classes.noPaddingBottom}>
             <div className={classNames(classes.wrapperRight, classes.slider)}>
             <div id="label" className={classes.sliderLabel}>Price Increase</div>
             <Slider classes={{
@@ -558,6 +578,10 @@ class Summary extends Component {
             />
             </FormControl>
             </div>
+            </Grid>
+
+
+            <Grid item xs={this.props.widthLessThan452PX ? null : 3} className={classes.noPaddingBottom}>
             <div className={classNames(classes.wrapperRight, classes.slider)}>
             <div id="label2" className={classes.sliderLabel}>Price Decrease</div>
             <Slider
@@ -578,6 +602,10 @@ class Summary extends Component {
             </input>
             </FormControl>
             </div>
+            </Grid>
+
+
+            <Grid item xs={this.props.widthLessThan452PX ? null : 3} className={classes.noPaddingBottom}>
             <div className={classNames(classes.wrapperRight, classes.slider)}>
             <div id="label3" className={classes.sliderLabel}>Timeout</div>
             <Slider
@@ -599,7 +627,9 @@ class Summary extends Component {
             />
             </FormControl>
             </div>
-          </div>
+            </Grid>
+
+          </Grid>
           </CardContent>
         </Card>
          </CardContent>

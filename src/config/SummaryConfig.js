@@ -164,6 +164,11 @@ const SummaryConfig = {
       float: 'right',
       paddingRight: '30px',
     },
+    backButton452PX: {
+      float: 'right',
+      paddingRight: '4px',
+      fontSize: '0.96rem',
+    },
     cardBottomPadding: {
       paddingBottom: '50px',
     },
@@ -175,6 +180,9 @@ const SummaryConfig = {
     },
     label: {
       margin: '0 auto',
+    },
+    label452PX: {
+      marginLeft: '-7px',
     },
     titleIcon: {
       display: 'block',
@@ -265,6 +273,9 @@ const SummaryConfig = {
     paddingTopPackageSide: {
       paddingTop: '95px',
     },
+    paddingTopPackageSide452PX: {
+      paddingTop: '25px',
+    },
     beigeBackground: {
       backgroundColor: '#fff6ed',
     },
@@ -321,6 +332,19 @@ const SummaryConfig = {
       height: '8px',
       borderRadius: '5px',
       color: '#e6e6e6',
+    },
+    appBar452PX: {
+      fontSize: '0.96rem',
+    },
+    appLogoImg452PX: {
+      marginTop: '-35px',
+      position: 'absolute',
+      marginLeft: '50px',
+      height: '60px',
+      zIndex: '10',
+    },
+    card452PX: {
+      maxWidth: '350px',
     },
   }),
 };
