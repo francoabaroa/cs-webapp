@@ -271,6 +271,17 @@ class App extends Component {
     const email = document.getElementById('emailContent') ? document.getElementById('emailContent').textContent : '';
     let activeStep = WalkthroughConfig.scenesConfig[currentSceneNum].stepLevel;
     let stateObject = {};
+    let showBackButton = null;
+
+    if (this.state.showBackButton && this.state.widthLessThan452PX) {
+      showBackButton = false;
+    } else if (!this.state.widthLessThan452PX) {
+      showBackButton = true;
+    }
+
+    if (showBackButton !== null) {
+      stateObject.showBackButton = showBackButton;
+    }
 
     stateObject['currentSceneNumber'] = currentSceneNum + 1;
     stateObject['activeStep'] = activeStep;
@@ -350,10 +361,26 @@ class App extends Component {
   handleChange = name => event => {
     let currentSceneNum = this.state.currentSceneNumber;
     let activeStep = WalkthroughConfig.scenesConfig[currentSceneNum].stepLevel;
-    this.setState({
+    let showBackButton = null;
+
+    console.log('!!!!this.state.showBackButton!!!', this.state.showBackButton, this.state.showBackButton, 'this.state.showBackButton');
+
+    if (this.state.showBackButton && this.state.widthLessThan452PX) {
+      showBackButton = false;
+    } else if (!this.state.widthLessThan452PX) {
+      showBackButton = true;
+    }
+
+    let stateObject = {
       [name]: event.target.value,
       activeStep,
-    });
+    };
+
+    if (showBackButton !== null) {
+      stateObject.showBackButton = showBackButton;
+    }
+
+    this.setState(stateObject);
   };
 
   setPhoneNumber = phone => {
@@ -439,6 +466,17 @@ class App extends Component {
     const contenteditable = document.querySelector('[contenteditable]'),
     text = contenteditable.textContent;
     let stateObject = {};
+    let showBackButton = null;
+
+    if (this.state.showBackButton && this.state.widthLessThan452PX) {
+      showBackButton = false;
+    } else if (!this.state.widthLessThan452PX) {
+      showBackButton = true;
+    }
+
+    if (showBackButton !== null) {
+      stateObject.showBackButton = showBackButton;
+    }
 
     if (e.key === 'Enter') {
       let currentSceneNum = this.state.currentSceneNumber;
