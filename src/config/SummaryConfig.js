@@ -346,6 +346,9 @@ const SummaryConfig = {
     card452PX: {
       maxWidth: '350px',
     },
+    bottomPadding452PX: {
+      paddingBottom: '40px !important',
+    },
   }),
 };
 

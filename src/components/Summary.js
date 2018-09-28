@@ -562,8 +562,12 @@ class Summary extends Component {
               spacing={16}
               style={{paddingBottom: '40px'}}>
 
-            <Grid item xs={this.props.widthLessThan452PX ? null : 3} className={classes.noPaddingBottom}>
-            <div className={classNames(classes.wrapperRight, classes.slider)}>
+            <Grid
+              item
+              xs={this.props.widthLessThan452PX ? null : 3}
+              className={this.props.widthLessThan452PX ? classes.bottomPadding452PX : classes.noPaddingBottom}>
+            <div
+              className={classNames(classes.wrapperRight, classes.slider)}>
             <div id="label" className={classes.sliderLabel}>Price Increase</div>
             <Slider classes={{
               thumb: classes.thumb,
@@ -581,7 +585,10 @@ class Summary extends Component {
             </Grid>
 
 
-            <Grid item xs={this.props.widthLessThan452PX ? null : 3} className={classes.noPaddingBottom}>
+            <Grid
+              item
+              xs={this.props.widthLessThan452PX ? null : 3}
+              className={this.props.widthLessThan452PX ? classes.bottomPadding452PX : classes.noPaddingBottom}>
             <div className={classNames(classes.wrapperRight, classes.slider)}>
             <div id="label2" className={classes.sliderLabel}>Price Decrease</div>
             <Slider
@@ -605,7 +612,10 @@ class Summary extends Component {
             </Grid>
 
 
-            <Grid item xs={this.props.widthLessThan452PX ? null : 3} className={classes.noPaddingBottom}>
+            <Grid
+              item
+              xs={this.props.widthLessThan452PX ? null : 3}
+              className={this.props.widthLessThan452PX ? classes.bottomPadding452PX : classes.noPaddingBottom}>
             <div className={classNames(classes.wrapperRight, classes.slider)}>
             <div id="label3" className={classes.sliderLabel}>Timeout</div>
             <Slider
