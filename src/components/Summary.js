@@ -387,7 +387,7 @@ class Summary extends Component {
 
 
     return (
-      <Grid item xs={4} id="one" style={{padding: '5px'}}>
+      <Grid item xs={this.props.widthLessThan1222PX || this.props.widthLessThan452PX ? null : 4} id="one" style={{padding: '5px'}}>
         <Card className={classes.card2}>
           <CardContent>
             <div className={classNames(classes.blackFont, classes.textLeft, classes.bold, classes.alertLowerPadding, classes.alertTitleSub)} style={{fontSize: '1.1rem', paddingLeft: '10px'}}>
@@ -487,7 +487,7 @@ class Summary extends Component {
       SummaryConfig.traderPackageText;
 
     return (
-      <Grid item xs={8} id="two" style={{padding: '5px'}}>
+      <Grid item xs={this.props.widthLessThan1222PX || this.props.widthLessThan452PX ? null : 8} id="two" style={{padding: '5px'}}>
       <Card className={classes.card}>
       <CardContent className={classNames(classes.paddingTopPackageSide, classes.beigeBackground)}>
         <Card className={classNames(classes.card, classes.cardBottomPadding)}>
@@ -617,12 +617,8 @@ class Summary extends Component {
        spacing={24}>
        {this.renderAppBar()}
        {this.renderLogo()}
-       <div class="wrapperTest">
         {this.renderLeftCard()}
         {this.renderRightCard()}
-      </div>
-
-
       </Grid>
     );
   }

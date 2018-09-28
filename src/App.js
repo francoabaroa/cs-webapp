@@ -600,6 +600,8 @@ class App extends Component {
         priceDecrease={this.state.priceDecrease}
         timeOut={this.state.timeOut}
         surveyAnswers={this.state}
+        widthLessThan452PX={this.state.widthLessThan452PX}
+        widthLessThan1222PX={this.state.widthLessThan1222PX}
       />
     );
   }
