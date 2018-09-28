@@ -236,12 +236,14 @@ class Walkthrough extends Component {
       shouldDisplayButton = true;
     }
 
+    console.log('in text input', this.props, shouldDisplayButton, this.props.showNameField);
+
     return (
       <Grid key={this.props.currentSceneNumber} item>
-        <div className={classes.divInput}>
+        <div className={this.props.widthLessThan452PX ? classes.divInput1 : classes.divInput}>
           <div className={classes.divInputBox} id={field[0] === 'name' ?  'nameContent' : field[0] === 'email' ? 'emailContent' : null} contentEditable onKeyPress={this.props.handleKeyPress}
           onChange={this.props.handleChange(field[0])}></div>
-          <span onClick={this.props.changeToNextScene} className={shouldDisplayButton ? classes.enterButton3 : classes.displayNone}>></span>
+          <span onClick={this.props.changeToNextScene} className={!shouldDisplayButton ? classes.displayNone : this.props.widthLessThan452PX ? classes.enterButton4 : classes.enterButton3 }>></span>
         </div>
         <input
           onKeyPress={this.props.handleKeyPress}
@@ -286,13 +288,30 @@ class Walkthrough extends Component {
       customPadding = WalkthroughConfig.scenesConfig[this.props.currentSceneNumber].customPaddings;
     }
 
+    let xsVal = null;
+    if (smallButton) {
+      xsVal = 12;
+    } else if (isReferralQuestion && !this.props.widthLessThan1222PX) {
+      if (!this.props.widthLessThan452PX) {
+        xsVal = 4;
+      } else {
+        xsVal = null;
+      }
+    } else if (multipleSelections && !this.props.widthLessThan1222PX) {
+      if (!this.props.widthLessThan452PX) {
+        xsVal = 4;
+      } else {
+        xsVal = null;
+      }
+    }
+
     return buttonStrings.map((value, index) => {
       let selectionHandlerArgument = buttonStrings[index];
       return (
         <Grid
           key={index}
           item
-          xs={smallButton ? 12 : isReferralQuestion || multipleSelections ? 4 : null}>
+          xs={xsVal}>
            <ButtonBase
              className={
                multipleSelections && this.props.checkedExchanges.indexOf(buttonStrings[index]) !== -1 ?
@@ -419,6 +438,7 @@ class Walkthrough extends Component {
     let args = [];
     let body = [];
     let button = [];
+
     let submitButton = (
       <Button
         variant="outlined"
@@ -443,23 +463,20 @@ class Walkthrough extends Component {
     }
 
     let backClassName = isFirstScene || isLastScene || isTextOnlyScene || currentSceneNumber === 1 ? classes.backNoFixed : classes.back;
-    console.log('this.props.activeStep', this.props.activeStep);
-
-    /*
-
-    {isFirstScene === false || isLastScene === false || currentSceneNumber !== 1 ?
-            <div onClick={this.props.goBack} className={backClassName}>{'< Back'}</div> :
-            ''
-          }
-
-    */
-
     let width = '100%';
-    if (WalkthroughConfig.scenesConfig[currentSceneNumber].multipleSelections) {
+
+    // if (this.props.widthLessThan452PX) {
+    //   backClassName = classes.back2;
+    // }
+
+    console.log('this.props.widthLessThan1222PX', this.props.widthLessThan1222PX, 'this.props.widthLessThan452PX', this.props.widthLessThan452PX);
+    if (WalkthroughConfig.scenesConfig[currentSceneNumber].multipleSelections && !this.props.widthLessThan1222PX) {
       width = '50%';
-    } else if (isReferralScene) {
+    } else if (isReferralScene && !this.props.widthLessThan452PX) {
       width = '75%';
     }
+
+    console.log('this.props..showBackButton', this.props.showBackButton, this.props);
 
     return !WalkthroughConfig.scenesConfig[currentSceneNumber].stepperLabels ? (
       <Grid container className={classes.gridRoot} spacing={16} style={{paddingBottom: '40px'}}>
@@ -492,7 +509,7 @@ class Walkthrough extends Component {
           </Grid>
           {WalkthroughConfig.scenesConfig[currentSceneNumber].multipleSelections && this.props.checkedExchanges.length > 0 ? submitButton : null }
           {isFirstScene === false || isLastScene === false || currentSceneNumber !== 1 ?
-            <div onClick={this.props.goBack} className={backClassName}>{'< Back'}</div> :
+            <div onClick={this.props.goBack} className={this.props.showBackButton ? backClassName : classes.displayNone}>{'< Back'}</div> :
             ''
           }
         </Grid>

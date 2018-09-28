@@ -28,14 +28,14 @@ class App extends Component {
     super(props);
     this.state = {
       activeStep: 0,
-      enableWalkthrough: true,
+      enableWalkthrough: false,
       checkedExchanges: [],
       cryptoRiskProfile: '',
       cryptoCurrentStatus: '',
       cryptoTradingHabit: '',
       currenciesToExplore: '',
       currentSceneNumber: 0,
-      doesUseTA: false,
+      doesUseTA: null,
       email: '',
       incorporatingCryptoLifeAnswer: '',
       isPastCryptoTrader: false,
@@ -52,11 +52,58 @@ class App extends Component {
       showNameField: false,
       spacing: '40',
       spareTimeAvailability: '',
+      showBackButton: false,
       timeOut: 24,
+      widthLessThan452PX: false,
+      widthLessThan1222PX: false,
     };
   }
 
   componentDidMount() {
+    let widthLessThan452PX = false;
+    let widthLessThan1222PX = false;
+    let self = this;
+    let showBackButton = true;
+    let width = window.innerWidth ||
+      document.documentElement.clientWidth ||
+      document.body.clientWidth;
+
+    if (width < 452) {
+      console.log('inside if statement');
+      widthLessThan452PX = true;
+      showBackButton = false;
+    } else if (width < 1222) {
+      console.log('inside if statement width 1130', width);
+      widthLessThan1222PX = true;
+    }
+
+    console.log('showBackButton', showBackButton, 'width', width, width < 450);
+
+        // window.onscroll = function() {
+        // var pageHeight=document.documentElement.offsetHeight,
+        // windowHeight=window.innerHeight,
+        // scrollPosition=window.scrollY || window.pageYOffset || document.body.scrollTop + (document.documentElement && document.documentElement.scrollTop || 0);
+
+        // document.getElementById("val").innerHTML=pageHeight+','+windowHeight+','+scrollPosition;
+
+
+        // if (pageHeight <= windowHeight+scrollPosition) {
+        //     alert('At the bottom');
+        // }
+        // };
+
+    window.onscroll = function(ev) {
+      let method = WalkthroughConfig.scenesConfig[self.state.currentSceneNumber].method;
+      let numberToPass = document.body.offsetHeight - 12;
+      console.log('EV!', ev, ' ----- ', (window.innerHeight + window.scrollY) >= document.getElementById('root').offsetHeight, self.state.showBackButton, 'window.innerHeight', window.innerHeight, 'window.scrollY', window.scrollY, 'document.body.offsetHeight', document.body.offsetHeight)
+      if (!self.state.showBackButton && (window.innerHeight + window.scrollY) >= numberToPass && method !== undefined) {
+        console.log('SWITCHING BUTTON TO TRUE');
+        self.setState({showBackButton: true});
+      } else if (self.state.showBackButton && (window.innerHeight + window.scrollY) < numberToPass && self.state.widthLessThan452PX) {
+        self.setState({showBackButton: false})
+      }
+    };
+
     if (this.state.enableWalkthrough) {
       let fiveSeconds = 5000;
       let currentSceneNum = this.state.currentSceneNumber;
@@ -66,10 +113,47 @@ class App extends Component {
           this.setState({
             currentSceneNumber: currentSceneNum + 1,
             activeStep: activeStep,
+            widthLessThan452PX,
+            widthLessThan1222PX,
+            showBackButton
           });
         }, fiveSeconds)
       }
     }
+
+
+
+
+    // TODO: need to change boolean state if window resizes for 450 and 750
+    // - back button needs to show on resizing!!
+    window.addEventListener("resize", function() {
+       var width = window.innerWidth
+      || document.documentElement.clientWidth
+      || document.body.clientWidth;
+      console.log('WIDTH', width);
+    if (!window.matchMedia("(min-width: 450px)").matches) {
+        self.setState({
+          widthLessThan452PX: true,
+        })
+        console.log("Screen width is less than 450px");
+    } else {
+      self.setState({
+          widthLessThan452PX: false,
+        })
+    }
+
+    if (!window.matchMedia("(min-width: 1222px)").matches) {
+      self.setState({
+          widthLessThan1222PX: true,
+        })
+        console.log("Screen less than 1222px");
+    } else {
+      self.setState({
+          widthLessThan1222PX: false,
+        })
+        console.log("Screen less than 450px");
+    }
+});
   }
 
   componentDidUpdate() {
@@ -162,11 +246,15 @@ class App extends Component {
     let numberOfScenesToSubtract = 1;
     let activeStep = WalkthroughConfig.scenesConfig[currentSceneNum].stepLevel;
 
-    for (let i = currentSceneNum - 1; i >= 0; i--) {
-      if (WalkthroughConfig.scenesConfig[i].method === undefined) {
-        numberOfScenesToSubtract++;
-      } else if (WalkthroughConfig.scenesConfig[i].method !== undefined) {
-        break;
+    if (currentSceneNum === 11 && this.state.doesUseTA === null) {
+      numberOfScenesToSubtract = 3;
+    } else {
+      for (let i = currentSceneNum - 1; i >= 0; i--) {
+        if (WalkthroughConfig.scenesConfig[i].method === undefined) {
+          numberOfScenesToSubtract++;
+        } else if (WalkthroughConfig.scenesConfig[i].method !== undefined) {
+          break;
+        }
       }
     }
 
@@ -312,6 +400,11 @@ class App extends Component {
       stateObject[propertyName] = selection;
     }
 
+    if (this.state.showBackButton && this.state.widthLessThan452PX) {
+      console.log('in handle selection!!!!!!!!', this.state.showBackButton && this.state.widthLessThan452PX, 'this.state.showBackButton && this.state.widthLessThan452PX');
+      stateObject['showBackButton'] = false;
+    }
+
     this.setState(stateObject);
   };
 
@@ -436,6 +529,9 @@ class App extends Component {
         showNameField={this.state.showNameField}
         checkedExchanges={this.state.checkedExchanges}
         discoveryReason={this.state.discoveryReason}
+        showBackButton={this.state.showBackButton}
+        widthLessThan452PX={this.state.widthLessThan452PX}
+        widthLessThan1222PX={this.state.widthLessThan1222PX}
        />
     );
   }

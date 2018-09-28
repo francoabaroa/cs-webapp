@@ -348,6 +348,12 @@ const WalkthroughConfig = {
       left: 28,
       fontSize: '1.5em',
     },
+    back2: {
+      position: 'absolute',
+      bottom: 0,
+      left: 28,
+      fontSize: '1.5em',
+    },
     backNoFixed: {
       display: 'none',
       bottom: 100,
@@ -420,6 +426,24 @@ const WalkthroughConfig = {
       height: '32px',
       width: '32px',
     },
+    enterButton4: {
+      display: 'inline-block',
+      padding: 0,
+      fontSize: '12px',
+      fontWeight: 'lighter !important',
+      lineHeight: '32px',
+      color: '#fff !important',
+      textAlign: 'center',
+      whiteSpace: 'nowrap',
+      verticalAlign: 'baseline',
+      backgroundColor: '#4f8463',
+      borderRadius: '32px',
+      position: 'relative',
+      top: '-28px',
+      left: '127px',
+      height: '32px',
+      width: '32px',
+    },
     displayNone: {
       display: 'none',
     },
@@ -449,13 +473,37 @@ const WalkthroughConfig = {
       font: '-webkit-small-control',
       marginTop: '5px',
     },
+    divInput1: {
+      marginLeft: theme.spacing.unit,
+      marginRight: theme.spacing.unit,
+      minWidth: 300,
+      height: 54,
+      border: '3px solid black',
+      borderRadius: '6px',
+      padding: '5px',
+      '&:focus': {
+        outline: 'none !important',
+      },
+      paddingTop: '25px',
+      fontSize: '22px',
+      fontFamily: 'proxima-nova, sans-serif',
+      fontStyle: 'normal',
+      mozAppearance: 'textfield',
+      webkitAppearance: 'textfield',
+      backgroundColor: '-moz-field',
+      backgroundColor: '#FFFFFF',
+      font: '-moz-field',
+      font: '-webkit-small-control',
+      marginTop: '5px',
+    },
     divInputBox: {
       '&:focus': {
         outline: 'none !important',
       },
-      completed: {
-        backgroundColor: 'black !important',
-      },
+    },
+    completed: {
+      // backgroundColor: 'black !important',
+      color: '#4f8463 !important'
     },
     purpleFont: {
       color: '#2d59b0',
