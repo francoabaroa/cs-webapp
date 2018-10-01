@@ -393,6 +393,40 @@ class Walkthrough_Old extends Component {
     );
   }
 
+  renderCheckboxList(classes) {
+    return (
+      <div className={classes.list}>
+        <List>
+          {Object.values(WalkthroughConfig.exchangesList).map(value => (
+            <ListItem
+              key={value}
+              role={undefined}
+              dense
+              button
+              onClick={this.props.handleExchangeListToggle(value)}
+              className={classes.listItem}
+            >
+              <Checkbox
+                checked={this.props.checkedExchanges.indexOf(value) !== -1}
+                tabIndex={-1}
+                disableRipple
+              />
+              <ListItemText primary={`${value}`} />
+            </ListItem>
+          ))}
+        </List>
+        <Button
+          variant="outlined"
+          size="large"
+          color="primary"
+          className={classes.button}
+          onClick={this.props.changeToNextScene}>
+          {'Submit'}
+        </Button>
+      </div>
+    );
+  }
+
   renderScene5(classes) {
     let strings = ['Yes', 'No'];
     return [0, 1].map(value => (
