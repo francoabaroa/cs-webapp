@@ -20,7 +20,7 @@ class App extends Component {
     super(props);
     this.state = {
       activeStep: 0,
-      enableWalkthrough: false,
+      enableWalkthrough: true,
       checkedExchanges: [],
       cryptoRiskProfile: "",
       cryptoCurrentStatus: "",
