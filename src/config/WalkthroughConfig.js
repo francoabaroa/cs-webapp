@@ -90,23 +90,28 @@ const WalkthroughConfig = {
       stepperLabels: ["BASICS", "LIFESTYLE", "VALUES", "STRATEGY"]
     },
     13: {
-      arguments: ["incorporatingCryptoLifeAnswer"],
-      headline: "When it comes to incorporating crypto in your life, are you:",
+      arguments: ["tradingAmount"],
+      headline:
+        "If you are comfortable sharing, how much are you trading with today?",
       method: "renderButtons",
-      icons: ["informed", "curious", "skeptical", "rekt"],
-      strings: ["Dedicated", "On a kick", "Ready to learn"],
-      stepLevel: 1,
-      smallButton: true
+      strings: [
+        "Less than $1000",
+        "$1000 - $5,000",
+        "$5,001 - $20,000",
+        "$20,000+",
+        "Prefer not to say"
+      ],
+      stepLevel: 1
     },
     14: {
       arguments: ["spareTimeAvailability"],
       hasCustomPadding: true,
       customPaddings: [40, 40, 40],
-      headline: "When it comes to spare time for crypto, are you:",
+      headline: "Is crypto trading something you do:",
       method: "renderButtons",
       icons: ["completelyBooked", "occasionallyAvailable", "prettyFree"],
-      strings: ["Completely", "Occasionally", "Pretty"],
-      subStrings: ["booked", "available", "free"],
+      strings: ["Full", "Part", "Once in"],
+      subStrings: ["time", "time", "a while"],
       stepLevel: 1
     },
     15: {
@@ -117,10 +122,10 @@ const WalkthroughConfig = {
       arguments: ["currenciesToExplore"],
       hasCustomPadding: true,
       customPaddings: [60, 40, 10],
-      headline: "Which currencies are you interested in trading?",
+      headline: "Which currencies are you interested in trading:",
       method: "renderButtons",
       icons: ["topCurrencies", "wellKnown", "allOfThem"],
-      strings: ["Top currencies", "Well known", "All of them"],
+      strings: ["Top Coins Only", "Top 100 Coins", "Top 250 Coins"],
       stepLevel: 2
     },
     17: {
@@ -129,8 +134,7 @@ const WalkthroughConfig = {
       method: "renderButtons",
       icons: ["informed", "curious", "skeptical", "rekt"],
       strings: ["Trade quick", "Hold for a bit", "Sit back and relax"],
-      stepLevel: 2,
-      smallButton: true
+      stepLevel: 2
     },
     18: {
       arguments: ["cryptoRiskProfile"],

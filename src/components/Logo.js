@@ -26,7 +26,7 @@ class Logo extends Component {
           className={"App-logo3"}
           alt="logo"
           style={
-            this.props.widthLessThan452PX
+            this.props.widthLessThan452PX || this.props.widthLessThan1222PX
               ? {
                   marginTop: "-40px",
                   position: "absolute",

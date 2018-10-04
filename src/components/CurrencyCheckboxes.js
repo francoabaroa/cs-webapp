@@ -101,6 +101,21 @@ class CurrencyCheckboxes extends Component {
               />
             </td>
           );
+          if (currencies[i + 1] === undefined && currencies[i] !== null) {
+            checkboxes.push(
+              <tr
+                className={
+                  i > numberOfCheckboxesPerRow * 2 &&
+                  this.props.showMore === false &&
+                  i > this.props.showMoreIndex
+                    ? classes.hide
+                    : null
+                }
+              >
+                {tempCheckboxes}
+              </tr>
+            );
+          }
         }
       }
     }

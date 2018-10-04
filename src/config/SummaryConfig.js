@@ -8,7 +8,7 @@ const SummaryConfig = {
   checkIfValidPhoneApiUrl: "https://cs-price-alerts.herokuapp.com/check/",
   cryptospotlight: "CryptoSpotlight",
   coinbaseCurrencies: ["BTC", "ETH", "BCH", "LTC", "ETC"],
-  currencyStrings: ["Top currencies", "Well known", "All of them"],
+  currencyStrings: ["Top Coins Only", "Top 100 Coins", "Top 250 Coins"],
   riskProfiles: ["Risk averse", "The middle", "High risk,"],
   topXCoinsApiUrl: "https://cs-price-alerts.herokuapp.com/top?top=",
   applicationJson: "application/json",

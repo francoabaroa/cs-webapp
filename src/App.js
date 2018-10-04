@@ -29,7 +29,6 @@ class App extends Component {
       currentSceneNumber: 0,
       doesUseTA: null,
       email: "",
-      incorporatingCryptoLifeAnswer: "",
       isPastCryptoTrader: false,
       name: "",
       packagePrice: 0,
@@ -45,6 +44,7 @@ class App extends Component {
       spacing: "40",
       spareTimeAvailability: "",
       showBackButton: false,
+      tradingAmount: "",
       timeOut: 24,
       widthLessThan452PX: false,
       widthLessThan1222PX: false
@@ -107,8 +107,6 @@ class App extends Component {
       }
     }
 
-    // TODO: need to change boolean state if window resizes for 450 and 750
-    // - back button needs to show on resizing!!
     window.addEventListener("resize", function() {
       if (!window.matchMedia("(min-width: 450px)").matches) {
         self.setState({
@@ -183,7 +181,7 @@ class App extends Component {
       let priceIncrease = 0;
       let priceDecrease = 0;
       let timeOut = 0;
-      if (this.state.currenciesToExplore === "Top currencies") {
+      if (this.state.currenciesToExplore === "Top Coins Only") {
         pkg = "Coinbase";
       } else {
         pkg = "Trader";

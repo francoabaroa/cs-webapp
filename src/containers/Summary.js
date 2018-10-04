@@ -60,6 +60,8 @@ class Summary extends Component {
         currencyNum = 250;
       }
 
+      console.log(this.props.currenciesToExplore, this.props.currenciesToExplore === SummaryConfig.currencyStrings[2], currencyNum);
+
       if (currencyNum === 5) {
         let currencies = SummaryConfig.coinbaseCurrencies;
         currencies.unshift(null);
@@ -190,6 +192,7 @@ class Summary extends Component {
       timeOutPeriodInHrs: this.props.timeOut,
       userId: this.state.userId
     };
+    console.log('strategyInfo', strategyInfo);
 
     const createNewStrategy = async () => {
       const response = await fetch(SummaryConfig.saveStrategyUrl, {
@@ -220,7 +223,12 @@ class Summary extends Component {
   }
 
   renderLogo() {
-    return <Logo widthLessThan452PX={this.props.widthLessThan452PX} />;
+    return (
+      <Logo
+        widthLessThan1222PX={this.props.widthLessThan1222PX}
+        widthLessThan452PX={this.props.widthLessThan452PX}
+      />
+    );
   }
 
   renderLeftSummaryCard() {
@@ -286,6 +294,7 @@ class Summary extends Component {
   }
 
   render() {
+    console.log('this.summary state', this.state);
     return <div className="App">{this.renderSummary()}</div>;
   }
 }
