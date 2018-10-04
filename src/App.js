@@ -163,9 +163,6 @@ class App extends Component {
           });
         }, secondsToWait);
       }
-      if (isLastScene) {
-        console.log("componentDidUpdate()", this.state);
-      }
     }
 
     if (
@@ -176,7 +173,6 @@ class App extends Component {
     }
 
     if (this.state.enableWalkthrough && isLastScene) {
-      // TODO: need better way to determine package
       let pkg = "";
       let priceIncrease = 0;
       let priceDecrease = 0;
@@ -474,7 +470,6 @@ class App extends Component {
 
     if (e.key === "Enter") {
       let currentSceneNum = this.state.currentSceneNumber;
-      // TODO: potential bug here
       let activeStep =
         WalkthroughConfig.scenesConfig[currentSceneNum + 1].stepLevel;
 
@@ -629,7 +624,6 @@ class App extends Component {
   }
 
   render() {
-    console.log("THIS STATE", this.state);
     return (
       <div className="App">
         {!this.state.enableWalkthrough

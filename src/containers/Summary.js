@@ -34,13 +34,15 @@ class Summary extends Component {
 
   componentDidMount() {
     const self = this;
+    const stripeKeys = {
+      Coinbase: "prod_Dchlih0hVExbPP",
+      Trader: "prod_DdQ8YRYxcMDOuF"
+    };
     const handler = window.StripeCheckout.configure({
-      key: "pk_test_TYooMQauvdEDq54NiTphI7jx",
+      key: stripeKeys[self.props.packageSelected],
       image: logo,
       locale: "auto",
       token: function(token) {
-        console.log("Stripe token: ", token);
-        // TODO: what if token.email and this.props.email are different?
         self.createStrategy();
       }
     });
@@ -59,8 +61,6 @@ class Summary extends Component {
       ) {
         currencyNum = 250;
       }
-
-      console.log(this.props.currenciesToExplore, this.props.currenciesToExplore === SummaryConfig.currencyStrings[2], currencyNum);
 
       if (currencyNum === 5) {
         let currencies = SummaryConfig.coinbaseCurrencies;
@@ -167,7 +167,6 @@ class Summary extends Component {
         }
       });
       const { userId } = await response.json();
-      console.log(userId);
       self.setState({ userId });
     };
     createNewUser();
@@ -192,7 +191,6 @@ class Summary extends Component {
       timeOutPeriodInHrs: this.props.timeOut,
       userId: this.state.userId
     };
-    console.log('strategyInfo', strategyInfo);
 
     const createNewStrategy = async () => {
       const response = await fetch(SummaryConfig.saveStrategyUrl, {
@@ -204,7 +202,7 @@ class Summary extends Component {
         }
       });
       const serverResponse = await response;
-      console.log("/saveteststrategy response - ", serverResponse);
+      window.location.replace("https://cryptospotlight.net/thank-you");
     };
     createNewStrategy();
   }
@@ -294,7 +292,6 @@ class Summary extends Component {
   }
 
   render() {
-    console.log('this.summary state', this.state);
     return <div className="App">{this.renderSummary()}</div>;
   }
 }

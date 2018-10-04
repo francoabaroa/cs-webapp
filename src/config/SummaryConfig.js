@@ -16,8 +16,8 @@ const SummaryConfig = {
     "\n With a busy lifestyle, most of your trading needs can be solved for simply by solely tracking the Coinbase coins — that’s why we keep it simple.",
   traderPackageText:
     "\n Being a more experienced crypto trader, we give you the full power of our AI — you’re given the ears and eyes that monitor the market 24/7.",
-  saveStrategyUrl: "https://cs-price-alerts.herokuapp.com/saveteststrategy",
-  saveUserUrl: "https://cs-price-alerts.herokuapp.com/createtestuser",
+  saveStrategyUrl: "https://cs-price-alerts.herokuapp.com/savestrategy",
+  saveUserUrl: "https://cs-price-alerts.herokuapp.com/createuser",
   POST: "POST",
   prices: {
     Coinbase: 10,
